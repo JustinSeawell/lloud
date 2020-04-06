@@ -19,7 +19,7 @@ const providers = [
   "@adonisjs/shield/providers/ShieldProvider",
   "@adonisjs/session/providers/SessionProvider",
   "@adonisjs/auth/providers/AuthProvider",
-  "@adonisjs/validator/providers/ValidatorProvider"
+  "@adonisjs/validator/providers/ValidatorProvider",
 ];
 
 /*
@@ -31,7 +31,10 @@ const providers = [
 | Providers for migrations, tests etc.
 |
 */
-const aceProviders = ["@adonisjs/lucid/providers/MigrationsProvider"];
+const aceProviders = [
+  "@adonisjs/lucid/providers/MigrationsProvider",
+  "@adonisjs/vow/providers/VowProvider",
+];
 
 /*
 |--------------------------------------------------------------------------

@@ -45,7 +45,7 @@ class UserController {
     const rules = {
       username: "required|unique:users",
       email: "required|email|unique:users",
-      password: "required"
+      password: "required",
     };
 
     const validation = await validate(request.all(), rules);
@@ -109,6 +109,14 @@ class UserController {
     const output = await auth.attempt(email, password);
 
     return output;
+  }
+
+  async me({ auth, request }) {
+    try {
+      return await auth.getUser();
+    } catch (error) {
+      response.send("Missing or invalid jwt token");
+    }
   }
 }
 
