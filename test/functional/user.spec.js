@@ -4,6 +4,7 @@ const { test, trait, before } = use("Test/Suite")("User");
 const User = use("App/Models/User");
 
 trait("Test/ApiClient");
+trait("DatabaseTransactions"); // Rolls back DB after each test
 
 before(async () => {});
 
@@ -82,4 +83,24 @@ test("a successful login response returns a valid token", async ({
 });
 
 // Registration
-test("", async ({ client, assert }) => {});
+test("a new user is saved to the database", async ({ client, assert }) => {
+  const fakeCreds = {
+    email: "fakeEmail@gmail.com",
+    username: "fakeUserName",
+    password: "fake",
+  };
+
+  const response = await client.post("/users").send(fakeCreds).end();
+
+  response.assertStatus(200);
+  assert.property(response.body, "success");
+  assert.property(response.body, "message");
+
+  const newUser = response.body.message;
+
+  try {
+    await User.findOrFail(newUser.id);
+  } catch (error) {
+    assert.fail("Created user not found.");
+  }
+});
