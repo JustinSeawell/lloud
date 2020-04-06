@@ -3,8 +3,11 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
+/** @typedef {import('@adonisjs/framework/src/View')} View */
+/** @typedef {import('@adonisjs/framework/src/Event')} Event */
 
 const { validate } = use("Validator");
+const Event = use("Event");
 const User = use("App/Models/User");
 
 /**
@@ -41,7 +44,7 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response }) {
+  async store({ request, response, event }) {
     const rules = {
       username: "required|unique:users",
       email: "required|email|unique:users",
@@ -56,6 +59,8 @@ class UserController {
 
     const userData = request.only(["username", "email", "password"]);
     const user = await User.create(userData);
+
+    Event.fire("new::user", user);
 
     return { success: true, message: user };
   }
