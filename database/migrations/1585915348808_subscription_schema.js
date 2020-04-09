@@ -5,12 +5,13 @@ const Schema = use("Schema");
 
 class SubscriptionSchema extends Schema {
   up() {
-    this.create("subscriptions", table => {
+    this.create("subscriptions", (table) => {
       table.increments();
       table.bigInteger("account_id");
-      table.bigInteger("tier");
+      table.bigInteger("plan_id");
+      table.timestamp("started_at");
       table.timestamp("ended_at");
-      table.timestamp("expired_at");
+      table.boolean("is_active").notNullable().defaultTo(false);
       table.timestamps();
     });
   }

@@ -6,8 +6,9 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 /** @typedef {import('@adonisjs/framework/src/Event')} Event */
 
+const UserRegistration = use("App/Services/UserRegistration");
+
 const { validate } = use("Validator");
-const Event = use("Event");
 const User = use("App/Models/User");
 
 /**
@@ -56,13 +57,20 @@ class UserController {
     if (validation.fails()) {
       return validation.messages();
     }
-
     const userData = request.only(["username", "email", "password"]);
-    const user = await User.create(userData);
 
-    Event.fire("new::user", user);
+    try {
+      const user = await UserRegistration.registerListenerDefaultAccount(
+        userData
+      );
 
-    return { success: true, message: user };
+      return response.created({ success: true, message: user });
+    } catch (err) {
+      return {
+        success: false,
+        message: "User registration failed.",
+      };
+    }
   }
 
   /**

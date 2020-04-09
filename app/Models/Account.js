@@ -4,8 +4,16 @@
 const Model = use("Model");
 
 class Account extends Model {
-  subscription() {
-    return this.hasOne("App/Models/Subscription");
+  subscriptions() {
+    return this.hasMany("App/Models/Subscription");
+  }
+
+  activeSubscription() {
+    return this.hasOne("App/Models/Subscription").where("is_active", true);
+  }
+
+  accountType() {
+    return this.hasOne("App/Models/AccountType");
   }
 }
 

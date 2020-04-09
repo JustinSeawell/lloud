@@ -4,7 +4,7 @@ const User = (exports = module.exports = {});
 const Mail = use("Mail");
 
 User.registered = async (user) => {
-  await Mail.send("emails.welcome", user.toJSON(), (message) => {
+  await Mail.send("emails.welcome", user, (message) => {
     message
       .to(user.email)
       .from("noreply@lloudapp.com")

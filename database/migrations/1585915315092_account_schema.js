@@ -5,10 +5,10 @@ const Schema = use("Schema");
 
 class AccountSchema extends Schema {
   up() {
-    this.create("accounts", table => {
+    this.create("accounts", (table) => {
       table.increments();
       table.bigInteger("user_id");
-      table.bigInteger("type");
+      table.bigInteger("account_type_id");
       table.timestamp("deleted_at");
       table.timestamps();
     });

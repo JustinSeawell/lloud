@@ -1,6 +1,5 @@
 "use strict";
 
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use("Model");
 
 class User extends Model {
@@ -16,7 +15,6 @@ class User extends Model {
      * it to the database.
      */
     this.addHook("beforeSave", "UserHook.hashPassword");
-    this.addHook("beforeCreate", "UserHook.createAccount");
   }
 
   /**

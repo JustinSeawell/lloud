@@ -5,20 +5,14 @@ const Schema = use("Schema");
 
 class UserSchema extends Schema {
   up() {
-    this.create("users", table => {
+    this.create("users", (table) => {
       table.increments();
       table.string("firstname", 80);
       table.string("lastname", 80);
-      table
-        .string("username", 80)
-        .notNullable()
-        .unique();
-      table
-        .string("email")
-        .notNullable()
-        .unique();
+      table.string("username", 80).notNullable().unique();
+      table.string("email").notNullable().unique();
       table.string("password", 60).notNullable();
-      table.bigInteger("points");
+      table.boolean("is_fake").notNullable().defaultTo(false);
       table.string("address1");
       table.string("address2");
       table.string("city");
