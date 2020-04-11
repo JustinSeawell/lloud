@@ -1,5 +1,8 @@
 "use strict";
 
+const crypto = require("crypto");
+const moment = require("moment");
+
 const Model = use("Model");
 
 class User extends Model {
@@ -33,6 +36,13 @@ class User extends Model {
 
   account() {
     return this.hasOne("App/Models/Account");
+  }
+
+  generatePasswordReset() {
+    this.resetPasswordToken = crypto.randomBytes(20).toString("hex");
+    this.resetPasswordExpires = moment()
+      .add(1, "hours")
+      .format("YYYY-MM-DD HH:mm:ss");
   }
 }
 

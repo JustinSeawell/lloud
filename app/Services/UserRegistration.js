@@ -44,7 +44,7 @@ class UserRegistration extends Service {
 
       await trx.commit();
 
-      Event.fire("new::user", user);
+      Event.fire("user::new", user);
 
       return user;
     } catch (err) {

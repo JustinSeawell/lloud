@@ -14,4 +14,6 @@
 
 const Event = use("Event");
 
-Event.on("new::user", "User.registered");
+Event.on("user::new", "User.registered");
+Event.on("user::recover_password", "User.recover");
+Event.on("user::password_was_reset", "User.passwordWasReset");

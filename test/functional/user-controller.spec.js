@@ -96,3 +96,21 @@ test("a user needs a password to register", async ({ client, assert }) => {
     },
   ]);
 });
+
+test("a user needs an account to login", async ({ client, assert }) => {
+  const fakeUser = await Factory.model("App/Models/User").make();
+  const userData = {
+    username: fakeUser.username,
+    email: fakeUser.email,
+    // password: "jello",
+    is_fake: true,
+  };
+
+  const response = await client.post("/login").send(userData).end();
+  response.assertError([
+    {
+      message: "Cannot find user with provided email",
+      field: "email",
+    },
+  ]);
+});
