@@ -1,8 +1,9 @@
 "use strict";
 
-const { test, trait, after } = use("Test/Suite")("User Registration");
+const { test, trait, before, after } = use("Test/Suite")("User Registration");
 
 const Factory = use("Factory");
+const Mail = use("Mail");
 
 const User = use("App/Models/User");
 const Account = use("App/Models/Account");
@@ -11,8 +12,12 @@ const UserRegistration = use("App/Services/UserRegistration");
 
 trait("DatabaseTransactions");
 
+before(async () => {
+  Mail.fake();
+});
+
 after(async () => {
-  // TODO: Delete all accounts & subscriptions for fake user accounts
+  Mail.restore();
 });
 
 test("registering a listener user returns a user model instance", async ({

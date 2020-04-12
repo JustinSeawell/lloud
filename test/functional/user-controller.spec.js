@@ -1,12 +1,23 @@
 "use strict";
 
-const { test, trait } = use("Test/Suite")("User Controller");
+const { test, trait, before, after } = use("Test/Suite")("User Controller");
 
+const Event = use("Event");
+const Mail = use("Mail");
 const Factory = use("Factory");
+
 const User = use("App/Models/User");
 
 trait("Test/ApiClient");
 trait("DatabaseTransactions");
+
+before(async () => {
+  Mail.fake();
+});
+
+after(async () => {
+  Mail.restore();
+});
 
 test("a user can register in the system", async ({ client, assert }) => {
   const fakeUser = await Factory.model("App/Models/User").make();
@@ -17,7 +28,7 @@ test("a user can register in the system", async ({ client, assert }) => {
     is_fake: true,
   };
 
-  const response = await client.post("/users").send(userData).end();
+  const response = await client.post("api/v1/users").send(userData).end();
 
   response.assertStatus(201);
   response.assertJSONSubset({
@@ -43,7 +54,7 @@ test("a user can not register with a username that's already taken", async ({
 
   const user = await User.create(userData);
 
-  const response = await client.post("/users").send(userData).end();
+  const response = await client.post("api/v1/users").send(userData).end();
   response.assertError([
     {
       message: "unique validation failed on username",
@@ -68,7 +79,7 @@ test("a user can not register with an email that's already taken", async ({
   const user = await User.create(userData);
   userData.username = "someOtherUserName";
 
-  const response = await client.post("/users").send(userData).end();
+  const response = await client.post("api/v1/users").send(userData).end();
   response.assertError([
     {
       message: "unique validation failed on email",
@@ -87,7 +98,7 @@ test("a user needs a password to register", async ({ client, assert }) => {
     is_fake: true,
   };
 
-  const response = await client.post("/users").send(userData).end();
+  const response = await client.post("api/v1/users").send(userData).end();
   response.assertError([
     {
       message: "required validation failed on password",
@@ -106,7 +117,7 @@ test("a user needs an account to login", async ({ client, assert }) => {
     is_fake: true,
   };
 
-  const response = await client.post("/login").send(userData).end();
+  const response = await client.post("api/v1/login").send(userData).end();
   response.assertError([
     {
       message: "Cannot find user with provided email",
