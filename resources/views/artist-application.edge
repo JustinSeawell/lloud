@@ -1,0 +1,91 @@
+@layout('layouts/external-form')
+
+@section('header')
+  <div class="jumbo">
+    <h1>Welcome <br> to Lloud<span class="red">.</span></h1>
+  </div>
+
+  <h2>What is Lloud?</h2>
+  <p>Lloud is a new kind of music app where listeners search for unknown artists. Listeners "like" songs, and earn rewards if that song becomes popular.</p>
+  
+  <h2>Why should I join?</h2>
+  <p>Lloud is different because listeners are actively searching for <strong>new</strong> music. You're more likely to be heard if you upload your music to Lloud.</p>
+  
+  <h2>What's the application process?</h2>
+  <p>Submit your artist profile information, and one of your songs. A representative from Lloud will review your application and respond via email.</p>
+@endsection
+
+@section('form')
+<h1>Artist Application Form:</h1>
+
+@if(flashMessage('notification'))
+  <div class="message--success">{{ flashMessage('notification') }}</div>
+@endif
+
+<form method="POST" action="{{ route('ArtistApplicationController.store') }}" class="pure-form pure-form-stacked" enctype="multipart/form-data">
+  <fieldset>
+    <legend>Artist Profile</legend>
+    <div class="field pure-u-md-3-4">
+      <label for="name">Artist Name</label>
+      <input class="pure-input-1" id="name" name="name" type="text" placeholder="Artist Name" value="{{ old('name', '') }}" required>
+      {{ elIf('<span class="error">$self</span>', getErrorFor('name'), hasErrorFor('name')) }}
+    </div>
+    <div class="field pure-u-md-3-4">
+      <label for="description">Bio</label>
+      <textarea id="description" name="description" class="pure-input-1" placeholder="A description of you and your music" value="{{ old('description', '') }}" required></textarea>
+      <span class="pure-form-message">This will appear on your artist profile if your application is approved.</span>
+      {{ elIf('<span class="error">$self</span>', getErrorFor('description'), hasErrorFor('description')) }}
+    </div>
+    <div class="field pure-u-md-1-2">
+      <label for="email">Email</label>
+      <input class="pure-input-1" id="email" name="email" type="email" placeholder="Email" value="{{ old('email', '') }}" required>
+      {{ elIf('<span class="error">$self</span>', getErrorFor('description'), hasErrorFor('description')) }}
+    </div>
+    <div class="field">
+      <label for="city">City</label>
+      <input id="city" name="city" type="text" placeholder="City" value="{{ old('city', '') }}" required>
+      {{ elIf('<span class="error">$self</span>', getErrorFor('city'), hasErrorFor('city')) }}
+    </div>
+    <div class="field">
+      <label for="state">State</label>
+      <input id="state" name="state" type="text" placeholder="State" value="{{ old('state', '') }}" required>
+      {{ elIf('<span class="error">$self</span>', getErrorFor('state'), hasErrorFor('state')) }}
+    </div>
+    <div class="field">
+      <label for="zipcode">Zipcode</label>
+      <input id="zipcode" name="zipcode" type="text" placeholder="Zipcode" value="{{ old('zipcode', '') }}" required>
+      {{ elIf('<span class="error">$self</span>', getErrorFor('zipcode'), hasErrorFor('zipcode')) }}
+    </div>
+    <div class="field">
+      <label for="country">Country</label>
+      <input id="country" name="country" type="text" placeholder="Country" value="{{ old('country', '') }}" required>
+      {{ elIf('<span class="error">$self</span>', getErrorFor('country'), hasErrorFor('country')) }}
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>Music</legend>
+    <div class="field pure-u-md-3-4">
+      <label for="song-title">Song Title</label>
+      <input class="pure-input-1" id="song-title" name="song_title" type="text" placeholder="Song Title" value="{{ old('song_title', '') }}" required>
+      {{ elIf('<span class="error">$self</span>', getErrorFor('song_title'), hasErrorFor('song_title')) }}
+    </div>
+    <div class="field pure-u-md-3-4">
+      <label for="audio_file">Audio File</label>
+      <input id="audio_file" name="audio_file" type="file" value="{{ old('audio_file', '') }}" required>
+      <span class="pure-form-message">If your application is approved, this song will be available for streaming on Lloud. <i>(.mp3 format only)</i></span>
+      {{ elIf('<span class="error">$self</span>', getErrorFor('audio_file'), hasErrorFor('audio_file')) }}
+    </div>
+    <div class="field pure-u-md-3-4">
+      <label for="artwork_file">Cover Artwork</label>
+      <input id="artwork_file" name="artwork_file" type="file" value="{{ old('artwork_file', '') }}" required>
+      <span class="pure-form-message"><i>(.jpg format only)</i></span>
+      {{ elIf('<span class="error">$self</span>', getErrorFor('artwork_file'), hasErrorFor('artwork_file')) }}
+    </div>
+  </fieldset>
+  <fieldset>
+    <div class="field">
+      <button type="submit" class="pure-button button--primary">Submit Application</button>
+    </div>
+  </fieldset>
+  </form>
+@endsection

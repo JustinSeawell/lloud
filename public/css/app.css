@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400&family=Raleway:wght@700;800;900&display=swap");
+html {
+  font-size: 18px; }
+
+body {
+  color: #1c1c1c;
+  font-family: "Lato", sans-serif; }
+
+h1 {
+  font-family: "Raleway", sans-serif;
+  font-weight: 900; }
+
+h2,
+h3,
+h4,
+legend {
+  font-family: "Raleway", sans-serif;
+  font-weight: normal; }
+
+.white {
+  color: #ffffff; }
+
+.red {
+  color: #ff4040; }
+
+.external {
+  width: 50%;
+  margin: 0 auto; }
+  .external .content {
+    margin: 3rem 0 0 0; }
+  .external .field {
+    margin: 0 0 1rem 0; }
+  .external .error {
+    color: #ff4040;
+    font-style: oblique;
+    font-size: 0.9rem; }
+
+@media (max-width: 400px) {
+  .external {
+    width: auto;
+    padding: 1rem; } }
+
+@media (max-width: 768px) {
+  .external {
+    width: auto;
+    padding: 2rem; } }
+
+.button--primary {
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); }
+
+.button--primary {
+  color: #ffffff;
+  background-color: #ff4040; }
+
+.message, .message--success, .message--warning {
+  padding: 1rem;
+  border-radius: 3px;
+  margin: 0 0 1rem 0; }
+
+.message {
+  background-color: #333; }
+
+.message--success {
+  background-color: #bef67a;
+  color: #5a9216; }
+
+.message--warning {
+  background-color: #fff263;
+  color: #c49000; }
+
+.jumbo {
+  font-size: 4rem; }
+
+@media (max-width: 768px) {
+  .jumbo {
+    font-size: 7vw; } }

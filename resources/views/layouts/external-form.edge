@@ -2,8 +2,12 @@
 <html lang="en">
   <head>
     <title>Lloud</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{ style('https://unpkg.com/purecss@1.0.1/build/pure-min.css') }}
+    {{ style('https://unpkg.com/purecss@1.0.1/build/grids-responsive-min.css') }}
+    {{ style('css/app') }}
   </head>
-  <body>
+  <body id="external-form" class="external">
     <header class="header">
       @!section('header')
     </header>

@@ -16,6 +16,17 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
 
+Route.on("/").render("welcome");
+
+// Artist application
+Route.get("artists/apply", "ArtistApplicationController.create").middleware(
+  "guest"
+);
+Route.post("artists/apply", "ArtistApplicationController.store").middleware(
+  "guest"
+);
+
+// Password Recovery
 Route.get("auth/reset/:resetToken", "PasswordController.reset")
   .middleware("guest")
   .as("password.edit");
@@ -24,6 +35,7 @@ Route.post("auth/reset/:resetToken", "PasswordController.resetPassword")
   .middleware("guest")
   .as("password.update");
 
+// API
 Route.group(() => {
   Route.post("auth/recover", "PasswordController.recover").middleware("guest");
 

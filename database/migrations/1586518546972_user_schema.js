@@ -15,8 +15,8 @@ class UserSchema extends Schema {
   down() {
     this.table("users", (table) => {
       // reverse alternations
-      table.dropIfExists("resetPasswordToken");
-      table.dropIfExists("resetPasswordExpires");
+      table.dropColumn("resetPasswordToken");
+      table.dropColumn("resetPasswordExpires");
     });
   }
 }

@@ -27,6 +27,7 @@ class PasswordController {
 
     Event.fire("user::recover_password", user, appUrl);
   }
+
   async reset({ params, request, response, view }) {
     const user = await User.findByOrFail(
       "resetPasswordToken",
@@ -47,6 +48,7 @@ class PasswordController {
 
     return view.render("password-reset-form", viewData);
   }
+
   async resetPassword({ params, request, response, view }) {
     const user = await User.findByOrFail(
       "resetPasswordToken",
