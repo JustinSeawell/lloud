@@ -21,7 +21,12 @@ class PasswordController {
       return validation.messages();
     }
 
-    const user = await User.findByOrFail(request.only(["email"]));
+    try {
+      const user = await User.findByOrFail(request.only(["email"]));
+    } catch (err) {
+      return response.notFound({ success: false, message: "User not found." });
+    }
+
     user.generatePasswordReset();
     await user.save();
 
