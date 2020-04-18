@@ -19,7 +19,10 @@
 <h1>Artist Application Form:</h1>
 
 @if(flashMessage('notification'))
-  <div class="message--success">{{ flashMessage('notification') }}</div>
+  <div class="message--success">
+    <i class="material-icons">check</i>
+    {{ flashMessage('notification') }}
+  </div>
 @endif
 
 <form method="POST" action="{{ route('ArtistApplicationController.store') }}" class="pure-form pure-form-stacked" enctype="multipart/form-data">

@@ -1,11 +1,15 @@
 @layout('layouts/external')
 
 @section('header')
-  <h1>Oh No!<h1>
-  <h3>There was an error.</h3>
+  <div class="jumbo">
+    <h1>Oh, No<span class="red">!</span></h1>
+  </div>
+  <h2>There was an error:</h2>
 @endsection
 
 @section('content')
-  <h4>Error Message:</h4>
-  <p>{{ errMsg }}</p>
+  <div class="message--error">
+    <i class="material-icons">error</i>
+    {{ errMsg }}
+  </div>
 @endsection

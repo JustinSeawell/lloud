@@ -21,8 +21,9 @@ class PasswordController {
       return validation.messages();
     }
 
+    let user;
     try {
-      const user = await User.findByOrFail(request.only(["email"]));
+      user = await User.findByOrFail(request.only(["email"]));
     } catch (err) {
       return response.notFound({ success: false, message: "User not found." });
     }
@@ -34,24 +35,28 @@ class PasswordController {
   }
 
   async reset({ params, request, response, view }) {
-    const user = await User.findByOrFail(
-      "resetPasswordToken",
-      `${params.resetToken}`
-    );
+    try {
+      const user = await User.findByOrFail(
+        "resetPasswordToken",
+        `${params.resetToken}`
+      );
 
-    const isExpired = moment().isAfter(user.resetPasswordExpires);
-    if (isExpired) {
+      const isExpired = moment().isAfter(user.resetPasswordExpires);
+      if (isExpired) {
+        throw Error("Password reset token is expired.");
+      }
+
+      const viewData = {
+        username: user.username,
+        resetToken: params.resetToken,
+      };
+
+      return view.render("password-reset-form", viewData);
+    } catch (err) {
       return view.render("external-error", {
         errMsg: "Password reset token is invalid or has expired.",
       });
     }
-
-    const viewData = {
-      username: user.username,
-      resetToken: params.resetToken,
-    };
-
-    return view.render("password-reset-form", viewData);
   }
 
   async resetPassword({ params, request, response, view }) {
