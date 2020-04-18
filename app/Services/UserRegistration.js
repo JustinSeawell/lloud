@@ -21,7 +21,7 @@ class UserRegistration extends Service {
         {
           user_id: user.id,
           account_type_id: 2, // Listener
-          points_balance: 20,
+          likes_balance: 5,
         },
         trx
       );
