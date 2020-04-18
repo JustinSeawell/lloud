@@ -16,8 +16,6 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
 
-Route.on("/").render("welcome");
-
 // Artist application
 Route.get("artists/apply", "ArtistApplicationController.create").middleware(
   "guest"
