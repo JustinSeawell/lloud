@@ -44,6 +44,18 @@ class User extends Model {
       .add(1, "hours")
       .format("YYYY-MM-DD HH:mm:ss");
   }
+
+  /**
+   * When artists register in the app
+   * we want to give them a longer window
+   * to create a new password
+   */
+  generateDayLongPasswordReset() {
+    this.resetPasswordToken = crypto.randomBytes(20).toString("hex");
+    this.resetPasswordExpires = moment()
+      .add(1, "days")
+      .format("YYYY-MM-DD HH:mm:ss");
+  }
 }
 
 module.exports = User;

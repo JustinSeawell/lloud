@@ -1,0 +1,9 @@
+@layout('layouts/admin')
+
+@section('content')
+  <h1>Artist Applications</h1>
+
+  <div class="artist-applications">
+    @!each(app in artistApplications.data, include = 'partials.artist-app-card')
+  </div>
+@endsection

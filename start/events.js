@@ -17,3 +17,6 @@ const Event = use("Event");
 Event.on("user::new", "User.registered");
 Event.on("user::recover_password", "User.recover");
 Event.on("user::password_was_reset", "User.passwordWasReset");
+
+Event.on("artist_application::denied", "ArtistApplication.denied");
+Event.on("artist_application::approved", "ArtistApplication.approved");

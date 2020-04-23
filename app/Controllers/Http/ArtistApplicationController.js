@@ -4,11 +4,14 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const Drive = use("Drive");
+const moment = require("moment");
+
+const Event = use("Event");
 const { validate } = use("Validator");
 
 const ArtistApplication = use("App/Models/ArtistApplication");
 const FileUploader = use("App/Services/FileUploader");
+const ArtistRegistration = use("App/Services/ArtistRegistration");
 
 /**
  * Resourceful controller for interacting with artistapplications
@@ -23,7 +26,18 @@ class ArtistApplicationController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) {}
+  async index({ request, response, params, view }) {
+    const page = params.page || 1;
+
+    const artistApplications = await ArtistApplication.query()
+      .with("audioFile")
+      .with("imageFile")
+      .paginate(page);
+
+    return view.render("admin.artist-applications", {
+      artistApplications: artistApplications.toJSON(),
+    });
+  }
 
   /**
    * Render a form to be used for creating a new artistapplication.
@@ -48,9 +62,9 @@ class ArtistApplicationController {
    */
   async store({ request, response, session, auth }) {
     const rules = {
-      name: "required|unique:artist_applications",
+      name: "required|unique:artist_applications|unique:users,username",
       description: "required",
-      email: "required|email|unique:artist_applications",
+      email: "required|email|unique:artist_applications|unique:users,email",
       city: "required",
       state: "required",
       zipcode: "required",
@@ -110,7 +124,17 @@ class ArtistApplicationController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response, view }) {
+    const application = await ArtistApplication.query()
+      .where("id", params.id)
+      .with("audioFile")
+      .with("imageFile")
+      .first();
+
+    return view.render("admin.artist-application", {
+      application: application.toJSON(),
+    });
+  }
 
   /**
    * Render a form to update an existing artistapplication.
@@ -131,7 +155,40 @@ class ArtistApplicationController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response }) {
+    const req = request.only(["app_id", "result"]);
+
+    try {
+      const application = await ArtistApplication.findOrFail(
+        parseInt(req.app_id)
+      );
+
+      const nowStr = moment().format("YYYY-MM-DD HH:mm:ss");
+      if (req.result == "approve") {
+        application.approved_at = nowStr;
+      } else if (req.result == "deny") {
+        application.rejected_at = nowStr;
+      }
+
+      await application.save();
+
+      // Approved
+      // - create artist
+      // - create song
+      // - associate them
+      // - send email
+      if (req.result == "approve") {
+        await ArtistRegistration.registerArtist(application);
+      } else if (req.result == "deny") {
+        Event.fire("artist_application::denied", application.toJSON());
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+    // ArtistApplication.find();
+    return response.route("admin.artist-apps");
+  }
 
   /**
    * Delete a artistapplication with id.

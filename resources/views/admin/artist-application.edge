@@ -1,0 +1,83 @@
+@layout('layouts/admin')
+
+@section('content')
+<div class="artist-application">
+  <a href="{{ route('admin.artist-apps') }}" class="pure-button button--hollow">
+    <i class="material-icons md-18">arrow_back</i>
+    Artist Applications
+  </a>
+  <h1>{{ application.name }}</h1>
+
+  <div class="pure-g">
+    <div class="approval pure-u-1-3">
+      <form method="POST" action="{{ route('admin.artist-app.update', { id: application.id }) }}">
+        <input type="hidden" name="app_id" value="{{ application.id }}">
+        <input type="hidden" name="result" id="result" value="" required>
+      </form>
+
+      @if(application.approved_at)
+        @!component('components/message', type = 'success', txt = 'Approved at: ' + application.approved_at)
+      @elseif(application.rejected_at)
+        @!component('components/message', type = 'error', txt = 'Denied at: ' + application.rejected_at)
+      @else
+        <button id="deny" class="pure-button button">
+          <i class="material-icons error">cancel</i>
+          Deny
+        </button>
+        <button id="approve" class="pure-button button">
+          <i class="material-icons success">check_circle</i>
+          Approve
+        </button>
+      @endif
+    </div>
+  </div>
+
+  <div class="pure-form">
+    <legend>Artist Profile</legend>
+    
+    <p><strong>{{ application.name }}</strong></p>
+    <p>{{ application.description }}</p>
+    <p>{{ application.city }}, {{ application.state }} <br> {{ application.zipcode }}</p>
+    <p>{{ application.country }}</p>
+    
+    <legend>Song</legend>
+    <p>{{ application.song_title }}</p>
+    <p>
+      <audio controls>
+        <source src="{{ application.audioFile.location }}" type="audio/mpeg">
+        Your browser does not support the audio tag.
+      </audio> 
+      <div class="album-art"><img src="{{ application.imageFile.location }}" alt=""></div>
+    </p>
+  </div>
+</div>
+@endsection
+
+@section('script')
+  <script>
+    function approvalButtons() {
+      this.buttons = document.querySelectorAll('.approval button');
+
+      this.setup = function() {
+        for (var i = 0; i < this.buttons.length; i++) {
+          this.buttons[i].addEventListener("click", this.postResult);
+        }
+      }
+
+      this.postResult = function() {
+        var confirmation = confirm("Are you sure you want to " + this.id + " this artist application?");
+        if (!confirmation) {
+          return;
+        }
+
+        document.getElementById('result').value = this.id;
+
+        const form = document.querySelector('.approval form');
+        form.submit();
+      }
+
+      setup();
+    }
+    approvalButtons();
+  </script>
+@endsection

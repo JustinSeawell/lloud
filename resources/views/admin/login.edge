@@ -1,0 +1,29 @@
+@layout('layouts/external-form')
+
+@section('header')
+  <h1>Lloud<span class="red">.</span></h1>
+@endsection
+
+@section('form')
+  @if(flashMessage('error'))
+    @!component('components.message', type = 'error', txt = flashMessage('error'))
+  @endif
+
+  <form method="POST" action="{{ route('admin.login') }}" class="pure-form pure-form-stacked">
+    <fieldset>
+      <div class="field pure-u-md-1-2">
+        <label for="email">Email</label>
+        <input class="pure-input-1" id="email" name="email" type="email" placeholder="Email" value="{{ old('email', '') }}" required>
+        {{ elIf('<span class="error">$self</span>', getErrorFor('description'), hasErrorFor('description')) }}
+      </div>
+      <div class="field pure-u-md-1-2">
+        <label for="password">Password</label>
+        <input class="pure-input-1" id="password" name="password" type="password" placeholder="Password" value="{{ old('password', '') }}" required>
+        {{ elIf('<span class="error">$self</span>', getErrorFor('description'), hasErrorFor('description')) }}
+      </div>
+      <div class="field">
+        <button type="submit" class="pure-button button--primary">Login</button>
+      </div>
+    </fieldset>
+  </form>
+@endsection

@@ -8,8 +8,5 @@
 @endsection
 
 @section('content')
-  <div class="message--error">
-    <i class="material-icons">error</i>
-    {{ errMsg }}
-  </div>
+  @!component('components.message', type = 'error', txt = errMsg)
 @endsection

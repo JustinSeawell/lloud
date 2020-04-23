@@ -1,12 +1,56 @@
+// Jumbo
+.jumbo {
+  font-size: 4rem;
+}
+@media (max-width: $breakpoint-tablet) {
+  .jumbo {
+    font-size: 7vw;
+  }
+}
+
 // Button
 %button-shared {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  display: inline-flex;
+  border-radius: 3px;
+  box-sizing: border-box;
+
+  .material-icons {
+    text-shadow: none;
+    margin: 0 0.5rem 0 0;
+  }
+}
+
+.button {
+  @extend %button-shared;
 }
 
 .button--primary {
   @extend %button-shared;
   color: $white;
   background-color: $accent;
+}
+
+// Hollow Button
+%button-hollow-shared {
+  display: inline-flex;
+  border-radius: 3px;
+  box-sizing: border-box;
+  border: 1px solid $primary;
+  background-color: transparent;
+  font-size: 0.75rem;
+
+  .material-icons {
+    margin: 0 0.5rem 0 0;
+  }
+}
+
+.button--hollow {
+  @extend %button-hollow-shared;
+}
+.button--hollow:hover {
+  background-color: $primary;
+  color: $white;
 }
 
 // Message
@@ -16,6 +60,10 @@
   margin: 0 0 1rem 0;
   display: flex;
   align-items: center;
+
+  .material-icons {
+    margin: 0 0.5rem 0 0;
+  }
 }
 
 .message {
@@ -36,4 +84,21 @@
   @extend %message-shared;
   background-color: $error-light;
   color: $error-dark;
+}
+
+// Cards
+%card-shared {
+  margin: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 5px 10px 18px #88888852;
+  width: 250px;
+  display: inline-block;
+}
+
+.card {
+  @extend %card-shared;
+  background-color: $white;
+  text-decoration: none;
+  color: $primary;
+  position: relative;
 }

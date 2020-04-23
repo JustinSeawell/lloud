@@ -1,0 +1,18 @@
+<a href="{{ route('admin.artist-app', { id: app.id }) }}" class="card" >
+  
+  <div class="approval">
+    @if(app.approved_at)
+      <i class="material-icons success">check_circle</i>
+    @elseif(app.rejected_at)
+      <i class="material-icons error">cancel</i>
+    @else
+      <i class="material-icons">help</i>
+    @endif
+  </div>
+
+  <div class="top" style="background-image: url({{ app.imageFile.location }});"></div>
+  <div class="bottom">
+    <h3>{{ app.name }}</h3>
+    <p>{{ app.city }}, {{ app.state }}</p>
+  </div>
+</a>

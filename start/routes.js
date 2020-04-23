@@ -43,9 +43,29 @@ Route.group(() => {
   Route.post("users", "UserController.store").middleware("guest");
   Route.get("users/:id", "UserController.show").middleware("auth");
 
-  // Route.get("songs", "SongController.index").middleware("auth"); // TODO: Paginate this
+  // Route.get("songs/:page", "SongController.index").middleware("auth"); // TODO: Paginate this
   // Route.post("songs", "SongController.store").middleware("auth"); // Artist only
   // Route.put("songs/:id", "SongController.update").middleware("auth"); // Artist only
   // Route.get("songs/like", "SongController.like").middleware("auth");
   // Route.delete("songs/:id", "SongController.destroy").middleware("auth"); // Artist only
 }).prefix("api/v1");
+
+// Admin
+Route.group(() => {
+  Route.on("login").render("admin.login");
+  Route.post("login", "UserController.adminLogin")
+    .middleware("guest")
+    .as("admin.login");
+  Route.get("artist-applications/:page?", "ArtistApplicationController.index")
+    .middleware("admin")
+    .as("admin.artist-apps");
+  Route.get("artist-applications/show/:id", "ArtistApplicationController.show")
+    .middleware("admin")
+    .as("admin.artist-app");
+  Route.post(
+    "artist-applications/:id/result",
+    "ArtistApplicationController.update"
+  )
+    .middleware("admin")
+    .as("admin.artist-app.update");
+}).prefix("admin");

@@ -2,6 +2,17 @@ $white: #ffffff;
 $black: #1c1c1c;
 $red: #ff4040;
 
+.white {
+  color: $white;
+}
+
+.red {
+  color: $red;
+}
+
+$white-dark: #fafafa;
+$grey: rgb(223, 223, 223);
+
 $primary-light: #434343;
 $primary: #1c1c1c;
 $primary-dark: #000000;
@@ -21,3 +32,11 @@ $warning-dark: #c49000;
 $error-light: #ffc0bb;
 $error-medium: #ff4040;
 $error-dark: #64000c;
+
+.success {
+  color: $success-medium;
+}
+
+.error {
+  color: $error-medium;
+}

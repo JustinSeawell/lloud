@@ -19,10 +19,7 @@
 <h1>Artist Application Form:</h1>
 
 @if(flashMessage('notification'))
-  <div class="message--success">
-    <i class="material-icons">check</i>
-    {{ flashMessage('notification') }}
-  </div>
+  @!component('components.message', type = 'success', txt = flashMessage('notification'))
 @endif
 
 <form method="POST" action="{{ route('ArtistApplicationController.store') }}" class="pure-form pure-form-stacked" enctype="multipart/form-data">
@@ -42,7 +39,7 @@
     <div class="field pure-u-md-1-2">
       <label for="email">Email</label>
       <input class="pure-input-1" id="email" name="email" type="email" placeholder="Email" value="{{ old('email', '') }}" required>
-      {{ elIf('<span class="error">$self</span>', getErrorFor('description'), hasErrorFor('description')) }}
+      {{ elIf('<span class="error">$self</span>', getErrorFor('email'), hasErrorFor('email')) }}
     </div>
     <div class="field">
       <label for="city">City</label>

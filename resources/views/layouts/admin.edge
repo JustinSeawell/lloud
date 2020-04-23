@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    @include('partials.head')
+  </head>
+  <body class="admin">
+    <header class="header">
+    </header>
+
+    <div class="container">
+      <aside class="sidebar">
+        @section('sidebar') 
+          <a href="{{ route('admin.artist-apps', { page: 1 }) }}" title="Artist Applications"><i class="material-icons md-36">assignment_ind</i></a>
+        @endsection
+      </aside>
+
+      <div class="content">
+        @!section('content')
+      </div>
+    </div>
+
+    @!section('script')
+  </body>
+</html>
+

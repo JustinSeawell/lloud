@@ -5,7 +5,7 @@ const Schema = use("Schema");
 
 class ArtistSongSchema extends Schema {
   up() {
-    this.create("artist_songs", table => {
+    this.create("artist_songs", (table) => {
       table.bigInteger("artist_id");
       table.bigInteger("song_id");
     });

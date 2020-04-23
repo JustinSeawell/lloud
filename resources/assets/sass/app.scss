@@ -11,8 +11,8 @@ html {
   font-size: $default-font-size;
 }
 
-body {
-  color: $black;
+html,
+.pure-g [class*="pure-u"] {
   font-family: $body;
 }
 
@@ -29,53 +29,11 @@ legend {
   font-weight: normal;
 }
 
-.white {
-  color: $white;
-}
-
-.red {
-  color: $red;
-}
-
 // Layout Specific
-.external {
-  width: 50%;
-  margin: 0 auto;
-
-  .content {
-    margin: 3rem 0 0 0;
-  }
-
-  .field {
-    margin: 0 0 1rem 0;
-  }
-
-  .error {
-    color: $red;
-    font-style: oblique;
-    font-size: 0.9rem;
-  }
-}
-@media (max-width: $breakpoint-mobile) {
-  .external {
-    width: auto;
-    padding: 1rem;
-  }
-}
-@media (max-width: $breakpoint-tablet) {
-  .external {
-    width: auto;
-    padding: 2rem;
-  }
-}
+@import "layouts";
 
 // Widgets
 @import "widgets";
-.jumbo {
-  font-size: 4rem;
-}
-@media (max-width: $breakpoint-tablet) {
-  .jumbo {
-    font-size: 7vw;
-  }
-}
+
+// Page Specific
+@import "pages";

@@ -1,0 +1,58 @@
+.artist-applications {
+  .card {
+    // TODO: Move this
+    .approval {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      z-index: 1;
+      background-color: $white;
+      width: 25px;
+      height: 25px;
+      color: $primary;
+      box-shadow: 5px 10px 18px #88888852;
+      padding: 0.25rem;
+      border: 1px solid $grey;
+      border-radius: 3px;
+    }
+
+    .top {
+      min-height: 200px;
+      height: 50%;
+      background-position: center;
+      background-size: cover;
+      border-radius: 5px 5px 0 0;
+    }
+
+    .bottom {
+      padding: 1rem;
+    }
+  }
+  .card:hover {
+    background-color: $accent;
+    color: $white;
+    box-shadow: none;
+
+    .top {
+      opacity: 0.75;
+    }
+  }
+}
+.artist-application {
+  padding: 1rem 0 0 0;
+
+  .approval {
+    margin: 0 0 1rem 0;
+  }
+  .album-art {
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    background-color: $grey;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
