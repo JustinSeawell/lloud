@@ -43,11 +43,10 @@ Route.group(() => {
   Route.post("users", "UserController.store").middleware("guest");
   Route.get("users/:id", "UserController.show").middleware("auth");
 
-  // Route.get("songs/:page", "SongController.index").middleware("auth"); // TODO: Paginate this
-  // Route.post("songs", "SongController.store").middleware("auth"); // Artist only
-  // Route.put("songs/:id", "SongController.update").middleware("auth"); // Artist only
-  // Route.get("songs/like", "SongController.like").middleware("auth");
-  // Route.delete("songs/:id", "SongController.destroy").middleware("auth"); // Artist only
+  Route.get("songs/:page?", "SongController.index").middleware("auth");
+  Route.post("songs/:id/like", "LikeController.store").middleware("auth");
+
+  Route.get("likes", "LikeController.index").middleware("auth");
 }).prefix("api/v1");
 
 // Admin

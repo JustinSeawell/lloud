@@ -19,7 +19,29 @@ class SongController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view, params }) {}
+  async index({ request, response, view, params }) {
+    const page = params.page || 1;
+
+    const results = await Song.query()
+      .with("audioFile")
+      .with("imageFile")
+      .with("artists")
+      .with("likes")
+      .whereNull("deleted_at")
+      .paginate(page);
+
+    /**
+     * TODO:
+     * - Refactor this to pull likesCount
+     * directly from query
+     */
+    results.rows = results.rows.map((song) => {
+      song.likesCount = song.toJSON().likes.length;
+      return song;
+    });
+
+    response.send(results);
+  }
 
   /**
    * Render a form to be used for creating a new song.

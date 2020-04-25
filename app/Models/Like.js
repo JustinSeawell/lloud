@@ -8,6 +8,14 @@ class Like extends Model {
     super.boot();
     this.addHook("beforeCreate", "LikeHook.distributePoints");
   }
+
+  song() {
+    return this.belongsTo("App/Models/Song");
+  }
+
+  user() {
+    return this.belongsTo("App/Models/User");
+  }
 }
 
 module.exports = Like;
