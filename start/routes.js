@@ -47,6 +47,18 @@ Route.group(() => {
   Route.post("songs/:id/like", "LikeController.store").middleware("auth");
 
   Route.get("likes", "LikeController.index").middleware("auth");
+
+  Route.get("store-items/:page?", "StoreItemController.index").middleware(
+    "auth"
+  );
+  Route.get("store-items/show/:id", "StoreItemController.show").middleware(
+    "auth"
+  );
+
+  Route.post(
+    "store-items/purchase",
+    "StorePurchaseController.store"
+  ).middleware("auth");
 }).prefix("api/v1");
 
 // Admin

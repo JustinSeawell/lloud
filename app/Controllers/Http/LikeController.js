@@ -29,8 +29,13 @@ class LikeController {
       .with("song.artists")
       .with("song.audioFile")
       .with("song.imageFile")
+      .with("song.likes")
       .where({ user_id: userId })
       .fetch();
+
+    // TODO:
+    // Calculate points that user
+    // earned from each song
 
     response.send(results);
   }
