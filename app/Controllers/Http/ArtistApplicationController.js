@@ -172,11 +172,6 @@ class ArtistApplicationController {
 
       await application.save();
 
-      // Approved
-      // - create artist
-      // - create song
-      // - associate them
-      // - send email
       if (req.result == "approve") {
         await ArtistRegistration.registerArtist(application);
       } else if (req.result == "deny") {
@@ -186,7 +181,6 @@ class ArtistApplicationController {
       console.log(err);
     }
 
-    // ArtistApplication.find();
     return response.route("admin.artist-apps");
   }
 
