@@ -19,7 +19,7 @@ class SongController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view, params }) {
+  async index({ auth, response, params }) {
     const page = params.page || 1;
 
     const results = await Song.query()
@@ -36,7 +36,18 @@ class SongController {
      * directly from query
      */
     results.rows = results.rows.map((song) => {
-      song.likesCount = song.toJSON().likes.length;
+      const likes = song.toJSON().likes;
+      song.likesCount = likes.length;
+
+      let userLikedThisSong = false;
+      likes.forEach((like) => {
+        if (like.user_id == auth.user.id) {
+          userLikedThisSong = true;
+        }
+      });
+
+      song.likedByUser = userLikedThisSong;
+
       return song;
     });
 

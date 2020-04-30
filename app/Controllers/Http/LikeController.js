@@ -4,6 +4,8 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const moment = require("moment");
+
 const Database = use("Database");
 const { validate } = use("Validator");
 const Like = use("App/Models/Like");
@@ -33,11 +35,21 @@ class LikeController {
       .where({ user_id: userId })
       .fetch();
 
-    // TODO:
-    // Calculate points that user
-    // earned from each song
+    results.rows = results.rows.map((like) => {
+      const likeObj = like.toJSON();
+      const thisUserLikedAt = likeObj.created_at;
 
-    response.send(results);
+      like.pointsEarned = 0;
+      likeObj.song.likes.forEach((likeByOtherUser) => {
+        if (moment(thisUserLikedAt).isBefore(likeByOtherUser.created_at)) {
+          like.pointsEarned++;
+        }
+      });
+
+      return like;
+    });
+
+    response.send({ success: true, data: results });
   }
 
   /**
