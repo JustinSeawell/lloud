@@ -23,9 +23,13 @@ class StoreItemController {
     const page = params.page || 1;
 
     const results = await StoreItem.query()
+      .with("type")
+      .with("imageFile")
+      .with("availableSizes")
       .whereNull("deleted_at")
       .paginate(page);
 
+    results.success = true;
     response.send(results);
   }
 
@@ -63,6 +67,7 @@ class StoreItemController {
     const storeItem = await StoreItem.query()
       .where("id", params.id)
       .with("imageFile")
+      .with("availableSizes")
       .first();
 
     if (!storeItem) {

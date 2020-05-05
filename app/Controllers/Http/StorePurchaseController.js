@@ -54,8 +54,7 @@ class StorePurchaseController {
     if (validation.fails()) {
       return validation.messages();
     }
-
-    const purchaseData = request.only(["store_item_id"]);
+    const purchaseData = request.only(["store_item_id", "size"]);
 
     const storeItem = await StoreItem.find(purchaseData.store_item_id);
 
@@ -69,7 +68,7 @@ class StorePurchaseController {
     if (storeItem.qty <= 0) {
       return response.ok({
         success: false,
-        message: "Store item quantity is zero",
+        message: "Store item is out of stock",
       });
     }
 
@@ -103,9 +102,24 @@ class StorePurchaseController {
       storeItem.qty--;
       await storeItem.save(trx);
 
+      if (purchaseData.size) {
+        const requestedSize = await storeItem.size(purchaseData.size).first();
+
+        if (requestedSize.qty <= 0) {
+          await trx.rollback();
+          return response.ok({
+            success: false,
+            message: "Item size is out of stock",
+          });
+        }
+
+        requestedSize.qty--;
+        await requestedSize.save(trx);
+      }
+
       await trx.commit();
 
-      response.send(purchase);
+      return response.created({ success: true, data: purchase });
     } catch (err) {
       await trx.rollback();
       return response.ok({

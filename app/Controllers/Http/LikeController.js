@@ -108,7 +108,7 @@ class LikeController {
     acct.likes_balance--;
     await acct.save();
 
-    return response.send(like);
+    return response.created({ success: true, data: like });
   }
 
   /**

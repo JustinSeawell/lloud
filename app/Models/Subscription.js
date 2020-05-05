@@ -7,6 +7,10 @@ class Subscription extends Model {
   plan() {
     return this.belongsTo("App/Models/Plan");
   }
+
+  account() {
+    return this.belongsTo("App/Models/Account");
+  }
 }
 
 module.exports = Subscription;

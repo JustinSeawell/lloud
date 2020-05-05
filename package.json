@@ -1,8 +1,8 @@
 {
-  "name": "adonis-fullstack-app",
-  "version": "4.1.0",
+  "name": "lloud",
+  "version": "1.0.0",
   "adonis-version": "4.1.0",
-  "description": "The fullstack application boilerplate for Adonisjs",
+  "description": "A Social Music Streaming and Investment Platform",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
@@ -13,7 +13,7 @@
     "adonisjs",
     "adonis-app"
   ],
-  "author": "",
+  "author": "Justin Seawell",
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
@@ -31,6 +31,7 @@
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/vow": "^1.0.17",
+    "adonis-scheduler": "^3.0.2",
     "aws-sdk": "^2.657.0",
     "moment": "^2.24.0",
     "mysql": "^2.18.1"
