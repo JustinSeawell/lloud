@@ -17,7 +17,7 @@ class ArtistApplicationSchema extends Schema {
       table.string("song_title");
       table.bigInteger("audio_file_id");
       table.bigInteger("image_file_id");
-      table.timestamp("approved_at");
+      table.datetime("approved_at");
       table.timestamps();
     });
   }

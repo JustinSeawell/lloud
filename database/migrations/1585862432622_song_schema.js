@@ -5,12 +5,12 @@ const Schema = use("Schema");
 
 class SongSchema extends Schema {
   up() {
-    this.create("songs", table => {
+    this.create("songs", (table) => {
       table.increments();
       table.string("title").notNullable();
       table.bigInteger("audio_file_id");
       table.bigInteger("image_file_id");
-      table.timestamp("deleted_at");
+      table.datetime("deleted_at");
       table.bigInteger("deleted_by");
       table.timestamps();
     });

@@ -14,7 +14,7 @@ class StoreItemSchema extends Schema {
       table.bigInteger("qty").notNullable();
       table.bigInteger("store_item_type_id").notNullable();
       table.boolean("coming_soon").notNullable().defaultTo(false);
-      table.timestamp("deleted_at").nullable();
+      table.datetime("deleted_at").nullable();
       table.bigInteger("deleted_by").nullable();
       table.timestamps();
     });

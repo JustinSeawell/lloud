@@ -9,8 +9,8 @@ class SubscriptionSchema extends Schema {
       table.increments();
       table.bigInteger("account_id");
       table.bigInteger("plan_id");
-      table.timestamp("started_at");
-      table.timestamp("ended_at");
+      table.datetime("started_at");
+      table.datetime("ended_at");
       table.boolean("is_active").notNullable().defaultTo(false);
       table.timestamps();
     });

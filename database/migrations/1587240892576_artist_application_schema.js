@@ -7,7 +7,7 @@ class ArtistApplicationSchema extends Schema {
   up() {
     this.table("artist_applications", (table) => {
       // alter table
-      table.timestamp("rejected_at").after("approved_at");
+      table.datetime("rejected_at").after("approved_at");
     });
   }
 

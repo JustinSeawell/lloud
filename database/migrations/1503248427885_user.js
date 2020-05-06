@@ -19,7 +19,7 @@ class UserSchema extends Schema {
       table.string("state");
       table.string("zipcode");
       table.string("country");
-      table.timestamp("deleted_at");
+      table.datetime("deleted_at");
       table.timestamps();
     });
   }

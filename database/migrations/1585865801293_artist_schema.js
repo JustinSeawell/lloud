@@ -5,7 +5,7 @@ const Schema = use("Schema");
 
 class ArtistSchema extends Schema {
   up() {
-    this.create("artists", table => {
+    this.create("artists", (table) => {
       table.increments();
       table.string("name").notNullable();
       table.string("city").notNullable();
@@ -13,7 +13,7 @@ class ArtistSchema extends Schema {
       table.string("zipcode").notNullable();
       table.string("country").notNullable();
       table.text("description");
-      table.timestamp("deleted_at");
+      table.datetime("deleted_at");
       table.timestamps();
     });
   }
