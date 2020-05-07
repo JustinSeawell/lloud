@@ -94,16 +94,33 @@ class ArtistApplicationController {
 
     const audioFile = request.file("audio_file", {
       types: ["audio"],
-      // size: "2mb",
+      size: "15mb",
       extnames: ["mp3"],
     });
-    const uploadedAudioFile = await fileUploader.uploadAudioFileToS3(audioFile);
-    applicationData.audio_file_id = uploadedAudioFile.id;
+
+    if (audioFile.extname != "mp3") {
+      session
+        .withErrors({ audio_file: "Please upload an MP3 file" })
+        .flashAll();
+      return response.redirect("back");
+    }
 
     const artworkFile = request.file("artwork_file", {
       types: ["image"],
       size: "2mb",
+      extnames: ["jpg", "png"],
     });
+
+    if (artworkFile.extname != "jpg" && artworkFile.extname != "png") {
+      session
+        .withErrors({ artwork_file: "Please upload a jpg or png file" })
+        .flashAll();
+      return response.redirect("back");
+    }
+
+    const uploadedAudioFile = await fileUploader.uploadAudioFileToS3(audioFile);
+    applicationData.audio_file_id = uploadedAudioFile.id;
+
     const uploadedArtworkFile = await fileUploader.uploadImageFileToS3(
       artworkFile
     );
