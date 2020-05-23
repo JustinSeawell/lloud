@@ -100,6 +100,13 @@ class SubscriptionController {
     const account = await user.account().fetch();
     const currentSub = await account.activeSubscription().fetch();
 
+    if (currentSub.plan_id == 1) {
+      return response.forbidden({
+        success: false,
+        message: "User is already a premium subscriber",
+      });
+    }
+
     const timestamp = moment().format("YYYY-MM-DD HH:mm:ss");
 
     /**
