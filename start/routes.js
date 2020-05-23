@@ -66,6 +66,11 @@ Route.group(() => {
     "store-items/purchase",
     "StorePurchaseController.store"
   ).middleware("auth");
+
+  Route.post(
+    "subscriptions/upgrade",
+    "SubscriptionController.upgrade"
+  ).middleware("auth");
 }).prefix("api/v1");
 
 // Admin
