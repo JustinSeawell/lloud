@@ -16,13 +16,15 @@ class DistributeLike extends Task {
     console.log("Running Task: DistributeLike");
 
     const now = moment();
+    const zeroBasedWeekday = now.weekday() - 1; // Weekday function in MySQL is zero based, but Moment JS starts with 1
 
     const results = await Subscription.query()
       .with("account")
       .with("plan")
+      .where("is_active", 1)
       .whereRaw(
-        "WEEKDAY(started_at) = ? AND HOUR(started_at) = ? AND ended_at > ?",
-        [now.weekday(), now.hour(), now.format("YYYY-MM-DD HH:mm:ss")]
+        "WEEKDAY(started_at) = ? AND HOUR(started_at) = ? AND (ended_at > ? OR ended_at IS NULL)",
+        [zeroBasedWeekday, now.hour(), now.format("YYYY-MM-DD HH:mm:ss")]
       )
       .fetch();
 
