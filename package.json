@@ -33,6 +33,7 @@
     "@adonisjs/vow": "^1.0.17",
     "adonis-scheduler": "^3.0.2",
     "aws-sdk": "^2.657.0",
+    "axios": "^0.19.2",
     "moment": "^2.24.0",
     "mysql": "^2.18.1"
   },

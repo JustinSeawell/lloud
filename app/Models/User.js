@@ -38,6 +38,10 @@ class User extends Model {
     return this.hasOne("App/Models/Account");
   }
 
+  purchaseReceipt() {
+    return this.hasMany("App/Models/purchaseReceipt");
+  }
+
   generatePasswordReset() {
     this.resetPasswordToken = crypto.randomBytes(20).toString("hex");
     this.resetPasswordExpires = moment()
