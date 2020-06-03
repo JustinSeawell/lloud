@@ -71,6 +71,11 @@ Route.group(() => {
     "subscriptions/upgrade",
     "SubscriptionController.upgrade"
   ).middleware("auth");
+
+  Route.post(
+    "purchase-updates/verify",
+    "PurchaseReceiptController.verify"
+  ).middleware("auth");
 }).prefix("api/v1");
 
 // Admin
