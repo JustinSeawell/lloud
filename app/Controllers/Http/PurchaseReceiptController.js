@@ -1,7 +1,6 @@
 "use strict";
 
 const { validate } = use("Validator");
-const PurchaseReceipt = use("App/Models/PurchaseReceipt");
 
 const ReceiptVerification = use("App/Services/ReceiptVerification");
 
@@ -21,10 +20,9 @@ class PurchaseReceiptController {
      * - Return response to the iOS client
      */
     const rules = {
-      email: "required|platform",
-      email: "required|product_id",
-      email: "required|verification_data",
-      email: "required|serialized_purchase_details",
+      platform: "required",
+      product_id: "required",
+      verification_data: "required"
     };
 
     const validation = await validate(request.all(), rules);
@@ -35,18 +33,18 @@ class PurchaseReceiptController {
     const receiptData = request.only([
       "platform",
       "product_id",
-      "verification_data",
-      "serialized_purchase_details",
+      "verification_data"
     ]);
 
+    receiptData.platform = 1;
     receiptData.user_id = auth.user.id;
 
     const verified = await ReceiptVerification.verifyAndSave(receiptData);
     if (!verified) {
-      // Return err response
+      return response.ok({ success: false, verified: false });
     }
 
-    // Return success response
+    return response.ok({ success: true, verified: true });
   }
 }
 

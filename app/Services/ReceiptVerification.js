@@ -5,6 +5,8 @@ const axios = require("axios");
 const Env = use("Env");
 const Service = use("App/Services");
 
+const PurchaseReceipt = use("App/Models/PurchaseReceipt");
+
 class ReceiptVerification extends Service {
   static APPLE_PROD() {
     return "https://buy.itunes.apple.com/verifyReceipt";
@@ -18,46 +20,52 @@ class ReceiptVerification extends Service {
     return Env.get("APPSTORE_SHARED_SECRET");
   }
 
-  static verify(receipt) {
+  static async verify(receipt) {
+    /**
+     * TODO:
+     * Right now our receipt verification system
+     * only works for iOS platform. This will need to
+     * be refactored once we expand to Android.
+     */
+    // if (receipt.platform != 'ios') {
+    //   // throw
+    // }
+
     const req = {};
     req["receipt-data"] = receipt.verification_data;
     req["password"] = this.APPSTORE_SHARED_SECRET();
     req["exclude-old-transactions"] = true;
 
-    let success, environment;
+    let isSandbox = false;
 
-    success = this.appleProdVerify(req);
-    isSandbox = false;
-
-    // TODO: Make this more sophisticated than just a boolean
-    if (!success) {
-      success = this.appleSandboxVerify(req);
+    let response = await this.appleProdVerify(req);
+    if (response.data.status == 21007) {
+      response = await this.appleSandboxVerify(req);
       isSandbox = true;
     }
 
-    return { verified: success, sandbox: isSandbox };
+    const success = (response.data.status === 0);
+
+    return { verified: success, sandbox: isSandbox, response: response.data };
   }
 
-  static appleProdVerify(reqBody) {
-    return axios.post(this.APPLE_PROD(), reqBody).then((response) => {
-      return false;
-    });
+  static async appleProdVerify(reqBody) {
+    return await axios.post(this.APPLE_PROD(), reqBody);
   }
 
-  static appleSandboxVerify(reqBody) {
-    return axios.post(this.APPLE_SANDBOX(), reqBody).then((response) => {
-      return false;
-    });
+  static async appleSandboxVerify(reqBody) {
+    return await axios.post(this.APPLE_SANDBOX(), reqBody);
   }
 
-  static async save(receipt) {
+  static async save(receiptData) {
     return await PurchaseReceipt.create(receiptData);
   }
 
   static async verifyAndSave(receiptData) {
-    const { verified, sandbox } = this.verify(receiptData);
+    const { verified, sandbox, response } = await this.verify(receiptData);
     receiptData.verified = verified;
     receiptData.is_sandbox = sandbox;
+    receiptData.original_transaction_id = response.latest_receipt_info[0].original_transaction_id;
 
     await this.save(receiptData);
 

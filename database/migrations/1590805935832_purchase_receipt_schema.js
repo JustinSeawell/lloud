@@ -11,8 +11,8 @@ class PurchaseReceiptSchema extends Schema {
       table.bigInteger("platform");
       table.boolean("is_sandbox").defaultTo(false);
       table.string("product_id").notNullable();
-      table.string("verification_data").notNullable();
-      table.json("serialized_purchase_details");
+      table.text("verification_data").notNullable();
+      table.bigInteger("original_transaction_id");
       table.boolean("verified").defaultTo(false);
       table.timestamps();
     });
