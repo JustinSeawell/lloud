@@ -32,6 +32,8 @@ class PasswordController {
     await user.save();
 
     Event.fire("user::recover_password", user, appUrl);
+
+    return response.ok({ success: true, message: "Password recovery email sent." })
   }
 
   async reset({ params, request, response, view }) {
