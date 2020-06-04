@@ -94,6 +94,8 @@ class PasswordController {
     await user.save();
 
     Event.fire("user::password_was_reset", user);
+
+    return view.render("password-recovered");
   }
 }
 
