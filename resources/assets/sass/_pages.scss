@@ -56,3 +56,60 @@
     }
   }
 }
+
+@media (min-width: $breakpoint-tablet) {
+  #home {
+    #learn-more {
+      position: relative;
+      height: 75px;
+
+      .learn-more-link {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: $white;
+        padding: 0 1.5rem;
+      }
+    }
+  }
+}
+
+#what-is-lloud {
+  .display {
+    font-size: 2.75rem;
+  }
+
+  .walkthrough-step {
+    h1 {
+      margin: 0;
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
+  }
+}
+
+.help-center {
+  h1 {
+    font-size: 2.75rem;
+  }
+
+  .help-link-group {
+    list-style-type: none;
+    margin: 0 0 3rem 0;
+    padding: 0;
+  }
+
+  li {
+    margin: 0 0 1rem 0;
+  }
+
+  .help-link {
+    font-weight: 300;
+  }
+  .help-link a:hover {
+    color: $red;
+  }
+}

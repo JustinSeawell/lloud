@@ -102,3 +102,95 @@
   color: $primary;
   position: relative;
 }
+
+// Nav
+.nav {
+  height: 56px;
+  background-color: $primary;
+
+  .container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+}
+
+// Logo
+.logo {
+  margin: 0;
+  color: $white;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+// Hero
+%hero {
+  width: 100%;
+
+  h1 {
+    font-size: 5rem;
+    margin: 1rem 0;
+  }
+}
+
+.hero.hero--black {
+  @extend %hero;
+
+  background-color: $primary;
+  background-image: url("/images/monitor-blk-pattern.png");
+  background-size: 50px auto;
+}
+.hero.hero--white {
+  @extend %hero;
+
+  background-color: $white;
+  background-image: url("/images/monitor-wht-transparent-pattern.png");
+  background-size: 100px auto;
+  box-sizing: border-box;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+// Footer
+.footer {
+  border-top: 1px solid #d4d4d4;
+  box-sizing: border-box;
+  padding: 2rem 0;
+  text-align: center;
+  font-size: 0.8rem;
+
+  .footer-link-group {
+    margin: 0 0 2rem 0;
+  }
+
+  .footer-links {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    li {
+      margin: 0 0 1rem 0;
+    }
+  }
+
+  .footer-link {
+    font-weight: 300;
+  }
+
+  .copyright {
+    font-weight: 300;
+  }
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .footer {
+    text-align: left;
+
+    .footer-link-group {
+      margin: 0;
+    }
+
+    .copyright {
+      text-align: right;
+    }
+  }
+}

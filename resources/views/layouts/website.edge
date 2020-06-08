@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    @include('partials.head')
+  </head>
+  <body>
+    @include('partials.nav')
+    <header class="header">
+      @!section('header')
+    </header>
+    <div class="content">
+      @!section('content')
+    </div>
+    @include('partials.footer')
+  </body>
+</html>

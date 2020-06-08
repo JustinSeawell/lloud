@@ -3,8 +3,9 @@
 @import "icons";
 
 // Vars
-$breakpoint-mobile: 400px;
+$breakpoint-mobile: 414px;
 $breakpoint-tablet: 768px;
+$breakpoint-desktop: 1280px;
 
 // Global Defaults
 html {
@@ -14,6 +15,11 @@ html {
 html,
 .pure-g [class*="pure-u"] {
   font-family: $body;
+}
+
+a {
+  text-decoration: none;
+  color: $primary;
 }
 
 h1 {
@@ -28,6 +34,35 @@ legend {
   font-family: $display;
   font-weight: normal;
 }
+
+.content {
+  min-height: calc(100vh - 490px);
+}
+
+.container {
+  margin: 0 1rem;
+  max-width: 1080px;
+}
+@media (min-width: $breakpoint-tablet) {
+  .container {
+    margin: 0 auto;
+    padding: 0 80px;
+  }
+}
+
+::-moz-selection {
+  /* Code for Firefox */
+  color: $red;
+  background: $white;
+}
+
+::selection {
+  color: $black;
+  background: $red;
+}
+
+// Utility Classes
+@import "util";
 
 // Layout Specific
 @import "layouts";

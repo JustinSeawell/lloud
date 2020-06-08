@@ -16,13 +16,15 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
 
-// Artist application
-Route.get("artists/apply", "ArtistApplicationController.create").middleware(
-  "guest"
-);
-Route.post("artists/apply", "ArtistApplicationController.store").middleware(
-  "guest"
-);
+// Website
+Route.on("/").render("site.home");
+Route.on("/what-is-lloud").render("site.what-is-lloud");
+Route.on("/help").render("site.help").as("help-center");
+
+Route.group(() => {
+  Route.get("artists/apply", "ArtistApplicationController.create");
+  Route.post("artists/apply", "ArtistApplicationController.store");
+}).middleware(["guest"]);
 
 // Password Recovery
 Route.get("auth/reset/:resetToken", "PasswordController.reset")
