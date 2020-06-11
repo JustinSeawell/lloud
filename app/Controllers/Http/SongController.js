@@ -28,6 +28,7 @@ class SongController {
       .with("artists")
       .with("likes")
       .whereNull("deleted_at")
+      .orderBy("created_at", "desc")
       .paginate(page);
 
     /**
