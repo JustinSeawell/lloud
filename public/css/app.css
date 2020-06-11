@@ -226,7 +226,8 @@ legend {
   text-decoration: none; }
 
 .hero.hero--black, .hero.hero--white {
-  width: 100%; }
+  width: 100%;
+  padding: 1rem 0; }
   .hero.hero--black h1, .hero.hero--white h1 {
     font-size: 5rem;
     margin: 1rem 0; }
@@ -314,6 +315,10 @@ legend {
       width: 100%;
       height: auto; }
 
+#home #learn-more #red-arrow {
+  float: right;
+  clear: right; }
+
 @media (min-width: 768px) {
   #home #learn-more {
     position: relative;
@@ -325,6 +330,11 @@ legend {
       transform: translate(-50%, -50%);
       background-color: #ffffff;
       padding: 0 1.5rem; } }
+
+@media (min-width: 1280px) {
+  #home #learn-more #red-arrow {
+    float: none;
+    text-align: center; } }
 
 #what-is-lloud .display {
   font-size: 2.75rem; }
@@ -351,3 +361,14 @@ legend {
 
 .help-center .help-link a:hover {
   color: #ff4040; }
+
+#about .content-block {
+  padding: 0.5rem 0 0 0; }
+
+@media (min-width: 768px) {
+  #about .content-block {
+    padding: 2rem 0; } }
+
+@media (min-width: 768px) {
+  .contact .contact-input {
+    margin: 0 0 1.5rem 0; } }

@@ -57,6 +57,14 @@
   }
 }
 
+#home {
+  #learn-more {
+    #red-arrow {
+      float: right;
+      clear: right;
+    }
+  }
+}
 @media (min-width: $breakpoint-tablet) {
   #home {
     #learn-more {
@@ -70,6 +78,16 @@
         transform: translate(-50%, -50%);
         background-color: $white;
         padding: 0 1.5rem;
+      }
+    }
+  }
+}
+@media (min-width: $breakpoint-desktop) {
+  #home {
+    #learn-more {
+      #red-arrow {
+        float: none;
+        text-align: center;
       }
     }
   }
@@ -111,5 +129,26 @@
   }
   .help-link a:hover {
     color: $red;
+  }
+}
+
+#about {
+  .content-block {
+    padding: 0.5rem 0 0 0;
+  }
+}
+@media (min-width: $breakpoint-tablet) {
+  #about {
+    .content-block {
+      padding: 2rem 0;
+    }
+  }
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .contact {
+    .contact-input {
+      margin: 0 0 1.5rem 0;
+    }
   }
 }

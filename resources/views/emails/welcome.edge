@@ -1,5 +1,30 @@
-<h2> Hello {{ username }} </h2>
-<p>
-  Welcome to Lloud, here's your getting started guide:
-  - Do stuff
-</p>
+@layout('layouts/email')
+
+@section('content')
+<table align="center" cellpadding="0" cellspacing="0" style="text-align: center; border-collapse: collapse;">
+  <tr>
+    <td style="color: #1c1c1c; font-family: Arial, sans-serif; font-size: 20px;">
+      <h1 style="margin: 0px 0px 10px 0px;">Find what's next with Lloud<span style="color:#ff4040;">.</span></h1>
+    </td>
+  </tr>
+  <tr>
+    <td style="font-family: Arial, sans-serif; font-size: 16px;">
+      Discover your favorite new songs while gaining rewards for having great taste in music.
+    </td>
+  </tr>
+  <tr>
+    <td style="font-family: Arial, sans-serif; font-size: 16px;">
+      <h2>What is Lloud?</h2>
+      
+      <h3>1. Built for artists and listeners</h3>
+      <p>We're building a better place for streaming music: an ad-free platform where listeners are rewarded for finding the best new songs before anyone else.</p>
+
+      <h3>2. Exclusive rewards</h3>
+      <p>Prove your music taste to the world. Earn more points for knowing good music, and redeem those points on rewards from the Lloud store. Log in to Lloud for more music & rewards!</p>
+
+      <h3>3. The best interactive music-streaming platform</h3>
+      <p>Listeners can subscribe to Lloud for weekly 'like' refills & earn more points while discovering new music. Lloud is only $10/month for listeners.</p>
+    </td>
+  </tr>
+</table>
+@endsection

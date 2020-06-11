@@ -1,19 +1,15 @@
-<div><img src="{{ assetsUrl('images/email-banner-1.jpg') }}" alt=""></div>
-<h2> Hello &#64;{{ name }} </h2>
-<p>
-  We're excited to inform you that your artist application has been approved. Please complete the following steps to create your account and upload songs for your audience.
-</p>
-<h3>Create Your Account</h3>
-<h4>Step 1: Create A Password</h4>
-<p>
-  Click the following link to create a password for your new account:<br>
-  <a href="{{ appUrl }}{{ route('password.edit', { resetToken }) }}" target="_blank">Create your Password</a>
-</p>
-<h4>Step 2: Download Lloud from the app store</h4>
-<p>
-  Go to the app store and download the application to your phone.
-</p>
-<h4>Step 3: Login to the app</h4>
-<p>Login to the app</p>
-<h4>Step 4: Upload your music</h4>
-<p></p>
+@layout('layouts/email')
+
+@section('content')
+<table align="center" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+  <tr>
+    <td style="color: #1c1c1c; font-family: Arial, sans-serif; font-size: 20px;"><h2>Hello &#64;{{ name }},</h2></td>
+  </tr>
+  <tr>
+    <td style="font-family: Arial, sans-serif; font-size: 16px;">
+      <p>We're excited to inform you that your artist application has been approved. The song you submitted <strong>{{ song_title }}</strong> is now available to Lloud listeners.</p>
+      <p>We're working on a way for artists to upload music whenever they want. Until then, if you'd like to upload more of your music to Lloud please email: <a href="mailto:music@lloudapp.com" style="color:#ff4040;">music@lloudapp.com</a></p>
+    </td>
+  </tr>
+</table>
+@endsection

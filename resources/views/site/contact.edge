@@ -1,0 +1,43 @@
+@layout('layouts/website')
+
+@section('header')
+<div class="contact">
+  <div class="container">
+    <h1 class="body fw-light">Send us a message</h1>
+  </div>
+</div>
+@endsection
+
+@section('content')
+  <div class="contact">
+    <div class="container">
+      <div >
+        <div >
+
+          @if(flashMessage('notification'))
+            @!component('components.message', type = 'success', txt = flashMessage('notification'))
+          @endif
+        <form method="POST" action="{{ route('contact.store') }}" class="pure-form pure-form-stacked">
+            <fieldset>
+              <div class="contact-input">
+                <label for="email">Email</label>
+              <input type="text" value="{{ old('email', '') }}" name="email" id="email" class="pure-u-1 pure-u-sm-2-3 pure-u-lg-1-3" required>
+              {{ elIf('<span class="error">$self</span>', getErrorFor('email'), hasErrorFor('email')) }}
+              </div>
+              <div class="contact-input">
+                <label for="subject">Subject</label>
+                <input type="text" value="{{ old('subject', '') }}" name="subject" id="subject" class="pure-u-1 pure-u-sm-2-3 pure-u-lg-1-2" required>
+                {{ elIf('<span class="error">$self</span>', getErrorFor('subject'), hasErrorFor('subject')) }}
+              </div>
+              <div class="contact-input">
+                <label for="message">Message</label>
+                <textarea class="pure-u-1 pure-u-sm-7-8 pure-u-lg-1-2" name="message" id="message" rows="6" required>{{ old('message', '') }}</textarea>
+                {{ elIf('<span class="error">$self</span>', getErrorFor('message'), hasErrorFor('message')) }}
+              </div>
+              <button type="submit" class="pure-button button--primary">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+@endsection

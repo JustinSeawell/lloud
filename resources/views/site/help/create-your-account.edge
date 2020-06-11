@@ -1,0 +1,26 @@
+@layout('layouts/website')
+
+@section('header')
+  <div class="help-center">
+    @include('partials.help.back-to-help')
+    <div class="container">
+      <h1 class="body fw-light">Create your account</h1>
+    </div>
+  </div>
+@endsection
+
+@section('content')
+  <div class="help-center">
+    <div class="container">
+      <ol>
+        <li>Download Lloud from the App Store</li>
+        <li>Enter your email on the signup page and click next</li>
+        <li>Enter your username and click next</li>
+        <li>Enter your password and click next</li>
+        <li>Review your information and begin your account.</li>
+      </ol>
+      <p>Congrats! You are now a Lloud user.</p>
+      <div style="height: 50px;">{{-- spacer --}}</div>
+    </div>
+  </div>
+@endsection

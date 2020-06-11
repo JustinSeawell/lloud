@@ -1,4 +1,16 @@
-<h2> Hello {{ name }} </h2>
-<p>
-  We regret to inform you that your artist application has been denied.
-</p>
+@layout('layouts/email')
+
+@section('content')
+<table align="center" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+  <tr>
+    <td style="color: #1c1c1c; font-family: Arial, sans-serif; font-size: 20px;"><h2>Hello &#64;{{ name }},</h2></td>
+  </tr>
+  <tr>
+    <td style="font-family: Arial, sans-serif; font-size: 16px;">
+      <p>We're sorry to inform you that your artist application has been denied.</p>
+      <p>Lloud is constantly changing, so we encourage you to apply again later.</p>
+      <p>Thanks again for considering Lloud.</p>
+    </td>
+  </tr>
+</table>
+@endsection
