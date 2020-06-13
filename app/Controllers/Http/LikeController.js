@@ -99,9 +99,11 @@ class LikeController {
       .where({ song_id: params.id })
       .select("user_id");
 
-    await Account.query()
-      .whereIn("user_id", otherUsersWhoLikedSong)
-      .increment("points_balance", 1);
+    if (!auth.user.is_fake) {
+      await Account.query()
+        .whereIn("user_id", otherUsersWhoLikedSong)
+        .increment("points_balance", 1);
+    }
 
     const like = await Like.create(likeData);
 
