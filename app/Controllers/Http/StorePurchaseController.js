@@ -99,22 +99,24 @@ class StorePurchaseController {
       acct.points_balance -= storeItem.cost;
       await acct.save(trx);
 
-      storeItem.qty--;
-      await storeItem.save(trx);
+      if (!auth.user.is_fake) {
+        storeItem.qty--;
+        await storeItem.save(trx);
 
-      if (purchaseData.size) {
-        const requestedSize = await storeItem.size(purchaseData.size).first();
+        if (purchaseData.size) {
+          const requestedSize = await storeItem.size(purchaseData.size).first();
 
-        if (requestedSize.qty <= 0) {
-          await trx.rollback();
-          return response.ok({
-            success: false,
-            message: "Item size is out of stock",
-          });
+          if (requestedSize.qty <= 0) {
+            await trx.rollback();
+            return response.ok({
+              success: false,
+              message: "Item size is out of stock",
+            });
+          }
+
+          requestedSize.qty--;
+          await requestedSize.save(trx);
         }
-
-        requestedSize.qty--;
-        await requestedSize.save(trx);
       }
 
       await trx.commit();
