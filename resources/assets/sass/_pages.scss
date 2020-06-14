@@ -63,6 +63,12 @@
       float: right;
       clear: right;
     }
+    .learn-more-link {
+      border: 2px solid #ff4040;
+      box-sizing: border-box;
+      display: inline-block;
+      padding: 0.5rem 2rem;
+    }
   }
 
   .screenshot {
@@ -142,12 +148,24 @@
   }
 
   .walkthrough-step {
+    margin: 0 0 2rem 0;
+
     h1 {
       margin: 0;
     }
 
     p {
       font-size: 1.1rem;
+    }
+
+    .screenshot {
+      height: 550px;
+      display: flex;
+      justify-content: start;
+    }
+    .screenshot img {
+      height: 100%;
+      width: auto;
     }
   }
 }
@@ -193,5 +211,20 @@
     .contact-input {
       margin: 0 0 1.5rem 0;
     }
+  }
+}
+
+#privacy {
+  p {
+    line-height: 1.5rem;
+  }
+
+  a {
+    color: $red;
+  }
+
+  .indent {
+    margin-left: 2.25rem;
+    font-size: 0.9rem;
   }
 }
