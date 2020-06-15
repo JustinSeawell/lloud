@@ -27,6 +27,7 @@ class StoreItemController {
       .with("imageFile")
       .with("availableSizes")
       .whereNull("deleted_at")
+      .orderBy("created_at", "desc")
       .paginate(page);
 
     results.success = true;
