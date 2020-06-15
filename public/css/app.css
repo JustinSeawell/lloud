@@ -322,6 +322,13 @@ legend {
   float: right;
   clear: right; }
 
+.home #learn-more .learn-more-link {
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 0.5rem 2rem;
+  color: #1c1c1c;
+  border: 2px solid #ff4040; }
+
 .home .screenshot {
   padding: 2rem; }
 
@@ -342,7 +349,6 @@ legend {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: #ffffff;
       padding: 0 1.5rem; }
   .home .screenshot-wrapper {
     display: flex;
@@ -371,11 +377,23 @@ legend {
 #what-is-lloud .display {
   font-size: 2.75rem; }
 
-#what-is-lloud .walkthrough-step h1 {
-  margin: 0; }
-
-#what-is-lloud .walkthrough-step p {
-  font-size: 1.1rem; }
+#what-is-lloud .walkthrough-step {
+  margin: 0 0 2rem 0; }
+  #what-is-lloud .walkthrough-step h1 {
+    margin: 0; }
+  #what-is-lloud .walkthrough-step p {
+    font-size: 1.1rem; }
+  #what-is-lloud .walkthrough-step .screenshot {
+    height: 550px;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    box-sizing: border-box; }
+  #what-is-lloud .walkthrough-step .screenshot img {
+    height: 100%;
+    width: auto; }
+  #what-is-lloud .walkthrough-step .walkthrough-number {
+    padding: 0 2rem; }
 
 .help-center h1 {
   font-size: 2.75rem; }
@@ -404,3 +422,26 @@ legend {
 @media (min-width: 768px) {
   .contact .contact-input {
     margin: 0 0 1.5rem 0; } }
+
+#privacy p,
+#terms p {
+  line-height: 1.5rem; }
+
+#privacy ul,
+#privacy li,
+#terms ul,
+#terms li {
+  line-height: 1.5rem; }
+
+#privacy ol li,
+#terms ol li {
+  margin-bottom: 1rem; }
+
+#privacy a,
+#terms a {
+  color: #ff4040; }
+
+#privacy .indent,
+#terms .indent {
+  margin-left: 2.25rem;
+  font-size: 0.9rem; }

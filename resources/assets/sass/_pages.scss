@@ -63,6 +63,13 @@
       float: right;
       clear: right;
     }
+    .learn-more-link {
+      box-sizing: border-box;
+      display: inline-block;
+      padding: 0.5rem 2rem;
+      color: $primary;
+      border: 2px solid #ff4040;
+    }
   }
 
   .screenshot {
@@ -89,7 +96,6 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background-color: $white;
         padding: 0 1.5rem;
       }
     }
@@ -142,12 +148,30 @@
   }
 
   .walkthrough-step {
+    margin: 0 0 2rem 0;
+
     h1 {
       margin: 0;
     }
 
     p {
       font-size: 1.1rem;
+    }
+
+    .screenshot {
+      height: 550px;
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+    .screenshot img {
+      height: 100%;
+      width: auto;
+    }
+
+    .walkthrough-number {
+      padding: 0 2rem;
     }
   }
 }
@@ -193,5 +217,32 @@
     .contact-input {
       margin: 0 0 1.5rem 0;
     }
+  }
+}
+
+#privacy,
+#terms {
+  p {
+    line-height: 1.5rem;
+  }
+
+  ul,
+  li {
+    line-height: 1.5rem;
+  }
+
+  ol {
+    li {
+      margin-bottom: 1rem;
+    }
+  }
+
+  a {
+    color: $red;
+  }
+
+  .indent {
+    margin-left: 2.25rem;
+    font-size: 0.9rem;
   }
 }

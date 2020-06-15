@@ -36,6 +36,8 @@ Route.on("/help/create-your-account")
   .render("site.help.create-your-account")
   .as("help-center.create-your-account");
 Route.on("/about").render("site.about").as("about");
+Route.on("/privacy").render("site.privacy").as("privacy");
+Route.on("/terms").render("site.terms").as("terms");
 Route.get("/contact", "ContactFormController.create").as("contact");
 Route.post("/contact", "ContactFormController.store").as("contact.store");
 
