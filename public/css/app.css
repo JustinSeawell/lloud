@@ -323,10 +323,11 @@ legend {
   clear: right; }
 
 .home #learn-more .learn-more-link {
-  border: 2px solid #ff4040;
   box-sizing: border-box;
   display: inline-block;
-  padding: 0.5rem 2rem; }
+  padding: 0.5rem 2rem;
+  color: #1c1c1c;
+  border: 2px solid #ff4040; }
 
 .home .screenshot {
   padding: 2rem; }
@@ -348,7 +349,6 @@ legend {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: #ffffff;
       padding: 0 1.5rem; }
   .home .screenshot-wrapper {
     display: flex;
@@ -423,12 +423,25 @@ legend {
   .contact .contact-input {
     margin: 0 0 1.5rem 0; } }
 
-#privacy p {
+#privacy p,
+#terms p {
   line-height: 1.5rem; }
 
-#privacy a {
+#privacy ul,
+#privacy li,
+#terms ul,
+#terms li {
+  line-height: 1.5rem; }
+
+#privacy ol li,
+#terms ol li {
+  margin-bottom: 1rem; }
+
+#privacy a,
+#terms a {
   color: #ff4040; }
 
-#privacy .indent {
+#privacy .indent,
+#terms .indent {
   margin-left: 2.25rem;
   font-size: 0.9rem; }
