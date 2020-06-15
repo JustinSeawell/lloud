@@ -161,11 +161,17 @@
     .screenshot {
       height: 550px;
       display: flex;
-      justify-content: start;
+      justify-content: center;
+      padding: 1rem;
+      box-sizing: border-box;
     }
     .screenshot img {
       height: 100%;
       width: auto;
+    }
+
+    .walkthrough-number {
+      padding: 0 2rem;
     }
   }
 }
