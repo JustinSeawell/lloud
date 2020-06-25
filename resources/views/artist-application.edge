@@ -6,20 +6,20 @@
   </div>
 
   <h2>What is Lloud?</h2>
-  <p>Lloud is a new kind of music app where listeners search for unknown artists. Listeners "like" songs, and earn rewards if that song gains traction.</p>
+  <p>Lloud is a new kind of music app where listeners search for unknown artists. Listeners "like" songs, and earn points if that song gains traction.</p>
   
   <h2>Why should I join?</h2>
   <p>Lloud is different because listeners are actively searching for <strong>new</strong> music. You're more likely to be heard if you upload your music to Lloud.</p>
   
-  <h2>What's the application process?</h2>
-  <p>Submit your artist profile information, and one of your songs. A representative from Lloud will review your application and respond via email.</p>
+  <h2>How do I get my music on Lloud?</h2>
+  <p>Submit your artist profile information, and one of your songs. We will send you an email when your account is active.</p>
   
   <h2>How much does it cost?</h2>
-  <p>Nothing! It's free to post your music on Lloud.</p>
+  <p>Nothing! It's free to post your music on Lloud.<br><br><i>P.S. It's ad-free.</i></p>
 @endsection
 
 @section('form')
-<h1>Artist Application Form:</h1>
+<h1>Create Artist Account</h1>
 
 @if(flashMessage('notification'))
   @!component('components.message', type = 'success', txt = flashMessage('notification'))
@@ -36,7 +36,7 @@
     <div class="field pure-u-md-3-4">
       <label for="description">Bio</label>
       <textarea id="description" name="description" class="pure-input-1" placeholder="A description of you and your music" required>{{ old('description', '') }}</textarea>
-      <span class="pure-form-message">This will appear on your artist profile if your application is approved.</span>
+      <span class="pure-form-message">This will appear on your artist profile.</span>
       {{ elIf('<span class="error">$self</span>', getErrorFor('description'), hasErrorFor('description')) }}
     </div>
     <div class="field pure-u-md-1-2">
