@@ -105,13 +105,22 @@ class ArtistApplicationController {
       return response.redirect("back");
     }
 
+    const allowedArtworkExtensions = [
+      "jpg",
+      "JPG",
+      "jpeg",
+      "JPEG",
+      "png",
+      "PNG",
+    ];
+
     const artworkFile = request.file("artwork_file", {
       types: ["image"],
       size: "2mb",
-      extnames: ["jpg", "png"],
+      extnames: allowedArtworkExtensions,
     });
 
-    if (artworkFile.extname != "jpg" && artworkFile.extname != "png") {
+    if (!allowedArtworkExtensions.includes(artworkFile.extname)) {
       session
         .withErrors({ artwork_file: "Please upload a jpg or png file" })
         .flashAll();
