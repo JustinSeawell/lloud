@@ -6,6 +6,8 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 /** @typedef {import('@adonisjs/framework/src/Event')} Event */
 
+const moment = require("moment");
+
 const UserRegistration = use("App/Services/UserRegistration");
 
 const { validate } = use("Validator");
@@ -196,9 +198,22 @@ class UserController {
     const plan = await sub.plan().fetch();
     const weeklyLikesAllowance = plan.likes_per_month / 4; // TODO: Calculate better
 
+    const startDay = moment(sub.started_at);
+    const refillDay = startDay.isoWeekday();
+    const today = moment().isoWeekday();
+
+    let nextRefill;
+    if (today <= refillDay) {
+      nextRefill = moment().isoWeekday(refillDay);
+    } else {
+      nextRefill = moment().add(1, 'weeks').isoWeekday(refillDay);
+    }
+    nextRefill.hour(startDay.hour()).minute(0);
+    const refilledAtStr = nextRefill.format("MMMM Do") + " at " + nextRefill.format("h:mm a");
+
     return response.ok({
       success: true,
-      data: { remaining: acct.likes_balance, allowance: weeklyLikesAllowance },
+      data: { remaining: acct.likes_balance, allowance: weeklyLikesAllowance, refilledAt: refilledAtStr },
     });
   }
 
