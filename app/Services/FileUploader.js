@@ -28,15 +28,18 @@ class FileUploader extends Service {
 
       await Drive.disk("lloud_audio").put(
         fileName,
-        await Drive.get(fileObj.tmpPath)
+        await Drive.get(fileObj.tmpPath),
+        {
+          ContentType: `audio/${fileObj.extname == "wav" ? "x-wav" : "mpeg"}`,
+        }
       );
       await Drive.delete(fileObj.tmpPath);
 
-      const newUrl = Drive.disk("lloud_audio").getUrl(fileName);
+      const location = "https://audio.lloudapp.com/" + fileName;
 
       const audioFile = await AudioFile.create({
         name: fileName,
-        location: newUrl,
+        location: location,
         s3_bucket: "lloud_audio",
       });
 
@@ -54,15 +57,22 @@ class FileUploader extends Service {
 
       await Drive.disk("lloud_images").put(
         fileName,
-        await Drive.get(fileObj.tmpPath)
+        await Drive.get(fileObj.tmpPath),
+        {
+          ContentType: `image/${
+            fileObj.extname == "png" || fileObj.extname == "PNG"
+              ? "png"
+              : "jpeg"
+          }`,
+        }
       );
       await Drive.delete(fileObj.tmpPath);
 
-      const newUrl = Drive.disk("lloud_images").getUrl(fileName);
+      const location = "https://images.lloudapp.com/" + fileName;
 
       const imageFile = await ImageFile.create({
         name: fileName,
-        location: newUrl,
+        location: location,
         s3_bucket: "lloud_images",
       });
 
