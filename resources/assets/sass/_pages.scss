@@ -58,6 +58,14 @@
 }
 
 .home {
+  .arrow-wrapper {
+    height: 175px;
+    overflow-y: hidden;
+  }
+  .arrow {
+    margin-top: -117px;
+  }
+
   #learn-more {
     #red-arrow {
       float: right;
@@ -70,6 +78,13 @@
       color: $primary;
       border: 2px solid #ff4040;
     }
+  }
+  .upload-song-link {
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 0.5rem 2rem;
+    color: $primary;
+    border: 2px solid #1c1c1c;
   }
 
   .screenshot {
@@ -87,6 +102,14 @@
 }
 @media (min-width: $breakpoint-tablet) {
   .home {
+    .arrow-wrapper {
+      height: initial;
+      overflow-y: initial;
+    }
+    .arrow {
+      margin-top: initial;
+    }
+
     #learn-more {
       position: relative;
       height: 75px;
