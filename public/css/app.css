@@ -318,6 +318,13 @@ legend {
       width: 100%;
       height: auto; }
 
+.home .arrow-wrapper {
+  height: 175px;
+  overflow-y: hidden; }
+
+.home .arrow {
+  margin-top: -117px; }
+
 .home #learn-more #red-arrow {
   float: right;
   clear: right; }
@@ -328,6 +335,13 @@ legend {
   padding: 0.5rem 2rem;
   color: #1c1c1c;
   border: 2px solid #ff4040; }
+
+.home .upload-song-link {
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 0.5rem 2rem;
+  color: #1c1c1c;
+  border: 2px solid #1c1c1c; }
 
 .home .screenshot {
   padding: 2rem; }
@@ -341,6 +355,11 @@ legend {
   flex-direction: column-reverse; }
 
 @media (min-width: 768px) {
+  .home .arrow-wrapper {
+    height: initial;
+    overflow-y: initial; }
+  .home .arrow {
+    margin-top: initial; }
   .home #learn-more {
     position: relative;
     height: 75px; }
