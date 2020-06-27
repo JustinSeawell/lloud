@@ -211,7 +211,12 @@ class UserController {
     }
     nextRefill.hour(startDay.hour()).minute(0);
 
-    const refilledAtStr = (nextRefill.isAfter(moment(sub.ended_at))) ? "No Refills Remaining" : nextRefill.format("MMMM Do") + " at " + nextRefill.format("h:mm a");
+    // We don't refill on the first day
+    if (startDay.isSame(nextRefill, 'day')) {
+      nextRefill.add(1, 'weeks');
+    }
+
+    const refilledAtStr = (nextRefill.isAfter(moment(sub.ended_at))) ? "No Refills Remaining" : nextRefill.format("MMMM Do");
 
     return response.ok({
       success: true,
