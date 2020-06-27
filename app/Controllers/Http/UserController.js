@@ -199,6 +199,7 @@ class UserController {
     const weeklyLikesAllowance = plan.likes_per_month / 4; // TODO: Calculate better
 
     const startDay = moment(sub.started_at);
+    
     const refillDay = startDay.isoWeekday();
     const today = moment().isoWeekday();
 
@@ -209,7 +210,8 @@ class UserController {
       nextRefill = moment().add(1, 'weeks').isoWeekday(refillDay);
     }
     nextRefill.hour(startDay.hour()).minute(0);
-    const refilledAtStr = nextRefill.format("MMMM Do") + " at " + nextRefill.format("h:mm a");
+
+    const refilledAtStr = (nextRefill.isAfter(moment(sub.ended_at))) ? "No Refills Remaining" : nextRefill.format("MMMM Do") + " at " + nextRefill.format("h:mm a");
 
     return response.ok({
       success: true,
