@@ -32,6 +32,7 @@ class ArtistApplicationController {
     const artistApplications = await ArtistApplication.query()
       .with("audioFile")
       .with("imageFile")
+      .orderBy("created_at", "desc")
       .paginate(page);
 
     return view.render("admin.artist-applications", {
