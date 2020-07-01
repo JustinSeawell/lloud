@@ -11,8 +11,39 @@ class FileUploader extends Service {
     throw new Error(`File Upload Failed: ${msg}`);
   }
 
-  cleanupFileName(fileName) {
-    return fileName.trim().replace(/\s+/g, "-");
+  // Thanks Bae :)
+  slugify(str) {
+    str = str.replace(/^\s+|\s+$/g, "");
+
+    // Make the string lowercase
+    str = str.toLowerCase();
+
+    // Remove accents, swap ñ for n, etc
+    var from =
+      "ÁÄÂÀÃÅČÇĆĎÉĚËÈÊẼĔȆÍÌÎÏŇÑÓÖÒÔÕØŘŔŠŤÚŮÜÙÛÝŸŽáäâàãåčçćďéěëèêẽĕȇíìîïňñóöòôõøðřŕšťúůüùûýÿžþÞĐđßÆa·/_,:;";
+    var to =
+      "AAAAAACCCDEEEEEEEEIIIINNOOOOOORRSTUUUUUYYZaaaaaacccdeeeeeeeeiiiinnooooooorrstuuuuuyyzbBDdBAa------";
+    for (var i = 0, l = from.length; i < l; i++) {
+      str = str.replace(new RegExp(from.charAt(i), "g"), to.charAt(i));
+    }
+
+    // Remove invalid chars
+    str = str
+      .replace(/[^a-z0-9 -]/g, "")
+      // Collapse whitespace and replace by -
+      .replace(/\s+/g, "-")
+      // Collapse dashes
+      .replace(/-+/g, "-");
+
+    return str;
+  }
+
+  cleanupFileName(fileObj) {
+    const ext = fileObj.extname;
+    const ogName = fileObj.clientName;
+    const plainName = ogName.replace(ext, "");
+    const slugifiedName = this.slugify(plainName);
+    return slugifiedName + "." + ext;
   }
 
   addTimestampToFileName(fileName) {
@@ -23,7 +54,7 @@ class FileUploader extends Service {
   async uploadAudioFileToS3(fileObj) {
     try {
       const fileName = this.addTimestampToFileName(
-        this.cleanupFileName(fileObj.clientName)
+        this.cleanupFileName(fileObj)
       );
 
       await Drive.disk("lloud_audio").put(
@@ -52,7 +83,7 @@ class FileUploader extends Service {
   async uploadImageFileToS3(fileObj) {
     try {
       const fileName = this.addTimestampToFileName(
-        this.cleanupFileName(fileObj.clientName)
+        this.cleanupFileName(fileObj)
       );
 
       await Drive.disk("lloud_images").put(
