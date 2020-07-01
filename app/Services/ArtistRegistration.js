@@ -32,11 +32,12 @@ class ArtistRegistration extends Service {
       user.generateDayLongPasswordReset();
       user.save();
 
+      // TODO: Redundant code.. clean this up
       const acct = await Account.create(
         {
           user_id: user.id,
           account_type_id: 3, // Artist
-          likes_balance: 5,
+          likes_balance: 20,
         },
         trx
       );

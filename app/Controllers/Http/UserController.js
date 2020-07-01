@@ -196,31 +196,27 @@ class UserController {
     }
     const sub = await acct.activeSubscription().fetch();
     const plan = await sub.plan().fetch();
-    const weeklyLikesAllowance = plan.likes_per_month / 4; // TODO: Calculate better
+    const weeklyLikesAllowance = plan.likes_per_month / 4; // TODO: Deprecate
 
-    const startDay = moment(sub.started_at);
-    
-    const refillDay = startDay.isoWeekday();
-    const today = moment().isoWeekday();
+    const subEndDay = sub.ended_at ? moment(sub.ended_at) : null;
+    const refillDay = moment().add(1, "months").startOf("month"); // First day of next month
 
-    let nextRefill;
-    if (today <= refillDay) {
-      nextRefill = moment().isoWeekday(refillDay);
+    let refilledAtStr;
+    if (subEndDay !== null && refillDay.isAfter(subEndDay)) {
+      refilledAtStr = "No Refills Remaining";
+    } else if (moment().isSame(refillDay, "day")) {
+      refilledAtStr = "Today";
     } else {
-      nextRefill = moment().add(1, 'weeks').isoWeekday(refillDay);
+      refilledAtStr = refillDay.format("MMMM Do");
     }
-    nextRefill.hour(startDay.hour()).minute(0);
-
-    // We don't refill on the first day
-    if (startDay.isSame(nextRefill, 'day')) {
-      nextRefill.add(1, 'weeks');
-    }
-
-    const refilledAtStr = (nextRefill.isAfter(moment(sub.ended_at))) ? "No Refills Remaining" : nextRefill.format("MMMM Do");
 
     return response.ok({
       success: true,
-      data: { remaining: acct.likes_balance, allowance: weeklyLikesAllowance, refilledAt: refilledAtStr },
+      data: {
+        remaining: acct.likes_balance,
+        allowance: weeklyLikesAllowance,
+        refilledAt: refilledAtStr,
+      },
     });
   }
 

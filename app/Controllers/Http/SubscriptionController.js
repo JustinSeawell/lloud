@@ -7,7 +7,7 @@
 const moment = require("moment");
 
 const User = use("App/Models/User");
-const Subscription = use("App/Models/Subscription");
+const SubscriptionVerifier = use("App/Services/SubscriptionVerifier");
 
 /**
  * Resourceful controller for interacting with subscriptions
@@ -96,6 +96,17 @@ class SubscriptionController {
    * @param {Response} ctx.response
    */
   async upgrade({ auth, request, response }) {
+    const verified = await SubscriptionVerifier.verifyUserIsSubscribed(
+      auth.user.id
+    );
+
+    if (!verified) {
+      return response.forbidden({
+        success: false,
+        message: "User hasn't paid for a subscription.",
+      });
+    }
+
     const user = await User.find(auth.user.id);
     const account = await user.account().fetch();
     const currentSub = await account.activeSubscription().fetch();
@@ -109,10 +120,7 @@ class SubscriptionController {
 
     const timestamp = moment().format("YYYY-MM-DD HH:mm:ss");
 
-    /**
-     * TODO:
-     * - Consider making this a transaction
-     */
+    // TODO: Consider making this a transaction
 
     currentSub.is_active = 0; // Bye bye!
     currentSub.ended_at = timestamp;
@@ -127,7 +135,7 @@ class SubscriptionController {
     });
 
     const newPlan = await newSub.plan().fetch();
-    account.likes_balance = newPlan.likes_per_month / 4;
+    account.likes_balance += newPlan.likes_per_month;
     await account.save();
 
     return response.ok({
