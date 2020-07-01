@@ -32,6 +32,7 @@ class LikeController {
       .with("song.audioFile")
       .with("song.imageFile")
       .with("song.likes")
+      .orderBy("created_at", "desc")
       .where({ user_id: userId })
       .fetch();
 
