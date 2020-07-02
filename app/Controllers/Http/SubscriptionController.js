@@ -7,6 +7,7 @@
 const moment = require("moment");
 
 const User = use("App/Models/User");
+const Subscription = use("App/Models/Subscription");
 const SubscriptionVerifier = use("App/Services/SubscriptionVerifier");
 
 /**
