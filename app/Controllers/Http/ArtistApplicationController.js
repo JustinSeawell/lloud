@@ -63,9 +63,9 @@ class ArtistApplicationController {
    */
   async store({ request, response, session, auth }) {
     const rules = {
-      name: "required|unique:artist_applications|unique:users,username",
+      name: "required",
       description: "required",
-      email: "required|email|unique:artist_applications|unique:users,email",
+      email: "required|email|unique:artist_applications",
       city: "required",
       state: "required",
       zipcode: "required",

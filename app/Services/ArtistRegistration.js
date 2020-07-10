@@ -19,45 +19,13 @@ class ArtistRegistration extends Service {
 
     try {
       /**
-       * Setup a user account for the artist so they can login
-       */
-      const user = await User.create(
-        {
-          username: artistApplication.name,
-          email: artistApplication.email,
-          password: crypto.randomBytes(20).toString("hex"), // tmp password
-        },
-        trx
-      );
-      user.generateDayLongPasswordReset();
-      user.save();
-
-      // TODO: Redundant code.. clean this up
-      const acct = await Account.create(
-        {
-          user_id: user.id,
-          account_type_id: 3, // Artist
-          likes_balance: 20,
-        },
-        trx
-      );
-
-      const subscription = await Subscription.create(
-        {
-          account_id: acct.id,
-          plan_id: 3, // TODO: Create artist plan
-          started_at: artistApplication.approved_at,
-        },
-        trx
-      );
-
-      /**
        * Create the artist account, and submit
        * their first song via the application data.
        */
       const artist = await Artist.create(
         {
           name: artistApplication.name,
+          email: artistApplication.email,
           city: artistApplication.city,
           state: artistApplication.state,
           zipcode: artistApplication.zipcode,
@@ -86,11 +54,7 @@ class ArtistRegistration extends Service {
 
       await trx.commit();
 
-      Event.fire(
-        "artist_application::approved",
-        artistApplication.toJSON(),
-        user
-      );
+      Event.fire("artist_application::approved", artistApplication.toJSON());
     } catch (err) {
       console.log(err);
       await trx.rollback();

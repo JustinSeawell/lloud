@@ -53,7 +53,6 @@ class UserRegistration extends Service {
     }
   }
 
-  static async registerArtistAccount() {}
   static async registerAdminAccount() {}
 }
 
