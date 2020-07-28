@@ -1,0 +1,312 @@
+@layout('artist/layouts/app')
+
+@section('content')
+  <div id="upload-song">
+      <div class="container pure-g">
+        <div class="pure-u-1">
+          <h1>Upload Song</h1>
+        </div>
+      </div>
+
+      <div class="container pure-g">
+        <div class="pure-u-1">
+        <form action="{{ route('artist.songs.store') }}" method="POST" class="pure-form pure-form-stacked">
+          
+          <div class="pure-g field">
+            <div class="pure-u-1 pure-u-lg-2-5">
+              <label for="song_title"><h3>Title</h3></label>
+              <input type="text" name="song_title" id="song_title" class="pure-input-1">
+            </div>
+          </div>
+
+          <div class="pure-g field">
+            <div class="pure-u-1 pure-u-lg-2-5">
+              <label for="song_genre"><h3>Genre</h3></label>
+              <select name="genre" id="genre" class="pure-input-1">
+                <option value="" selected>-- Select One --</option>
+                @each(genre in genres)
+                  <option value="{{ genre.id }}">{{ genre.display_name }}</option>
+                @endeach
+              </select>
+            </div>
+          </div>
+
+          <div class="pure-g field">
+            <div class="pure-u-1 pure-u-md-2-5 pure-u-lg-1-5">
+              <label for="artwork"><h3>Cover Artwork</h3></label>
+              
+              <div class="uploader upload-artwork">
+                <p>Add your .jpg or .png files here</p>
+                <img class="loading-gif" src="{{ assetsUrl('images/bars.gif') }}" alt="">
+                <input type="file" name="artwork_file" id="artwork_file" value="" style="display: none;" accept="image/png, image/jpeg">
+                <input type="hidden" id="image_file_id" name="image_file_id" value="">
+                <div id="reset_art" class="uploader-reset-btn pure-button white flex align-center justify-center"><i class="material-icons md-24" style="margin:0;">clear</i></div>
+              </div>
+              <div id="artwork_error" class="error"></div>
+              
+            </div>
+          </div>
+
+          <div class="pure-g field">
+            <div class="pure-u-1 pure-u-md-2-5 pure-u-lg-1-5">
+              <label for="song"><h3>Audio File</h3></label>
+              
+              <div class="uploader upload-song">
+                <p>Add your .mp3 files here</p>
+
+                <img class="audio-ctrl play-btn" src="{{ assetsUrl('images/play-grey.png') }}" alt="">
+                <img class="audio-ctrl pause-btn" src="{{ assetsUrl('images/pause-grey.png') }}" alt="">
+                <img class="loading-gif" src="{{ assetsUrl('images/bars.gif') }}" alt="">
+                <input type="file" name="audio_file" id="audio_file" value="" style="display: none;" accept="audio/mpeg">
+                <input type="hidden" id="audio_file_id" name="audio_file_id" value="">
+                <audio id="audio_player" src=""></audio>
+                <div id="reset_song" class="uploader-reset-btn pure-button white flex align-center justify-center"><i class="material-icons md-24" style="margin:0;">clear</i></div>
+              </div>
+              <div id="audio_error" class="error"></div>
+
+            </div>
+          </div>
+
+          <div class="pure-g field">
+            <div class="pure-u-1">
+              <button type="submit" class="pure-button button--gradient button--primary button--lg">Upload Song</button>
+            </div>
+          </div>
+          </form>
+        </div>
+      </div>
+  </div>
+@endsection
+
+@section('script')
+  <script>
+    function Uploader(uploadBlock, type, errorBlock, hiddenFileInput, hiddenFileIdInput, resetBtn, onSuccessCB, onResetCB) {
+      
+      // Variables
+      var isLoading = false;
+      var errorMsg = '';
+
+      const errorClass = 'error';
+      const loadingClass = 'loading';
+      const types = ['image', 'audio'];
+
+      var uploadBlock = document.querySelector(uploadBlock);
+      var errorBlock = document.querySelector(errorBlock);
+      var hiddenFileInput = document.querySelector(hiddenFileInput);
+      var hiddenFileIdInput = document.querySelector(hiddenFileIdInput);
+      var resetBtn = document.querySelector(resetBtn);
+      
+
+      // Validation
+      if (uploadBlock === null) { doThrow('No uploader block found.'); }
+      if (types.indexOf(type) < 0) { doThrow('Invalid uploader type.'); }
+      if (errorBlock === null) { doThrow('No error block found.'); }
+      if (hiddenFileInput === null) { doThrow('No hidden file input found.'); }
+      if (hiddenFileIdInput === null) { doThrow('No hidden file ID input found.'); }
+      if (resetBtn === null) { doThrow('No reset button found.'); }
+      if (!(onSuccessCB instanceof Function)) { doThrow('Success callback is required and must be a function.'); }
+      if (!(onResetCB instanceof Function)) { doThrow('Reset callback is required and must be a function.'); }
+
+
+      // Methods
+      function chooseFile() {
+        if (isLoading) { return; }
+
+        clearError();
+        hiddenFileInput.click();
+      }
+
+      function uploadFile() {
+        var files = hiddenFileInput.files;
+        
+        if (files.length != 1) { doThrow('Exactly one file is required for upload.'); }
+
+        var formData = new FormData();
+        const inputName = type + '_file';
+        formData.append(inputName, files[0]);
+
+        var xhttp = new XMLHttpRequest();
+        const url = '/api/v1/' + type + '-files/store';
+        xhttp.open("POST", url, true);
+
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            var response = JSON.parse(this.responseText);
+            doneLoading();
+            if (response.success) {
+              onSuccess(response, type);
+            } else {
+              displayError(response.message);
+            }
+          }
+        };
+
+        loading();
+        xhttp.send(formData);
+      }
+
+      function onSuccess(response, type) {
+        if (!response.file_id) { doThrow('No file Id found in response object.'); }
+
+        assignFileId(response.file_id);
+        onSuccessCB(response, uploadBlock);
+
+        uploadBlock.removeEventListener("click", chooseFile);
+      }
+
+      function assignFileId(id) {
+        hiddenFileIdInput.value = id;
+      }
+      
+      function clearFileId() {
+        hiddenFileIdInput.value = '';
+      }
+
+      function doThrow(jsError) {
+        const msg = jsError || 'Uploader Widget failed.';
+        console.error('Uploader Widget Error: ' + msg);
+        return;
+      }
+
+      function doneLoading() {
+        isLoading = false;
+        uploadBlock.classList.remove(loadingClass);
+      }
+      
+      function loading() {
+        isLoading = true;
+        uploadBlock.classList.add(loadingClass);
+      }
+
+      function clearError() {
+        errorBlock.innerHTML = '';
+        uploadBlock.classList.remove(errorClass);
+      }
+      
+      function displayError(errMsg) {
+        const msg = errMsg || 'Something went wrong.';
+        errorBlock.innerHTML = msg;
+        uploadBlock.classList.add(errorClass);
+      }
+
+      function reset() {
+        doneLoading();
+        clearError();
+        clearFileId();
+        onResetCB(uploadBlock);
+        uploadBlock.addEventListener("click", chooseFile);
+      }
+
+      function init() {
+        uploadBlock.addEventListener("click", chooseFile);
+        hiddenFileInput.addEventListener("change", uploadFile);
+        resetBtn.addEventListener("click", reset);
+      }
+
+      init();
+    }
+
+    function ImageUploader() {
+      var onImageUploaded = function(response, uploadBlock) {
+        if (!response.url) { doThrow('No image url found in response object.'); }
+
+        displayThumbnail(response.url, uploadBlock);
+      }
+      
+      var onReset = function(uploadBlock) {
+        clearThumbnail(uploadBlock);
+      }
+
+      function displayThumbnail(url, uploadBlock) {
+        uploadBlock.style.backgroundImage = "url('" + url + "')"
+        uploadBlock.classList.add("preview");
+      }
+      
+      function clearThumbnail(uploadBlock) {
+        uploadBlock.style.backgroundImage = "";
+        uploadBlock.classList.remove("preview");
+      }
+
+      function doThrow(jsError) {
+        const msg = jsError || 'Image Uploader Widget failed.';
+        console.error('Image Uploader Widget Error: ' + msg);
+        return;
+      }
+
+      Uploader('.upload-artwork', 'image', '#artwork_error', '#artwork_file', '#image_file_id', '#reset_art', onImageUploaded, onReset);
+    }
+
+    ImageUploader();
+    
+    function AudioUploader() {
+
+      // Variables
+      const pausedClass = 'paused';
+      const playClass = 'play';
+      var audioPlayer = document.querySelector('#audio_player');
+
+      // Validation
+      if (audioPlayer === null) { doThrow('No audio player found.'); }
+
+      // Methods
+      var onAudioUploaded = function(response, uploadBlock) {
+        if (!response.url) { doThrow('No audio url found in response object.'); }
+        
+        assignAudioUrl(response.url);
+        initPlayer(uploadBlock);
+      }
+
+      var onReset = function(uploadBlock) {
+        uploadBlock.classList.remove(pausedClass);
+        uploadBlock.classList.remove(playClass);
+        audioPlayer.pause();
+        clearAudioUrl();
+      }
+
+      function assignAudioUrl(url) {
+        audioPlayer.src = url;
+      }
+      
+      function clearAudioUrl() {
+        audioPlayer.src = '';
+      }
+
+      function initPlayer(uploadBlock) {
+        var isPlaying = false;
+        var playBtn = document.querySelector('.play-btn');
+        var pauseBtn = document.querySelector('.pause-btn');
+
+        if (playBtn === null) { doThrow('Play button not found.'); }
+        if (pauseBtn === null) { doThrow('Pause button not found.'); }
+
+        this.playSong = function() {
+          audioPlayer.play();
+          
+          uploadBlock.classList.remove(pausedClass);
+          uploadBlock.classList.add(playClass);
+        }
+        
+        this.pauseSong = function() {
+          audioPlayer.pause();
+          
+          uploadBlock.classList.remove(playClass);
+          uploadBlock.classList.add(pausedClass);
+        }
+        
+        uploadBlock.classList.add(pausedClass);
+        playBtn.addEventListener("click", this.playSong);
+        pauseBtn.addEventListener("click", this.pauseSong);
+      }
+
+      function doThrow(jsError) {
+        const msg = jsError || 'Audio Uploader Widget failed.';
+        console.error('Audio Uploader Widget Error: ' + msg);
+        return;
+      }
+
+      Uploader('.upload-song', 'audio', '#audio_error', '#audio_file', '#audio_file_id', '#reset_song', onAudioUploaded, onReset);
+    }
+
+    AudioUploader();
+  </script>
+@endsection

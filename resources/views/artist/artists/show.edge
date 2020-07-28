@@ -1,0 +1,42 @@
+@layout('artist/layouts/app')
+
+@section('content')
+  <div id="artist-profile">
+    <div class="container pure-g">
+      <div class="pure-u-1">
+        <h1>Profile</h1>
+        @if(artist.description)
+          <a href="{{ route('artist.edit') }}" class="pure-button button--gradient button--secondary">Edit Profile</a>
+        @else
+          <a href="{{ route('artist.edit') }}" class="pure-button button--gradient button--primary">Create Profile</a>
+        @endif
+      </div>
+    </div>
+    @if(artist.description)
+      <div class="container pure-g">
+        <div class="pure-u-1">
+          <h3>Name</h3>
+          <p>{{ artist.name }}</p>
+        </div>
+      </div>
+      <div class="container pure-g">
+        <div class="pure-u-1">
+          <h3>City</h3>
+          <p>{{ artist.city }}, {{ artist.state }}</p>
+        </div>
+      </div>
+      <div class="container pure-g">
+        <div class="pure-u-1">
+          <h3>Description</h3>
+          <p>{{ artist.description }}</p>
+        </div>
+      </div>
+    @else
+        <div class="container pure-g">
+          <div class="pure-u-1">
+            <p>Your profile is empty!</p>
+          </div>
+        </div>
+    @endif
+  </div>
+@endsection

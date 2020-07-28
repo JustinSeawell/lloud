@@ -13,11 +13,7 @@ const UserRegistration = use("App/Services/UserRegistration");
 const { validate } = use("Validator");
 const User = use("App/Models/User");
 const Account = use("App/Models/Account");
-const Subscription = use("App/Models/Subscription");
 
-/**
- * Resourceful controller for interacting with users
- */
 class UserController {
   /**
    * Create/save a new user.
@@ -169,13 +165,6 @@ class UserController {
     const output = await auth.attempt(email, password);
 
     return output;
-  }
-
-  async adminLogin({ auth, request, response }) {
-    const { email, password } = request.all();
-    await auth.authenticator("session").attempt(email, password);
-
-    return response.route("ArtistApplicationController.index");
   }
 
   async me({ auth, response }) {

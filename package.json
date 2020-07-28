@@ -35,7 +35,8 @@
     "aws-sdk": "^2.657.0",
     "axios": "^0.19.2",
     "moment": "^2.24.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "sharp": "^0.25.4"
   },
   "devDependencies": {
     "node-sass": "^4.13.1"

@@ -1,0 +1,94 @@
+// Text Align
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+// Position
+.pos-rel {
+  position: relative;
+}
+
+// Flexbox
+.flex {
+  display: flex;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+
+// Font weight
+.fw-black {
+  font-weight: 900;
+}
+
+.fw-regular {
+  font-weight: 400;
+}
+
+.fw-light {
+  font-weight: 300;
+}
+
+// Margin
+.m0 {
+  margin: 0;
+}
+
+.m0a {
+  margin: 0 auto;
+}
+
+// Padding
+.p1 {
+  padding: 1rem;
+}
+
+// Responsive
+.mobile {
+  display: initial;
+}
+.tablet {
+  display: none;
+}
+.desktop {
+  display: none;
+}
+@media (min-width: $breakpoint-tablet) {
+  .mobile {
+    display: none;
+  }
+  .tablet {
+    display: initial;
+  }
+  .desktop {
+    display: none;
+  }
+}
+@media (min-width: $breakpoint-desktop) {
+  .mobile {
+    display: none;
+  }
+  .tablet {
+    display: none;
+  }
+  .desktop {
+    display: initial;
+  }
+}
+
+// Shadow
+.text-shadow--black {
+  text-shadow: 0px 2px 4px rgba(28, 28, 28, 0.25);
+}

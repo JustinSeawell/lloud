@@ -1,0 +1,60 @@
+$white: #ffffff;
+$black: #1c1c1c;
+$red: #ff4040;
+
+.white {
+  color: $white;
+}
+
+.red {
+  color: $red;
+}
+
+.black {
+  color: $black;
+}
+
+$white-dark: #fafafa;
+$grey: rgb(223, 223, 223);
+
+$primary-light: #434343;
+$primary: #1c1c1c;
+$primary-dark: #000000;
+
+$accent-light: #ff786c;
+$accent: #ff4040;
+$accent-dark: #c40018;
+
+$success-light: #bef67a;
+$success-medium: #8bc34a;
+$success-dark: #5a9216;
+
+$warning-light: #fff263;
+$warning-medium: #fbc02d;
+$warning-dark: #c49000;
+
+$error-light: #ffc0bb;
+$error-medium: #ff4040;
+$error-dark: #64000c;
+
+.success {
+  color: $success-medium;
+}
+
+.error {
+  color: $error-medium;
+}
+
+// Artist Portal
+$apGrey: #f6f6f6;
+
+$redGradient: linear-gradient(
+  180deg,
+  rgba(255, 64, 64, 1) 0%,
+  rgba(255, 64, 64, 0.75) 100%
+);
+
+.red-gradient {
+  background: rgb(255, 64, 64);
+  background: $redGradient;
+}

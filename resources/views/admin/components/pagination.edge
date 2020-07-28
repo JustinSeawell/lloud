@@ -1,0 +1,6 @@
+<div class="pagination pure-button-group" role="group" aria-label="...">
+  <a href="{{ route(routeName, { page: 1 }) }}" class="pure-button button-small">First</a>
+  <a href="{{ route(routeName, { page: pages.page - 1 }) }}" class="pure-button button-small" {{ pages.page <= 1 ? 'disabled' : ''}}>Prev</a>
+  <a href="{{ route(routeName, { page: pages.page + 1 }) }}" class="pure-button button-small" {{ pages.page >= pages.lastPage ? 'disabled' : ''}}>Next</a>
+  <a href="{{ route(routeName, { page: pages.lastPage }) }}" class="pure-button button-small">Last</a>
+</div>

@@ -1,60 +1,65 @@
 "use strict";
 
-const crypto = require("crypto");
+const moment = require("moment");
 
 const Database = use("Database");
-const Event = use("Event");
+// const Event = use("Event");
 
 const Service = use("App/Services");
-const Account = use("App/Models/Account");
-const Subscription = use("App/Models/Subscription");
-const User = use("App/Models/User");
 const Artist = use("App/Models/Artist");
-const Song = use("App/Models/Song");
-const ArtistSong = use("App/Models/ArtistSong");
+const Account = use("App/Models/Account");
+const User = use("App/Models/User");
+const Subscription = use("App/Models/Subscription");
 
 class ArtistRegistration extends Service {
-  static async registerArtist(artistApplication) {
+  static async registerArtist(userData) {
     const trx = await Database.beginTransaction();
 
     try {
-      /**
-       * Create the artist account, and submit
-       * their first song via the application data.
-       */
+      const newUser = await User.create(
+        {
+          email: userData.email,
+          password: userData.password,
+          username: userData.artist_name,
+        },
+        trx
+      );
+
+      const artistAccount = await Account.create(
+        {
+          user_id: newUser.id,
+          account_type_id: 3,
+          likes_balance: 20,
+        },
+        trx
+      );
+
+      const now = moment();
+      const freeSubscriptionStart = now.format("YYYY-MM-DD HH:mm:ss");
+      const freeSubscriptionEnd = now
+        .add(30, "days")
+        .format("YYYY-MM-DD HH:mm:ss");
+      const subscription = await Subscription.create(
+        {
+          account_id: artistAccount.id,
+          plan_id: 2, // Freemium
+          started_at: freeSubscriptionStart,
+          ended_at: freeSubscriptionEnd,
+          is_active: true,
+        },
+        trx
+      );
+
       const artist = await Artist.create(
         {
-          name: artistApplication.name,
-          email: artistApplication.email,
-          city: artistApplication.city,
-          state: artistApplication.state,
-          zipcode: artistApplication.zipcode,
-          country: artistApplication.country,
-          description: artistApplication.description,
-        },
-        trx
-      );
-
-      const song = await Song.create(
-        {
-          title: artistApplication.song_title,
-          audio_file_id: artistApplication.audio_file_id,
-          image_file_id: artistApplication.image_file_id,
-        },
-        trx
-      );
-
-      await ArtistSong.create(
-        {
-          artist_id: artist.id,
-          song_id: song.id,
+          name: userData.artist_name,
+          email: userData.email,
+          account_id: artistAccount.id,
         },
         trx
       );
 
       await trx.commit();
-
-      Event.fire("artist_application::approved", artistApplication.toJSON());
     } catch (err) {
       console.log(err);
       await trx.rollback();

@@ -51,6 +51,10 @@ class FileUploader extends Service {
     return timestamp + "-" + fileName;
   }
 
+  processFileName(fileObj) {
+    return this.addTimestampToFileName(this.cleanupFileName(fileObj));
+  }
+
   async uploadAudioFileToS3(fileObj) {
     try {
       const fileName = this.addTimestampToFileName(

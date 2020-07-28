@@ -4,6 +4,8 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const moment = require("moment");
+
 const Song = use("App/Models/Song");
 
 /**
@@ -19,41 +21,16 @@ class SongController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ auth, response, params }) {
+  async index({ params, view }) {
     const page = params.page || 1;
 
-    const results = await Song.query()
+    const songs = await Song.query()
       .with("audioFile")
       .with("imageFile")
-      .with("artists")
-      .with("likes")
-      .whereNull("deleted_at")
-      .whereNotNull("approved_at")
-      .orderBy("approved_at", "desc")
+      .orderBy("created_at", "desc")
       .paginate(page);
 
-    /**
-     * TODO:
-     * - Refactor this to pull likesCount
-     * directly from query
-     */
-    results.rows = results.rows.map((song) => {
-      const likes = song.toJSON().likes;
-      song.likesCount = likes.length;
-
-      let userLikedThisSong = false;
-      likes.forEach((like) => {
-        if (like.user_id == auth.user.id) {
-          userLikedThisSong = true;
-        }
-      });
-
-      song.likedByUser = userLikedThisSong;
-
-      return song;
-    });
-
-    response.send(results);
+    return view.render("admin.songs.index", { songs });
   }
 
   /**
@@ -86,7 +63,26 @@ class SongController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params, request, response, view }) {}
+  async show({ params, request, response, view }) {
+    const song = await Song.query()
+      .where("id", params.id)
+      .with("audioFile")
+      .with("imageFile")
+      .with("artists")
+      .with("genre")
+      .first();
+
+    const artist = song.getRelated("artists").rows[0];
+
+    let displayTime;
+    if (song.approved_at) {
+      displayTime = moment(song.approved_at).fromNow();
+    } else if (song.rejected_at) {
+      displayTime = moment(song.rejected_at).fromNow();
+    }
+
+    return view.render("admin.songs.show", { song, artist, displayTime });
+  }
 
   /**
    * Render a form to update an existing song.
@@ -107,7 +103,34 @@ class SongController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response }) {
+    const req = request.only(["result"]);
+
+    try {
+      const song = await Song.findOrFail(parseInt(params.id));
+
+      const nowStr = moment().format("YYYY-MM-DD HH:mm:ss");
+      if (req.result == "approve") {
+        song.approved_at = nowStr;
+      } else if (req.result == "deny") {
+        song.rejected_at = nowStr;
+      }
+
+      await song.save();
+
+      // TODO: setup new emails
+      // if (req.result == "approve") {
+      //   Event.fire("artist_application::denied", application.toJSON());
+      // } else if (req.result == "deny") {
+      //   Event.fire("artist_application::denied", application.toJSON());
+      // }
+    } catch (err) {
+      console.log(err);
+    }
+
+    // TODO: Add flash msg
+    return response.route("admin.songs");
+  }
 
   /**
    * Delete a song with id.

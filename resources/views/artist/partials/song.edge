@@ -1,0 +1,8 @@
+<div class="song-wrapper">
+  <div class="song" style="background-image: url('{{ song.getRelated('imageFile').location }}');">
+    @include('artist.partials.song-approval')
+    <div class="song__info-bar">
+      <h4 class="song__title">{{ song.title }}</h4>
+    </div>
+  </div>
+</div>

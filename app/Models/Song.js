@@ -19,6 +19,10 @@ class Song extends Model {
   likes() {
     return this.hasMany("App/Models/Like");
   }
+
+  genre() {
+    return this.belongsTo("App/Models/Genre");
+  }
 }
 
 module.exports = Song;

@@ -1,0 +1,51 @@
+@layout('artist/layouts/app')
+
+@section('content')
+  <div id="artist-profile-edit">
+    <div class="container pure-g">
+      <div class="pure-u-1">
+        <h1>Edit Profile</h1>
+      </div>
+    </div>
+    <div class="container pure-g">
+      <div class="pure-u-1">
+      <form method="POST" action="{{ route('artist.update', { id: artist.id }) }}" class="pure-form pure-form-stacked">
+          <fieldset>
+            <div class="field pure-u-1">
+              <label for="name">Artist Name</label>
+              <input class="pure-input-1" id="name" name="name" type="text" placeholder="Artist Name" value="{{ artist.name ? artist.name : '' }}" required>
+              {{ elIf('<span class="error">$self</span>', getErrorFor('name'), hasErrorFor('name')) }}
+            </div>
+            <div class="field pure-u-1">
+              <label for="city">City</label>
+              <input id="city" name="city" class="pure-input-1" type="text" placeholder="City" value="{{ artist.city ? artist.city : '' }}" required>
+              {{ elIf('<span class="error">$self</span>', getErrorFor('city'), hasErrorFor('city')) }}
+            </div>
+            <div class="field pure-u-1">
+              <label for="state">State</label>
+              <input id="state" name="state" class="pure-input-1" type="text" placeholder="State" value="{{ artist.state ? artist.state : '' }}" required>
+              {{ elIf('<span class="error">$self</span>', getErrorFor('state'), hasErrorFor('state')) }}
+            </div>
+            <div class="field pure-u-1">
+              <label for="zipcode">Zipcode</label>
+              <input id="zipcode" name="zipcode" class="pure-input-1" type="text" placeholder="Zipcode" value="{{ artist.zipcode ? artist.zipcode : '' }}" required>
+              {{ elIf('<span class="error">$self</span>', getErrorFor('zipcode'), hasErrorFor('zipcode')) }}
+            </div>
+            <div class="field pure-u-1">
+              <label for="country">Country</label>
+              <input id="country" name="country" class="pure-input-1" type="text" placeholder="Country" value="{{ artist.country ? artist.country : '' }}" required>
+              {{ elIf('<span class="error">$self</span>', getErrorFor('country'), hasErrorFor('country')) }}
+            </div>
+            <div class="field pure-u-1">
+              <label for="description">Bio</label>
+              <textarea id="description" rows="6" name="description" class="pure-input-1" placeholder="A description of you and your music" required>{{ artist.description ? artist.description : '' }}</textarea>
+              <span class="pure-form-message">This will appear on your artist profile.</span>
+              {{ elIf('<span class="error">$self</span>', getErrorFor('description'), hasErrorFor('description')) }}
+            </div>
+            <button type="submit" class="pure-button button--gradient button--primary">Update Profile</button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+@endsection

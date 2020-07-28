@@ -4,61 +4,24 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const Song = use("App/Models/Song");
-
 /**
- * Resourceful controller for interacting with songs
+ * Resourceful controller for interacting with users
  */
-class SongController {
+class UserController {
   /**
-   * Show a list of all songs.
-   * GET songs
+   * Show a list of all users.
+   * GET users
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ auth, response, params }) {
-    const page = params.page || 1;
-
-    const results = await Song.query()
-      .with("audioFile")
-      .with("imageFile")
-      .with("artists")
-      .with("likes")
-      .whereNull("deleted_at")
-      .whereNotNull("approved_at")
-      .orderBy("approved_at", "desc")
-      .paginate(page);
-
-    /**
-     * TODO:
-     * - Refactor this to pull likesCount
-     * directly from query
-     */
-    results.rows = results.rows.map((song) => {
-      const likes = song.toJSON().likes;
-      song.likesCount = likes.length;
-
-      let userLikedThisSong = false;
-      likes.forEach((like) => {
-        if (like.user_id == auth.user.id) {
-          userLikedThisSong = true;
-        }
-      });
-
-      song.likedByUser = userLikedThisSong;
-
-      return song;
-    });
-
-    response.send(results);
-  }
+  async index({ request, response, view }) {}
 
   /**
-   * Render a form to be used for creating a new song.
-   * GET songs/create
+   * Render a form to be used for creating a new user.
+   * GET users/create
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -68,8 +31,8 @@ class SongController {
   async create({ request, response, view }) {}
 
   /**
-   * Create/save a new song.
-   * POST songs
+   * Create/save a new user.
+   * POST users
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -78,8 +41,8 @@ class SongController {
   async store({ request, response }) {}
 
   /**
-   * Display a single song.
-   * GET songs/:id
+   * Display a single user.
+   * GET users/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -89,8 +52,8 @@ class SongController {
   async show({ params, request, response, view }) {}
 
   /**
-   * Render a form to update an existing song.
-   * GET songs/:id/edit
+   * Render a form to update an existing user.
+   * GET users/:id/edit
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -100,8 +63,8 @@ class SongController {
   async edit({ params, request, response, view }) {}
 
   /**
-   * Update song details.
-   * PUT or PATCH songs/:id
+   * Update user details.
+   * PUT or PATCH users/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -110,14 +73,21 @@ class SongController {
   async update({ params, request, response }) {}
 
   /**
-   * Delete a song with id.
-   * DELETE songs/:id
+   * Delete a user with id.
+   * DELETE users/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
   async destroy({ params, request, response }) {}
+
+  async login({ auth, request, response }) {
+    const { email, password } = request.all();
+    await auth.authenticator("session").attempt(email, password);
+
+    return response.route("admin.songs");
+  }
 }
 
-module.exports = SongController;
+module.exports = UserController;

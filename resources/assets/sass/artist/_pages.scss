@@ -1,0 +1,331 @@
+.artist-applications {
+  .card {
+    // TODO: Move this
+    .approval {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      z-index: 1;
+      background-color: $white;
+      width: 25px;
+      height: 25px;
+      color: $primary;
+      box-shadow: 5px 10px 18px #88888852;
+      padding: 0.25rem;
+      border: 1px solid $grey;
+      border-radius: 3px;
+    }
+
+    .top {
+      min-height: 200px;
+      height: 50%;
+      background-position: center;
+      background-size: cover;
+      border-radius: 5px 5px 0 0;
+    }
+
+    .bottom {
+      padding: 1rem;
+    }
+  }
+  .card:hover {
+    background-color: $accent;
+    color: $white;
+    box-shadow: none;
+
+    .top {
+      opacity: 0.75;
+    }
+  }
+}
+.artist-application {
+  padding: 1rem 0 0 0;
+
+  .approval {
+    margin: 0 0 1rem 0;
+  }
+  .album-art {
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    background-color: $grey;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+.home {
+  .arrow-wrapper {
+    height: 175px;
+    overflow-y: hidden;
+  }
+  .arrow {
+    margin-top: -117px;
+  }
+
+  #learn-more {
+    #red-arrow {
+      float: right;
+      clear: right;
+    }
+    .learn-more-link {
+      box-sizing: border-box;
+      display: inline-block;
+      padding: 0.5rem 2rem;
+      color: $primary;
+      border: 2px solid #ff4040;
+    }
+  }
+  .upload-song-link {
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 0.5rem 2rem;
+    color: $primary;
+    border: 2px solid #1c1c1c;
+  }
+
+  .screenshot {
+    padding: 2rem;
+  }
+  .screenshot img {
+    width: 100%;
+    height: auto;
+  }
+
+  .reversible-at-mobile {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
+@media (min-width: $breakpoint-tablet) {
+  .home {
+    .arrow-wrapper {
+      height: initial;
+      overflow-y: initial;
+    }
+    .arrow {
+      margin-top: initial;
+    }
+
+    #learn-more {
+      position: relative;
+      height: 75px;
+
+      .learn-more-link {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 0 1.5rem;
+      }
+    }
+
+    .screenshot-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    .screenshot {
+      padding: 0;
+      width: 200px;
+      text-align: right;
+    }
+
+    .reversible-at-mobile {
+      flex-direction: initial;
+    }
+  }
+}
+@media (min-width: $breakpoint-desktop) {
+  .home {
+    #learn-more {
+      #red-arrow {
+        float: none;
+        text-align: center;
+      }
+    }
+
+    .hero h1 {
+      font-size: 7em;
+    }
+
+    .screenshot-wrapper {
+      display: flex;
+      justify-content: end;
+      box-sizing: border-box;
+      padding: 1rem 2rem;
+    }
+
+    .screenshot {
+      width: 300px;
+    }
+  }
+}
+
+#what-is-lloud {
+  .display {
+    font-size: 2.75rem;
+  }
+
+  .walkthrough-step {
+    margin: 0 0 2rem 0;
+
+    h1 {
+      margin: 0;
+    }
+
+    p {
+      font-size: 1.1rem;
+    }
+
+    .screenshot {
+      height: 550px;
+      display: flex;
+      justify-content: center;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+    .screenshot img {
+      height: 100%;
+      width: auto;
+    }
+
+    .walkthrough-number {
+      padding: 0 2rem;
+    }
+  }
+}
+
+.help-center {
+  h1 {
+    font-size: 2.75rem;
+  }
+
+  .help-link-group {
+    list-style-type: none;
+    margin: 0 0 3rem 0;
+    padding: 0;
+  }
+
+  li {
+    margin: 0 0 1rem 0;
+  }
+
+  .help-link {
+    font-weight: 300;
+  }
+  .help-link a:hover {
+    color: $red;
+  }
+}
+
+#about {
+  .content-block {
+    padding: 0.5rem 0 0 0;
+  }
+}
+@media (min-width: $breakpoint-tablet) {
+  #about {
+    .content-block {
+      padding: 2rem 0;
+    }
+  }
+}
+
+@media (min-width: $breakpoint-tablet) {
+  .contact {
+    .contact-input {
+      margin: 0 0 1.5rem 0;
+    }
+  }
+}
+
+#privacy,
+#terms {
+  p {
+    line-height: 1.5rem;
+  }
+
+  ul,
+  li {
+    line-height: 1.5rem;
+  }
+
+  ol {
+    li {
+      margin-bottom: 1rem;
+    }
+  }
+
+  a {
+    color: $red;
+  }
+
+  .indent {
+    margin-left: 2.25rem;
+    font-size: 0.9rem;
+  }
+}
+
+#artist-signup {
+  #signup-form-card {
+    position: relative;
+    margin: 2rem 0;
+    padding: 0.5rem 1rem 1rem 1rem;
+  }
+
+  #signup-content {
+    margin-top: 5rem;
+  }
+}
+@media (min-width: $breakpoint-tablet) {
+  #artist-signup {
+    #signup-form-card {
+      padding: 1rem 2rem 2rem 2rem;
+    }
+
+    #signup-header {
+      margin: 0 auto;
+      text-align: center;
+      padding: 1.5rem 0 0 0;
+    }
+  }
+}
+
+#artist-dashboard {
+  .audience {
+    display: flex;
+  }
+
+  .info {
+    text-align: center;
+  }
+
+  .likes {
+    flex-basis: 40%;
+    // border: 1px solid #1c1c1c;
+    background: #f6f6f6;
+    padding: 0.5rem;
+    color: #ff4040;
+    border-radius: 15px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .number {
+    font-size: 42px;
+    font-family: "Lato", sans-serif;
+  }
+
+  .icon {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+  }
+}

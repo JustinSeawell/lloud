@@ -1,0 +1,143 @@
+@layout('admin/layouts/app')
+
+@section('content')
+  <div id="admin-songs-show">
+    <div class="container">
+      
+      <div class="pure-g">
+        <div class="pure-u-1">
+          <a href="{{ route('admin.songs') }}" class="pure-button button-small button-outline-primary">
+            <i class="material-icons md-18">arrow_back</i>
+            Songs
+          </a>
+          <br><br>
+          <h1>Song</h1>
+        </div>
+      </div>
+      <br>
+      <div class="pure-g">
+        <div class="pure-u-1">
+          <form id="approval_form" method="POST" action="{{ route('admin.songs.update', { id: song.id }) }}">
+            <input type="hidden" name="result" id="result" value="" required>
+          </form>
+
+          @if(song.approved_at)
+            @!component('components/message', type = 'success', txt = 'Approved: ' + displayTime)
+          @elseif(song.rejected_at)
+            @!component('components/message', type = 'error', txt = 'Denied: ' + displayTime)
+          @else
+            <button id="approve" class="approval-ctrl pure-button button">
+              <i class="material-icons success">check_circle</i>
+              Approve
+            </button>
+            <button id="deny" class="approval-ctrl pure-button button">
+              <i class="material-icons error">cancel</i>
+              Deny
+            </button>
+          @endif
+        </div>
+      </div>
+      
+      <hr>
+      <div class="pure-g">
+        <div class="pure-u-1 pure-form card">
+          <legend>Song</legend>
+          <div class="field">
+            <h2 class="display">{{ song.title }}</h2>
+          </div>
+          
+          <div class="field">
+            <strong>Genre</strong>
+            <p>{{ song.getRelated('genre').display_name }}</p>
+          </div>
+          
+          <div class="field">
+            <strong>Artwork</strong>
+            <p>
+              <img src="{{ song.getRelated('imageFile').location }}" alt="">
+            </p>
+          </div>
+          
+          <div class="field">
+            <strong>Audio</strong>
+            <p>
+              <audio controls>
+                <source src="{{ song.getRelated('audioFile').location }}" type="audio/mpeg">
+                Your browser does not support the audio tag.
+              </audio> 
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="pure-g">
+        <div class="pure-u-1 pure-form card">
+          <legend>Artist</legend>
+          <div class="field">
+            <h3>{{ artist.name }}</h3>
+            <br>
+          </div>
+          
+          <div class="field">
+            <strong>Email</strong>
+            <p>
+              <a href="mailto:{{ artist.email }}" class="red">{{ artist.email }}</a>
+            </p>
+          </div>
+          
+          <div class="field">
+            <strong>City</strong>
+            @if(artist.city)
+              <p>
+                {{ artist.city }}, {{ artist.state }}<br>
+                {{ artist.zipcode }}<br>
+                {{ artist.country }}
+              </p>
+            @else
+              <p>-</p>
+            @endif
+          </div>
+          <div class="field">
+            <strong>Description</strong>
+            @if(artist.description)
+              <p>{{ artist.description }}</p>
+            @else
+              <p>-</p>
+            @endif
+          </div>
+        </div>
+      </div>
+      
+      
+    
+    </div>
+  </div>
+@endsection
+
+@section('script')
+  <script>
+    function approvalButtons() {
+      this.buttons = document.querySelectorAll('.approval-ctrl');
+
+      this.setup = function() {
+        for (var i = 0; i < this.buttons.length; i++) {
+          this.buttons[i].addEventListener("click", this.postResult);
+        }
+      }
+
+      this.postResult = function() {
+        var confirmation = confirm("Are you sure you want to " + this.id + " this song?");
+        if (!confirmation) {
+          return;
+        }
+
+        document.getElementById('result').value = this.id;
+
+        const form = document.querySelector('#approval_form');
+        form.submit();
+      }
+
+      setup();
+    }
+    approvalButtons();
+  </script>
+@endsection

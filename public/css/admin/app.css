@@ -1,0 +1,205 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;900&family=Raleway:wght@700;800;900&display=swap");
+html,
+body {
+  font-size: 18px;
+  color: #1c1c1c;
+  font-weight: 300; }
+
+hr {
+  border: none;
+  border-top: 1px solid #dddddd; }
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Lato", sans-serif;
+  margin: 0;
+  font-weight: 400; }
+
+p,
+.body {
+  font-family: "Lato", sans-serif;
+  margin: 0.5rem 0; }
+
+img {
+  width: 100%;
+  height: auto;
+  max-width: 50vw; }
+
+.container {
+  padding: 1rem; }
+
+.field {
+  margin-bottom: 1rem; }
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 56px;
+  border-bottom: 1px solid #dddddd;
+  box-sizing: border-box;
+  background-color: #ffffff; }
+
+.card {
+  background-color: #ffffff;
+  border-radius: 5px;
+  padding: 1rem;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 8px rgba(28, 28, 28, 0.05);
+  border: 1px solid rgba(221, 221, 221, 0.562);
+  margin: 0.5rem; }
+
+.songs {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: start;
+  flex-flow: row wrap; }
+
+.song-wrapper {
+  flex-basis: 50%;
+  height: auto;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem;
+  text-decoration: none;
+  color: #1c1c1c; }
+
+.song-wrapper:before {
+  content: "";
+  float: left;
+  padding-top: 100%; }
+
+@media (min-width: 768px) {
+  .song-wrapper {
+    flex-basis: 25%; } }
+
+@media (min-width: 1280px) {
+  .song-wrapper {
+    flex-basis: 10%; } }
+
+.song {
+  border-radius: 5px;
+  background-color: #f6f6f6;
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+  width: 100%;
+  box-shadow: 0px 1px 2px rgba(28, 28, 28, 0.25);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  position: relative; }
+  .song .song__approval {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #f6f6f6;
+    box-shadow: 0px 1px 2px rgba(28, 28, 28, 0.25);
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    text-align: center; }
+  .song .song__info-bar {
+    background: rgba(28, 28, 28, 0.5);
+    width: 100%;
+    padding: 0.5rem;
+    color: #fff; }
+  .song .song__title {
+    margin: 0;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); }
+
+.song:before {
+  content: "";
+  float: left;
+  padding-top: 100%; }
+
+.message, .message--success, .message--warning, .message--error {
+  padding: 1rem;
+  border-radius: 3px;
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center; }
+  .message .material-icons, .message--success .material-icons, .message--warning .material-icons, .message--error .material-icons {
+    margin: 0 0.5rem 0 0; }
+
+.message {
+  background-color: #e0e0e0; }
+
+.message--success {
+  background-color: #bef67a;
+  color: #5a9216; }
+
+.message--warning {
+  background-color: #fff263;
+  color: #c49000; }
+
+.message--error {
+  background-color: #ffc0bb;
+  color: #64000c; }
+
+.pure-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between; }
+  .pure-button .material-icons {
+    margin: 0 0.5rem 0 0; }
+
+.pure-button-primary {
+  background-color: #ff4040; }
+
+.button-xsmall {
+  font-size: 70%; }
+
+.button-small {
+  font-size: 85%; }
+
+.button-large {
+  font-size: 110%; }
+
+.button-xlarge {
+  font-size: 125%; }
+
+.button-outline-primary {
+  background: none;
+  border-radius: 5px; }
+
+.button-outline-primary {
+  color: #ff4040;
+  border: 1px solid #ff4040; }
+
+.admin-portal {
+  background-color: #f8f8f8;
+  position: relative; }
+  .admin-portal .sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 56px; }
+
+.red {
+  color: #ff4040; }
+
+.display {
+  font-weight: 900;
+  font-family: "Raleway", sans-serif; }
+
+.txt-right {
+  text-align: right; }
+
+.success {
+  color: #8bc34a; }
+
+.error {
+  color: #ff4040; }

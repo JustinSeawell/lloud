@@ -3,7 +3,7 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-class AdminOnly {
+class ArtistOnly {
   /**
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -13,16 +13,17 @@ class AdminOnly {
     try {
       const user = await auth.authenticator("session").getUser();
       const acct = await user.account().first();
-      if (acct.account_type_id !== 1) {
-        throw new Error("Only admin users are allowed.");
+
+      if (acct.account_type_id !== 3) {
+        throw new Error("Only artist users are allowed.");
       }
     } catch (err) {
       session.flash({ error: err.message });
-      return response.route("admin.login");
+      return response.route("artist.home");
     }
 
     await next();
   }
 }
 
-module.exports = AdminOnly;
+module.exports = ArtistOnly;

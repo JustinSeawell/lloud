@@ -16,7 +16,9 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
 
-// Website
+// ======================================
+// PUBLIC WEBSITE
+// ======================================
 Route.on("/").render("site.home");
 Route.on("/what-is-lloud").render("site.what-is-lloud");
 Route.on("/help").render("site.help").as("help-center");
@@ -41,12 +43,9 @@ Route.on("/terms").render("site.terms").as("terms");
 Route.get("/contact", "ContactFormController.create").as("contact");
 Route.post("/contact", "ContactFormController.store").as("contact.store");
 
-Route.group(() => {
-  Route.get("artists/apply", "ArtistApplicationController.create");
-  Route.post("artists/apply", "ArtistApplicationController.store");
-}).middleware(["guest"]);
-
-// Password Recovery
+// ======================================
+// PASSWORD RECOVERY
+// ======================================
 Route.get("auth/reset/:resetToken", "PasswordController.reset")
   .middleware("guest")
   .as("password.edit");
@@ -55,7 +54,9 @@ Route.post("auth/reset/:resetToken", "PasswordController.resetPassword")
   .middleware("guest")
   .as("password.update");
 
-// API
+// ======================================
+// WEB API
+// ======================================
 Route.group(() => {
   Route.post("auth/recover", "PasswordController.recover").middleware("guest");
 
@@ -74,7 +75,10 @@ Route.group(() => {
 
   Route.get("songs/:page?", "SongController.index").middleware("auth");
   Route.post("songs/:id/like", "LikeController.store").middleware("auth");
-  Route.post("songs/:id/offensive-report", "OffensiveSongReportController.store").middleware("auth");
+  Route.post(
+    "songs/:id/offensive-report",
+    "OffensiveSongReportController.store"
+  ).middleware("auth");
 
   Route.get("likes", "LikeController.index").middleware("auth");
 
@@ -99,24 +103,69 @@ Route.group(() => {
     "purchase-updates/verify",
     "PurchaseReceiptController.verify"
   ).middleware("auth");
+
+  Route.post("image-files/store", "ImageFileController.store");
+  Route.post("audio-files/store", "AudioFileController.store");
 }).prefix("api/v1");
 
-// Admin
+// ======================================
+// ADMIN PORTAL
+// ======================================
 Route.group(() => {
   Route.on("login").render("admin.login");
-  Route.post("login", "UserController.adminLogin")
-    .middleware("guest")
-    .as("admin.login");
-  Route.get("artist-applications/:page?", "ArtistApplicationController.index")
-    .middleware("admin")
-    .as("admin.artist-apps");
-  Route.get("artist-applications/show/:id", "ArtistApplicationController.show")
-    .middleware("admin")
-    .as("admin.artist-app");
+  Route.post("login", "UserController.login").as("admin.login");
+})
+  .prefix("admin")
+  .namespace("Admin");
+
+Route.group(() => {
+  Route.get("/", "HomeController.home").as("admin.home");
+  Route.get("songs/page/:page?", "SongController.index").as("admin.songs");
+  Route.get("songs/:id", "SongController.show").as("admin.songs.show");
+  Route.post("songs/:id", "SongController.update").as("admin.songs.update");
+
+  Route.get(
+    "artist-applications/:page?",
+    "ArtistApplicationController.index"
+  ).as("admin.artist-apps");
+  Route.get(
+    "artist-applications/show/:id",
+    "ArtistApplicationController.show"
+  ).as("admin.artist-app");
   Route.post(
     "artist-applications/:id/result",
     "ArtistApplicationController.update"
-  )
-    .middleware("admin")
-    .as("admin.artist-app.update");
-}).prefix("admin");
+  ).as("admin.artist-app.update");
+})
+  .prefix("admin")
+  .middleware("admin")
+  .namespace("Admin");
+
+// ======================================
+// ARTIST PORTAL
+// ======================================
+Route.group(() => {
+  Route.get("/apply", "HomeController.home"); // Redirect old apply page
+
+  Route.get("/", "HomeController.home").as("artist.home");
+  Route.post("users", "UserController.store").as("artist.user.store");
+  Route.get("login", "UserController.login").as("artist.user.login");
+  Route.post("login", "UserController.authenticate").as("artist.user.auth");
+})
+  .namespace("Artist")
+  .prefix("artists");
+
+Route.group(() => {
+  Route.get("songs/create", "SongController.create").as("artist.songs.create");
+  Route.post("songs/store", "SongController.store").as("artist.songs.store");
+  Route.get("songs", "SongController.index").as("artist.songs.index");
+
+  Route.get("profile", "ArtistController.show").as("artist.show");
+  Route.get("profile/edit", "ArtistController.edit").as("artist.edit");
+  Route.post("profile/:id", "ArtistController.update").as("artist.update");
+
+  Route.get("logout", "UserController.logout").as("artist.user.logout");
+})
+  .namespace("Artist")
+  .prefix("artists")
+  .middleware("artist");

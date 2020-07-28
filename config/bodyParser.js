@@ -127,7 +127,7 @@ module.exports = {
     | is to true. Otherwise everything is processed manually.
     |
     */
-    processManually: [""],
+    processManually: ["/api/v1/audio-files/store"],
 
     /*
     |--------------------------------------------------------------------------

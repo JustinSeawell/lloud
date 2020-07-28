@@ -1,0 +1,96 @@
+@import "fonts";
+@import "colors";
+@import "icons";
+
+// Vars
+$breakpoint-mobile: 414px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1280px;
+
+$navHeight: 56px;
+
+// Global Defaults
+html {
+  font-size: $default-font-size;
+}
+
+html,
+button,
+input,
+select,
+textarea,
+.pure-g [class*="pure-u"] {
+  font-family: $body;
+}
+
+a {
+  text-decoration: none;
+  color: $primary;
+}
+
+p {
+  font-weight: 300;
+  line-height: 2rem;
+  font-size: 1.1rem;
+}
+
+h1 {
+  font-family: $display;
+  font-weight: 900;
+}
+
+h2,
+h3,
+h4,
+legend {
+  font-family: $display;
+  font-weight: normal;
+}
+
+label {
+  h2,
+  h3,
+  h4 {
+    margin: 0;
+  }
+}
+
+.content,
+.full-height {
+  min-height: calc(100vh - #{$navHeight});
+}
+
+.container {
+  padding: 0 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+@media (min-width: $breakpoint-tablet) {
+  .container {
+    margin: 0 auto;
+    max-width: 1920px;
+  }
+}
+
+::-moz-selection {
+  /* Code for Firefox */
+  color: $red;
+  background: $white;
+}
+
+::selection {
+  color: $black;
+  background: $red;
+}
+
+// Utility Classes
+@import "util";
+
+// Layout Specific
+@import "layouts";
+
+// Widgets
+@import "widgets";
+
+// Page Specific
+@import "pages";

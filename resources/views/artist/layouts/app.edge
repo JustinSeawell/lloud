@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    @include('artist.partials.head')
+  </head>
+  <body class="artist-portal">
+
+    <aside class="sidebar">
+      <h4 class="l4a-logo"><span class="red">Lloud</span>. for Artists</h4>
+    <a class="sidebar-link {{ (url == route('artist.home')) ? 'red' : '' }}" href="{{ route('artist.home') }}">
+        <i class="sidebar-link__icon material-icons md-24">home</i>
+      <span class="sidebar-link__text">Home</span>
+      </a>
+      <a class="sidebar-link {{ (url == route('artist.show')) ? 'red' : '' }}" href="{{ route('artist.show') }}">
+        <i class="sidebar-link__icon material-icons md-24">account_circle</i>
+        <span class="sidebar-link__text">Profile</span>
+      </a>
+      <a class="sidebar-link {{ (url == route('artist.songs.index')) ? 'red' : '' }}" href="{{ route('artist.songs.index') }}">
+        <i class="sidebar-link__icon material-icons md-24">library_music</i>
+        <span class="sidebar-link__text">Music</span>
+      </a>
+    </aside>
+
+    <div class="main">
+      <div class="topbar">
+        <button type="button" id="artist-badge" class="artist-badge pure-button"></button>
+        <div class="menu animate__animated animate__fadeIn">
+        <a href="{{ route('artist.user.logout') }}" class="menu__link">Logout</a>
+        </div>
+      </div>
+      <div class="content">
+        @!section('content')
+      </div>
+    </div>
+
+    @!section('script')
+    <script>
+      function Badge() {
+        
+        // Variables
+        const badge = document.querySelector('#artist-badge');
+        const menu = document.querySelector('.topbar .menu');
+        var menuIsOpen = false;
+
+        // Methods
+        this.openMenu = function() {
+          menu.classList.add('open');
+          menuIsOpen = true;
+        }
+        
+        this.closeMenu = function() {
+          menu.classList.remove('open');
+          menuIsOpen = false;
+        }
+
+        this.toggleMenu = function() {
+          (menuIsOpen) ? closeMenu() : openMenu();
+        }
+
+        // Init
+        badge.addEventListener("click", this.toggleMenu);
+      }
+
+      Badge();
+    </script>
+  </body>
+</html>

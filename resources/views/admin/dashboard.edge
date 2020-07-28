@@ -1,0 +1,36 @@
+@layout('admin/layouts/app')
+
+@section('content')
+  <div id="admin-dashboard">
+    <div class="container">
+      
+      <div class="pure-g">
+        <div class="pure-u-1">
+          <h1>Welcome back, <span class="red">{{ user.username }}</span>.</h1>
+        </div>
+      </div>
+      <br>
+      <div class="pure-g">
+        <div class="pure-u-1-3">
+          <div class="card">
+            <h1>0</h1>
+            <small>Purchases</small>
+          </div>
+        </div>
+        <div class="pure-u-1-3">
+          <div class="card">
+            <h1>0</h1>
+            <small>Likes</small>
+          </div>
+        </div>
+        <div class="pure-u-1-3">
+          <div class="card">
+            <h1>0</h1>
+            <small>Users</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+@endsection

@@ -1,0 +1,9 @@
+<div class="song__approval">
+  @if(song.approved_at)
+  <i class="material-icons success">check_circle</i>
+  @elseif(song.rejected_at)
+  <i class="material-icons error">cancel</i>
+  @else
+  <i class="material-icons">help</i>
+  @endif
+</div>
