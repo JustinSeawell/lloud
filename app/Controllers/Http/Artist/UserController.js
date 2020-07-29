@@ -183,20 +183,22 @@ class UserController {
       return response.redirect("back");
     }
 
-    /**
-     * - Check that user account type is 3
-     * -
-     */
     const user = await auth.authenticator("session").getUser();
     const acct = await user.account().first();
 
     if (acct.account_type_id !== 3) {
-      await auth.authenticator("session").logout();
-      session.flash({
-        errorMessage:
-          "You must sign up as an artist before you can login to the artist portal.",
-      });
-      return response.redirect("back");
+      const artist = await Artist.findBy("account_id", acct.id);
+      if (!artist) {
+        await auth.authenticator("session").logout();
+        session.flash({
+          errorMessage:
+            "You must sign up as an artist before you can login to the artist portal.",
+        });
+        return response.redirect("back");
+      }
+
+      acct.account_type_id = 3;
+      acct.save();
     }
 
     return response.route("artist.home");
