@@ -75,6 +75,7 @@ Route.group(() => {
 
   Route.get("songs/:page?", "SongController.index").middleware("auth");
   Route.post("songs/:id/like", "LikeController.store").middleware("auth");
+  Route.post("songs/:id/play", "PlayController.store").middleware("auth");
   Route.post(
     "songs/:id/offensive-report",
     "OffensiveSongReportController.store"

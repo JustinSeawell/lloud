@@ -20,6 +20,10 @@ class Song extends Model {
     return this.hasMany("App/Models/Like");
   }
 
+  plays() {
+    return this.hasMany("App/Models/Play");
+  }
+
   genre() {
     return this.belongsTo("App/Models/Genre");
   }

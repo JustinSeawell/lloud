@@ -27,6 +27,7 @@ class SongController {
       .with("imageFile")
       .with("artists")
       .with("likes")
+      .with("plays")
       .whereNull("deleted_at")
       .whereNotNull("approved_at")
       .orderBy("approved_at", "desc")
@@ -40,6 +41,9 @@ class SongController {
     results.rows = results.rows.map((song) => {
       const likes = song.toJSON().likes;
       song.likesCount = likes.length;
+
+      const plays = song.toJSON().plays;
+      song.playsCount = plays.length;
 
       let userLikedThisSong = false;
       likes.forEach((like) => {
