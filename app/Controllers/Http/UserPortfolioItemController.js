@@ -4,26 +4,45 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const Play = use("App/Models/Play");
+const Like = use("App/Models/Like");
 
 /**
- * Resourceful controller for interacting with plays
+ * Resourceful controller for interacting with userportfolioitems
  */
-class PlayController {
+class UserPortfolioItemController {
   /**
-   * Show a list of all plays.
-   * GET plays
+   * Show a list of all userportfolioitems.
+   * GET userportfolioitems
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, view }) {}
+  async index({ request, response, view }) {
+    const user = await User.find(params.user_id);
+    if (!user) {
+      return response.notFound({
+        status: "fail",
+        data: "User not found",
+      });
+    }
+
+    const results = await Like.query()
+      .with("song.artists")
+      .with("song.audioFile")
+      .with("song.imageFile")
+      .with("song.likes")
+      .orderBy("created_at", "desc")
+      .where({ user_id: user.id })
+      .fetch();
+
+    var portfolioItems = results.rows.map((result) => {});
+  }
 
   /**
-   * Render a form to be used for creating a new play.
-   * GET plays/create
+   * Render a form to be used for creating a new userportfolioitem.
+   * GET userportfolioitems/create
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -33,28 +52,18 @@ class PlayController {
   async create({ request, response, view }) {}
 
   /**
-   * Create/save a new play.
-   * POST plays
+   * Create/save a new userportfolioitem.
+   * POST userportfolioitems
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store({ request, response, auth }) {
-    const { duration, song_id } = request.only(["duration", "song_id"]);
-
-    const play = await Play.create({
-      song_id: song_id,
-      user_id: auth.user.id,
-      duration: duration,
-    });
-
-    return response.created({ success: true, data: play });
-  }
+  async store({ request, response }) {}
 
   /**
-   * Display a single play.
-   * GET plays/:id
+   * Display a single userportfolioitem.
+   * GET userportfolioitems/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -64,8 +73,8 @@ class PlayController {
   async show({ params, request, response, view }) {}
 
   /**
-   * Render a form to update an existing play.
-   * GET plays/:id/edit
+   * Render a form to update an existing userportfolioitem.
+   * GET userportfolioitems/:id/edit
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -75,8 +84,8 @@ class PlayController {
   async edit({ params, request, response, view }) {}
 
   /**
-   * Update play details.
-   * PUT or PATCH plays/:id
+   * Update userportfolioitem details.
+   * PUT or PATCH userportfolioitems/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -85,8 +94,8 @@ class PlayController {
   async update({ params, request, response }) {}
 
   /**
-   * Delete a play with id.
-   * DELETE plays/:id
+   * Delete a userportfolioitem with id.
+   * DELETE userportfolioitems/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -95,4 +104,4 @@ class PlayController {
   async destroy({ params, request, response }) {}
 }
 
-module.exports = PlayController;
+module.exports = UserPortfolioItemController;

@@ -4,27 +4,45 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const OffensiveSongReport = use("App/Models/OffensiveSongReport");
+const Artist = use("App/Models/Artist");
 
 /**
- * Resourceful controller for interacting with offensivesongreports
+ * Resourceful controller for interacting with artistimagefiles
  */
-class OffensiveSongReportController {
+class ArtistImageFileController {
   /**
-   * Show a list of all offensivesongreports.
-   * GET offensivesongreports
+   * Show a list of all artistimagefiles.
+   * GET artistimagefiles
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
+  async index ({ params, response }) {
+    const artist = await Artist.find(params.artist_id);
+    if (!artist) {
+      return response.notFound({
+        status: "fail",
+        data: "Artist not found",
+      });
+    }
+
+    // TODO: Change this to actual profile image
+    const song = await artist.songs().with("imageFile").first();
+    const imageFile = song.getRelated("imageFile");
+
+    return response.ok({
+      status: "success",
+      data: {
+        imageFile,
+      },
+    });
   }
 
   /**
-   * Render a form to be used for creating a new offensivesongreport.
-   * GET offensivesongreports/create
+   * Render a form to be used for creating a new artistimagefile.
+   * GET artistimagefiles/create
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -35,29 +53,19 @@ class OffensiveSongReportController {
   }
 
   /**
-   * Create/save a new offensivesongreport.
-   * POST offensivesongreports
+   * Create/save a new artistimagefile.
+   * POST artistimagefiles
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response, auth }) {
-    const songId = request.input('song_id');
-
-    const reportData = {
-      user_id: auth.user.id,
-      song_id: songId
-    };
-
-    const report = await OffensiveSongReport.create(reportData);
-    return response.created({ success: true, data: report });
-    
+  async store ({ request, response }) {
   }
 
   /**
-   * Display a single offensivesongreport.
-   * GET offensivesongreports/:id
+   * Display a single artistimagefile.
+   * GET artistimagefiles/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -68,8 +76,8 @@ class OffensiveSongReportController {
   }
 
   /**
-   * Render a form to update an existing offensivesongreport.
-   * GET offensivesongreports/:id/edit
+   * Render a form to update an existing artistimagefile.
+   * GET artistimagefiles/:id/edit
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -80,8 +88,8 @@ class OffensiveSongReportController {
   }
 
   /**
-   * Update offensivesongreport details.
-   * PUT or PATCH offensivesongreports/:id
+   * Update artistimagefile details.
+   * PUT or PATCH artistimagefiles/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -91,8 +99,8 @@ class OffensiveSongReportController {
   }
 
   /**
-   * Delete a offensivesongreport with id.
-   * DELETE offensivesongreports/:id
+   * Delete a artistimagefile with id.
+   * DELETE artistimagefiles/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -102,4 +110,4 @@ class OffensiveSongReportController {
   }
 }
 
-module.exports = OffensiveSongReportController
+module.exports = ArtistImageFileController

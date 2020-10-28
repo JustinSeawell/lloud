@@ -73,8 +73,10 @@ class LikeController {
    * @param {Response} ctx.response
    */
   async store({ request, response, params, auth }) {
+    const songId = request.input('song_id');
+
     const likeData = {
-      song_id: params.id,
+      song_id: songId,
       user_id: auth.user.id,
     };
 
@@ -97,14 +99,16 @@ class LikeController {
     }
 
     const otherUsersWhoLikedSong = Database.from("likes")
-      .where({ song_id: params.id })
+      .where({ song_id: songId })
       .select("user_id");
 
-    if (!auth.user.is_fake) {
-      await Account.query()
-        .whereIn("user_id", otherUsersWhoLikedSong)
-        .increment("points_balance", 1);
-    }
+    await Account.query()
+      .whereIn("user_id", otherUsersWhoLikedSong)
+      .increment("points_balance", 1);
+
+    await Like.query()
+      .where("song_id", songId)
+      .increment("points_earned", 1);
 
     const like = await Like.create(likeData);
 

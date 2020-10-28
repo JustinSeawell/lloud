@@ -65,6 +65,8 @@ Route.group(() => {
   Route.post("email", "UserController.validateEmail").middleware("guest");
   Route.post("username", "UserController.validateUsername").middleware("guest");
 
+  Route.get("accounts/me", "AccountController.me").middleware("auth");
+
   Route.post("users", "UserController.store").middleware("guest");
   Route.get("users/likes-balance", "UserController.likesBalance").middleware(
     "auth"
@@ -80,6 +82,8 @@ Route.group(() => {
     "songs/:id/offensive-report",
     "OffensiveSongReportController.store"
   ).middleware("auth");
+
+  Route.get("artists/:id", "ArtistController.show").middleware("auth");
 
   Route.get("likes", "LikeController.index").middleware("auth");
 

@@ -20,6 +20,14 @@ class Artist extends Model {
       .count("* as total");
     return result[0].total;
   }
+
+  async getSongIds() {
+    return await this.songs()
+      .whereNull("deleted_at")
+      .whereNotNull("approved_at")
+      .orderBy("approved_at", "desc")
+      .ids();
+  }
 }
 
 module.exports = Artist;

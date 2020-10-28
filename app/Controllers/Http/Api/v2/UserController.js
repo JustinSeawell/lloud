@@ -4,15 +4,13 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-const OffensiveSongReport = use("App/Models/OffensiveSongReport");
-
 /**
- * Resourceful controller for interacting with offensivesongreports
+ * Resourceful controller for interacting with users
  */
-class OffensiveSongReportController {
+class UserController {
   /**
-   * Show a list of all offensivesongreports.
-   * GET offensivesongreports
+   * Show a list of all users.
+   * GET users
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -23,8 +21,8 @@ class OffensiveSongReportController {
   }
 
   /**
-   * Render a form to be used for creating a new offensivesongreport.
-   * GET offensivesongreports/create
+   * Render a form to be used for creating a new user.
+   * GET users/create
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -35,29 +33,19 @@ class OffensiveSongReportController {
   }
 
   /**
-   * Create/save a new offensivesongreport.
-   * POST offensivesongreports
+   * Create/save a new user.
+   * POST users
    *
    * @param {object} ctx
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response, auth }) {
-    const songId = request.input('song_id');
-
-    const reportData = {
-      user_id: auth.user.id,
-      song_id: songId
-    };
-
-    const report = await OffensiveSongReport.create(reportData);
-    return response.created({ success: true, data: report });
-    
+  async store ({ request, response }) {
   }
 
   /**
-   * Display a single offensivesongreport.
-   * GET offensivesongreports/:id
+   * Display a single user.
+   * GET users/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -68,8 +56,8 @@ class OffensiveSongReportController {
   }
 
   /**
-   * Render a form to update an existing offensivesongreport.
-   * GET offensivesongreports/:id/edit
+   * Render a form to update an existing user.
+   * GET users/:id/edit
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -80,8 +68,8 @@ class OffensiveSongReportController {
   }
 
   /**
-   * Update offensivesongreport details.
-   * PUT or PATCH offensivesongreports/:id
+   * Update user details.
+   * PUT or PATCH users/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -91,8 +79,8 @@ class OffensiveSongReportController {
   }
 
   /**
-   * Delete a offensivesongreport with id.
-   * DELETE offensivesongreports/:id
+   * Delete a user with id.
+   * DELETE users/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -102,4 +90,4 @@ class OffensiveSongReportController {
   }
 }
 
-module.exports = OffensiveSongReportController
+module.exports = UserController

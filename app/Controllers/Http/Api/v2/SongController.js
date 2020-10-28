@@ -19,28 +19,45 @@ class SongController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ request, response, auth }) {
+  async index({ auth, request, response }) {
     const page = request.input("page") || 1;
 
-    const songs = await Song.query()
+    const results = await Song.query()
       .with("audioFile")
       .with("imageFile")
       .with("artists")
-      .withCount("likes")
-      .withCount("likes as liked_by_user", (builder) => {
-        builder.where("user_id", auth.user.id);
-      })
-      .withCount("plays")
+      .with("likes")
+      .with("plays")
       .whereNull("deleted_at")
       .whereNotNull("approved_at")
       .orderBy("approved_at", "desc")
-      .forPage(page, 10)
-      .fetch();
+      .paginate(page);
 
-    return response.ok({
-      status: "success",
-      data: { songs },
+    /**
+     * TODO:
+     * - Refactor this to pull likesCount
+     * directly from query
+     */
+    results.rows = results.rows.map((song) => {
+      const likes = song.toJSON().likes;
+      song.likesCount = likes.length;
+
+      const plays = song.toJSON().plays;
+      song.playsCount = plays.length;
+
+      let userLikedThisSong = false;
+      likes.forEach((like) => {
+        if (like.user_id == auth.user.id) {
+          userLikedThisSong = true;
+        }
+      });
+
+      song.likedByUser = userLikedThisSong;
+
+      return song;
     });
+
+    response.send(results);
   }
 
   /**
@@ -73,24 +90,7 @@ class SongController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params,  response, auth }) {
-    const song = await Song.query()
-      .with("audioFile")
-      .with("imageFile")
-      .with("artists")
-      .withCount("likes")
-      .withCount("likes as liked_by_user", (builder) => {
-        builder.where("user_id", auth.user.id);
-      })
-      .withCount("plays")
-      .where('id', params.id)
-      .first();
-
-    return response.ok({
-      status: "success",
-      data: { song },
-    });
-  }
+  async show({ params, request, response, view }) {}
 
   /**
    * Render a form to update an existing song.

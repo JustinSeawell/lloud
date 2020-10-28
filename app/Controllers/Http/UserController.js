@@ -95,7 +95,7 @@ class UserController {
    * @param {View} ctx.view
    */
   async show({ params, request, response, view }) {
-    return await User.findByOrFail("id", params.id);
+    return await User.query().where("id", params.id).with("profileImg").first();
   }
 
   /**
@@ -107,38 +107,46 @@ class UserController {
    * @param {Response} ctx.response
    */
   async update({ params, request, response, auth }) {
-    const user = await User.findOrFail(auth.user.id);
-
-    if (!user) {
+    let user;
+    try {
+      user = await User.findOrFail(params.id);
+    } catch (e) {
       return response.notFound({
-        success: false,
-        message: "User not found",
+        status: "fail",
+        data: "User not found",
+      });
+    }
+
+    if (params.id != auth.user.id) {
+      return response.unauthorized({
+        status: "fail",
+        data: "Not authorized to make updates on this user",
       });
     }
 
     const rules = {
       email: "required|email",
+      username: "required",
     };
 
-    const usernameReq = request.only(["username"]);
-    if (user.username != usernameReq.username) {
-      rules.username = "required|unique:users";
+    /**
+     * Check to make sure the user is changing to an
+     * available username/email.
+     */
+    const { username, email } = request.all();
+    if (user.username != username) {
+      rules.username += "|unique:users";
+    }
+    if (user.email != email) {
+      rules.email += "|unique:users";
     }
 
     const validation = await validate(request.all(), rules);
 
     if (validation.fails()) {
       return response.ok({
-        success: false,
-        message: "Please provide a unique username and email address",
-      });
-    }
-
-    const emailReq = request.only(["email"]);
-    if (user.email != emailReq.email) {
-      return response.unauthorized({
-        success: false,
-        message: "Email not associated with this user id",
+        status: "fail",
+        data: validation.messages(),
       });
     }
 
@@ -146,6 +154,7 @@ class UserController {
       "firstname",
       "lastname",
       "username",
+      "email",
       "address1",
       "address2",
       "city",
@@ -157,7 +166,10 @@ class UserController {
     user.merge(userData);
     await user.save();
 
-    return response.ok({ success: true, message: "User updated successfully" });
+    return response.ok({
+      status: "success",
+      data: null,
+    });
   }
 
   async login({ auth, request }) {
