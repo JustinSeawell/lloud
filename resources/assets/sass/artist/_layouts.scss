@@ -196,6 +196,8 @@
 
     .main {
       width: calc(100% - 200px);
+      position: static;
+      margin-left: 200px;
     }
 
     .tablet {
