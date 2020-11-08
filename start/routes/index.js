@@ -21,60 +21,6 @@ require("./password");
 require("./api-v1");
 
 // ======================================
-// WEB API
-// ======================================
-Route.group(() => {
-  Route.post("auth/recover", "PasswordController.recover").middleware("guest");
-
-  Route.post("login", "UserController.login").middleware("guest");
-  Route.get("me", "UserController.me").middleware("auth");
-  Route.post("email", "UserController.validateEmail").middleware("guest");
-  Route.post("username", "UserController.validateUsername").middleware("guest");
-
-  Route.post("users", "UserController.store").middleware("guest");
-  Route.get("users/likes-balance", "UserController.likesBalance").middleware(
-    "auth"
-  );
-  Route.get("users/points", "UserController.pointsBalance").middleware("auth");
-  Route.get("users/:id", "UserController.show").middleware("auth");
-  Route.put("users", "UserController.update").middleware("auth");
-
-  Route.get("songs/:page?", "SongController.index").middleware("auth");
-  Route.post("songs/:id/like", "LikeController.store").middleware("auth");
-  Route.post(
-    "songs/:id/offensive-report",
-    "OffensiveSongReportController.store"
-  ).middleware("auth");
-
-  Route.get("likes", "LikeController.index").middleware("auth");
-
-  Route.get("store-items/:page?", "StoreItemController.index").middleware(
-    "auth"
-  );
-  Route.get("store-items/show/:id", "StoreItemController.show").middleware(
-    "auth"
-  );
-
-  Route.post(
-    "store-items/purchase",
-    "StorePurchaseController.store"
-  ).middleware("auth");
-
-  Route.post(
-    "subscriptions/upgrade",
-    "SubscriptionController.upgrade"
-  ).middleware("auth");
-
-  Route.post(
-    "purchase-updates/verify",
-    "PurchaseReceiptController.verify"
-  ).middleware("auth");
-
-  Route.post("image-files/store", "ImageFileController.store");
-  Route.post("audio-files/store", "AudioFileController.store");
-}).prefix("api/v1");
-
-// ======================================
 // ADMIN PORTAL
 // ======================================
 Route.group(() => {
