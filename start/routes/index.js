@@ -18,6 +18,7 @@ const Route = use("Route");
 
 require("./website");
 require("./password");
+require("./api-v1");
 
 // ======================================
 // WEB API
