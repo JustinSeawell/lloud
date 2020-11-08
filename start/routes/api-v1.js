@@ -1,5 +1,6 @@
 const Route = use("Route");
 const prefix = "api/v1";
+const namespace = "Api/v1";
 
 Route.group(() => {
     Route.post("auth/recover", "PasswordController.recover");
@@ -7,7 +8,10 @@ Route.group(() => {
     Route.post("email", "UserController.validateEmail");
     Route.post("username", "UserController.validateUsername");
     Route.post("users", "UserController.store");
-}).middleware("guest").prefix(prefix);
+})
+    .prefix(prefix)
+    .namespace(namespace)
+    .middleware("guest");
 
 Route.group(() => {
     Route.get("me", "UserController.me");
@@ -39,4 +43,7 @@ Route.group(() => {
 
     Route.post("image-files/store", "ImageFileController.store");
     Route.post("audio-files/store", "AudioFileController.store");
-  }).middleware("auth").prefix(prefix);
+  })
+    .prefix(prefix)
+    .namespace(namespace)
+    .middleware("auth");
