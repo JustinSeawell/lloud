@@ -42,6 +42,10 @@ class User extends Model {
     return this.hasMany("App/Models/purchaseReceipt");
   }
 
+  profileImg() {
+    return this.belongsTo("App/Models/ImageFile", "profile_image_id", "id");
+  }
+
   generatePasswordReset() {
     this.resetPasswordToken = crypto.randomBytes(20).toString("hex");
     this.resetPasswordExpires = moment()
