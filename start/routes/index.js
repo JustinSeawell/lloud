@@ -18,5 +18,6 @@ const Route = use("Route");
 require("./website");
 require("./password");
 require("./api-v1");
+require("./api-v2");
 require("./admin");
 require("./artist");
