@@ -88,7 +88,7 @@ class UserController {
       "address1",
       "address2",
       "city",
-      "state",
+      "state_id",
       "zipcode",
       "country",
     ]);
