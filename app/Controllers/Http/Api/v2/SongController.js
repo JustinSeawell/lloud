@@ -73,7 +73,7 @@ class SongController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show({ params,  response, auth }) {
+  async show({ params, response, auth }) {
     const song = await Song.query()
       .with("audioFile")
       .with("imageFile")
@@ -83,7 +83,7 @@ class SongController {
         builder.where("user_id", auth.user.id);
       })
       .withCount("plays")
-      .where('id', params.id)
+      .where("id", params.id)
       .first();
 
     return response.ok({

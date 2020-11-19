@@ -3,9 +3,9 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use("Schema");
 
-class EntityTypeSchema extends Schema {
+class NotificationTypeSchema extends Schema {
   up() {
-    this.create("entity_types", (table) => {
+    this.create("notification_types", (table) => {
       table.increments();
       table.string("name");
       table.timestamps();
@@ -13,8 +13,8 @@ class EntityTypeSchema extends Schema {
   }
 
   down() {
-    this.drop("entity_types");
+    this.drop("notification_types");
   }
 }
 
-module.exports = EntityTypeSchema;
+module.exports = NotificationTypeSchema;

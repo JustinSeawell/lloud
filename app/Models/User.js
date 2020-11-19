@@ -38,8 +38,12 @@ class User extends Model {
     return this.hasOne("App/Models/Account");
   }
 
+  notifications() {
+    return this.hasMany("App/Models/Notification");
+  }
+
   purchaseReceipt() {
-    return this.hasMany("App/Models/purchaseReceipt");
+    return this.hasMany("App/Models/PurchaseReceipt");
   }
 
   profileImg() {
