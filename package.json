@@ -31,13 +31,16 @@
     "@adonisjs/shield": "^1.0.8",
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/vow": "^1.0.17",
+    "@adonisjs/websocket": "^1.0.12",
     "adonis-scheduler": "^3.0.2",
+    "apn": "^2.2.0",
     "aws-sdk": "^2.657.0",
     "axios": "^0.19.2",
     "moment": "^2.24.0",
     "mysql": "^2.18.1",
     "mysql2": "^2.2.5",
-    "sharp": "^0.25.4"
+    "sharp": "^0.25.4",
+    "socket.io": "^3.0.3"
   },
   "devDependencies": {
     "node-sass": "^4.13.1"
