@@ -4,6 +4,9 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const { validate } = use("Validator");
+const Account = use("App/Models/Account");
+
 /**
  * Resourceful controller for interacting with accounts
  */
@@ -81,7 +84,54 @@ class AccountController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update({ params, request, response }) {}
+  async update({ params, request, response, auth }) {
+    let account;
+    try {
+      account = await Account.findOrFail(params.id);
+    } catch (e) {
+      return response.notFound({
+        status: "fail",
+        data: "Account not found",
+      });
+    }
+
+    if (account.user_id != auth.user.id) {
+      return response.unauthorized({
+        status: "fail",
+        data: "Not authorized to make updates on this account",
+      });
+    }
+
+    const rules = {
+      user_id: "required",
+      account_type_id: "required",
+      points_balance: "required",
+      likes_balance: "required",
+    };
+
+    const validation = await validate(request.all(), rules);
+    if (validation.fails()) {
+      return response.badRequest({
+        status: "fail",
+        data: validation.messages(),
+      });
+    }
+
+    const acctData = request.only([
+      "user_id",
+      "account_type_id",
+      "points_balance",
+      "likes_balance",
+    ]);
+
+    account.merge(acctData);
+    await account.save();
+
+    return response.ok({
+      status: "success",
+      data: account,
+    });
+  }
 
   /**
    * Delete a account with id.
