@@ -22,7 +22,9 @@ class UserNotificationController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index({ auth, params, response, view }) {
+  async index({ auth, params, request, response }) {
+    const page = request.input("page") || 1;
+
     if (auth.user.id != params.user_id) {
       return response.unauthorized({
         status: "fail",
@@ -34,6 +36,7 @@ class UserNotificationController {
       .with("subjects")
       .where("user_id", params.user_id)
       .orderBy("created_at", "desc")
+      .forPage(page, 10)
       .fetch();
 
     for (let notification of notifications.rows) {
@@ -53,6 +56,10 @@ class UserNotificationController {
             }
           }
       }
+
+      notification.created_at_from_now = moment(
+        notification.created_at
+      ).fromNow();
     }
 
     return response.ok({

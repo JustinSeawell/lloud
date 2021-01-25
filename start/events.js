@@ -20,3 +20,5 @@ Event.on("user::password_was_reset", "User.passwordWasReset");
 
 Event.on("artist_application::denied", "ArtistApplication.denied");
 Event.on("artist_application::approved", "ArtistApplication.approved");
+
+Event.on("like::new", "Like.created");

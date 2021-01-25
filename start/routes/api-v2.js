@@ -6,9 +6,9 @@ const v2 = "Api/v2";
 
 Route.group(() => {
   Route.post("login", `${v1}/UserController.login`);
-  Route.post("register", `${v1}/UserController.store`);
   Route.post("email", `${v1}/UserController.validateEmail`);
   Route.post("username", `${v1}/UserController.validateUsername`);
+  Route.post("register", `${v2}/UserController.store`);
 })
   .prefix(prefix)
   .middleware("guest");
@@ -16,6 +16,7 @@ Route.group(() => {
 Route.group(() => {
   Route.get("me", `${v1}/UserController.me`);
   Route.get("accounts/me", `${v2}/AccountController.me`);
+  Route.resource("accounts", `${v2}/AccountController`).only(["update"]);
   Route.resource("users", `${v2}/UserController`).only(["show", "update"]);
   Route.resource("user.image-files", `${v2}/UserImageFileController`).only([
     "index",
@@ -59,6 +60,9 @@ Route.group(() => {
     "store",
   ]);
   Route.resource("activities", `${v2}/ActivityController`).only(["store"]);
+  Route.resource("user.apn-tokens", `${v2}/UserApnTokenController`).only([
+    "store",
+  ]);
   Route.resource("showcase-items", `${v2}/ShowcaseItemController`).only([
     "index",
   ]);

@@ -10,6 +10,7 @@ const Database = use("Database");
 const { validate } = use("Validator");
 const Like = use("App/Models/Like");
 const Account = use("App/Models/Account");
+const Event = use("Event");
 
 /**
  * Resourceful controller for interacting with likes
@@ -73,7 +74,7 @@ class LikeController {
    * @param {Response} ctx.response
    */
   async store({ request, response, params, auth }) {
-    const songId = request.input('song_id');
+    const songId = request.input("song_id");
 
     const likeData = {
       song_id: songId,
@@ -98,17 +99,17 @@ class LikeController {
       });
     }
 
-    const otherUsersWhoLikedSong = Database.from("likes")
+    const otherUsersWhoLikedSong = await Database.from("likes")
       .where({ song_id: songId })
-      .select("user_id");
+      .pluck("user_id");
 
     await Account.query()
       .whereIn("user_id", otherUsersWhoLikedSong)
       .increment("points_balance", 1);
 
-    await Like.query()
-      .where("song_id", songId)
-      .increment("points_earned", 1);
+    await Like.query().where("song_id", songId).increment("points_earned", 1);
+
+    Event.fire("like::new", likeData, otherUsersWhoLikedSong, auth.user); // Send out notifications
 
     const like = await Like.create(likeData);
 

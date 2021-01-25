@@ -34,12 +34,20 @@ class User extends Model {
     return this.hasMany("App/Models/Token");
   }
 
+  apnTokens() {
+    return this.hasMany("App/Models/ApnToken");
+  }
+
   account() {
     return this.hasOne("App/Models/Account");
   }
 
   notifications() {
     return this.hasMany("App/Models/Notification");
+  }
+
+  unreadNotifications() {
+    return this.notifications().whereNull("seen_at");
   }
 
   purchaseReceipt() {

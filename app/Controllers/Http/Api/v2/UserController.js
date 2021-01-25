@@ -16,6 +16,50 @@ const Account = use("App/Models/Account");
 
 class UserController {
   /**
+   * Create/save a new user.
+   * POST users
+   *
+   * @param {object} ctx
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
+  async store({ request, response, event, auth }) {
+    const rules = {
+      username: "required|unique:users",
+      email: "required|email|unique:users",
+      password: "required",
+    };
+
+    const validation = await validate(request.all(), rules);
+
+    if (validation.fails()) {
+      return response.badRequest({
+        status: "fail",
+        data: validation.messages(),
+      });
+    }
+    const userData = request.only(["username", "email", "password"]);
+
+    try {
+      const user = await UserRegistration.registerListenerDefaultAccount(
+        userData
+      );
+      const account = await user.account().fetch();
+      const bearerToken = await auth.generate(user, { account_id: account.id });
+
+      return response.header("x-auth-token", bearerToken.token).created({
+        status: "success",
+        data: user,
+      });
+    } catch (err) {
+      return response.badRequest({
+        status: "fail",
+        data: { message: "User registration failed" },
+      });
+    }
+  }
+
+  /**
    * Display a single user.
    * GET users/:id
    *
@@ -74,7 +118,7 @@ class UserController {
     const validation = await validate(request.all(), rules);
 
     if (validation.fails()) {
-      return response.ok({
+      return response.badRequest({
         status: "fail",
         data: validation.messages(),
       });
@@ -98,10 +142,9 @@ class UserController {
 
     return response.ok({
       status: "success",
-      data: null,
+      data: user,
     });
   }
-
 }
 
 module.exports = UserController;
