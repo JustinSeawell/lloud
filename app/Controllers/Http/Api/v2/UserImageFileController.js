@@ -74,7 +74,7 @@ class UserImageFileController {
 
     const image = request.file("image", {
       types: ["image"],
-      size: "2mb",
+      size: "3mb",
       extnames: ["png", "PNG", "jpg", "JPG", "jpeg", "JPEG"],
     });
 
@@ -104,7 +104,7 @@ class UserImageFileController {
     const imageOnServer = sharp(tmpPath);
 
     const metadata = await imageOnServer.metadata();
-    if (metadata.width > 4000 || metadata.height > 4000) {
+    if (metadata.width > 8000 || metadata.height > 8000) {
       return response.badRequest({
         status: "fail",
         message: "Profile image dimensions are too large",
@@ -116,6 +116,7 @@ class UserImageFileController {
       .resize(800, 800, {
         fit: "outside",
       })
+      .withMetadata()
       .toFormat("jpeg")
       .jpeg({ quality: 75, chromaSubsampling: "4:4:4" })
       .toFile(tmpOptPath);
