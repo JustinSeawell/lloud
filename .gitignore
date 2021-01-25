@@ -15,3 +15,7 @@ database/*.sqlite
 .history
 .idea
 .DS_Store
+.vscode/*
+
+# Apn Auth Key
+*.p8
