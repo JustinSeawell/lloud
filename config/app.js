@@ -220,6 +220,13 @@ module.exports = {
       filename: "adonis.log",
       level: "info",
     },
+
+    error: {
+      driver: "file",
+      name: "adonis-app",
+      filename: "errors.log",
+      level: "error",
+    },
   },
 
   /*
