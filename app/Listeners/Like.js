@@ -65,7 +65,7 @@ Like.created = async (likeData, otherUsersWhoLikedSong, authUser) => {
       keyId: Env.get("APN_KEY_ID"),
       teamId: Env.get("APPLE_DEV_TEAM_ID"),
     },
-    production: false, // TODO: Update w environment
+    production: Env.get("NODE_ENV") === "production",
   };
 
   var apnProvider = new apn.Provider(options);
