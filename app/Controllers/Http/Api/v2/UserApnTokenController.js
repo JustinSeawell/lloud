@@ -5,7 +5,7 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const User = use("App/Models/User");
-const APNToken = use("App/Models/APNToken");
+const ApnToken = use("App/Models/ApnToken");
 
 /**
  * Resourceful controller for interacting with userapntokens
@@ -53,7 +53,7 @@ class UserApnTokenController {
 
     const tokenStr = request.input("token");
 
-    const token = await APNToken.findOrCreate({
+    const token = await ApnToken.findOrCreate({
       user_id: params.user_id,
       token: tokenStr,
     });
