@@ -1,7 +1,8 @@
 "use strict";
 
-const BaseExceptionHandler = use("BaseExceptionHandler");
+const moment = require("moment");
 
+const BaseExceptionHandler = use("BaseExceptionHandler");
 const Logger = use("Logger");
 
 /**
@@ -37,7 +38,10 @@ class ExceptionHandler extends BaseExceptionHandler {
    * @return {void}
    */
   async report(error, { request }) {
-    Logger.transport("error").error(error.stack);
+    Logger.transport("error").error({
+      time: moment(),
+      stack: error.stack,
+    });
   }
 }
 
