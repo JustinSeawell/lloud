@@ -24,6 +24,7 @@ Route.group(() => {
     "destroy",
   ]);
   Route.resource("user.likes", `${v2}/UserLikeController`).only(["index"]);
+  Route.get("user/:user_id/likes/profile", `${v2}/UserLikeController.profile`);
   Route.post(
     "user/:user_id/notifications/:id/seen",
     `${v2}/UserNotificationController.seen`

@@ -54,6 +54,30 @@ class UserLikeController {
     });
   }
 
+  async profile({ response, params }) {
+    try {
+      await User.findOrFail(params.user_id);
+    } catch (e) {
+      return response.notFound({
+        status: "fail",
+        data: "User not found",
+      });
+    }
+
+    // Return ALL liked song Ids, and total points earned for user
+    const likes = await Like.query().where({ user_id: params.user_id }).fetch();
+    const songIds = likes.rows.map((l) => l.song_id);
+    const totalPoints = likes.rows.reduce(
+      (sum, l) => (sum += l.points_earned),
+      0
+    );
+
+    return response.ok({
+      status: "success",
+      data: { songIds, totalPoints },
+    });
+  }
+
   /**
    * Render a form to be used for creating a new userlike.
    * GET userlikes/create
