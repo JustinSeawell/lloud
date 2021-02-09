@@ -5,6 +5,7 @@ const v1 = "Api/v1";
 const v2 = "Api/v2";
 
 Route.group(() => {
+  Route.post("auth/recover", `${v1}/PasswordController.recover`);
   Route.post("login", `${v1}/UserController.login`);
   Route.post("email", `${v1}/UserController.validateEmail`);
   Route.post("username", `${v1}/UserController.validateUsername`);
