@@ -132,7 +132,8 @@ class UserImageFileController {
     await Drive.delete(tmpPath);
     await Drive.delete(tmpOptPath);
 
-    const url = `https://images.lloudapp.com/${filename}`;
+    // const url = `https://images.lloudapp.com/${filename}`;
+    const url = `https://ik.imagekit.io/mvp1bbxuku/${filename}`;
 
     const imageFile = await ImageFile.create({
       name: filename,

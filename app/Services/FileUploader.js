@@ -103,7 +103,8 @@ class FileUploader extends Service {
       );
       await Drive.delete(fileObj.tmpPath);
 
-      const location = "https://images.lloudapp.com/" + fileName;
+      // const location = "https://images.lloudapp.com/" + fileName;
+      const location = "https://ik.imagekit.io/mvp1bbxuku/" + fileName;
 
       const imageFile = await ImageFile.create({
         name: fileName,
