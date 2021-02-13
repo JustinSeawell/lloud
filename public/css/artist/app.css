@@ -697,24 +697,6 @@ label h4 {
 .home .arrow {
   margin-top: -117px; }
 
-.home #learn-more #red-arrow {
-  float: right;
-  clear: right; }
-
-.home #learn-more .learn-more-link {
-  box-sizing: border-box;
-  display: inline-block;
-  padding: 0.5rem 2rem;
-  color: #1c1c1c;
-  border: 2px solid #ff4040; }
-
-.home .upload-song-link {
-  box-sizing: border-box;
-  display: inline-block;
-  padding: 0.5rem 2rem;
-  color: #1c1c1c;
-  border: 2px solid #1c1c1c; }
-
 .home .screenshot {
   padding: 2rem; }
 

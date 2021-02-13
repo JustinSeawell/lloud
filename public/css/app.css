@@ -41,7 +41,7 @@ a {
   color: #1c1c1c; }
 
 h1 {
-  font-family: "Raleway", sans-serif;
+  font-family: "Lato", sans-serif;
   font-weight: 900; }
 
 h2,
@@ -177,6 +177,16 @@ legend {
   background-color: #1c1c1c;
   color: #ffffff; }
 
+.web-link {
+  width: 100%;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  justify-content: center;
+  border-radius: 0.25rem;
+  margin: 0.5rem 0;
+  text-shadow: none;
+  max-width: 500px; }
+
 .message, .message--success, .message--warning, .message--error {
   padding: 1rem;
   border-radius: 3px;
@@ -228,17 +238,12 @@ legend {
   font-weight: 900;
   text-decoration: none; }
 
-.hero.hero--black, .hero.hero--white {
+.hero.hero--white {
   width: 100%;
   padding: 1rem 0; }
-  .hero.hero--black h1, .hero.hero--white h1 {
+  .hero.hero--white h1 {
     font-size: 5rem;
     margin: 1rem 0; }
-
-.hero.hero--black {
-  background-color: #1c1c1c;
-  background-image: url("/images/monitor-blk-pattern.png");
-  background-size: 50px auto; }
 
 .hero.hero--white {
   background-color: #ffffff;
@@ -325,23 +330,8 @@ legend {
 .home .arrow {
   margin-top: -117px; }
 
-.home #learn-more #red-arrow {
-  float: right;
-  clear: right; }
-
-.home #learn-more .learn-more-link {
-  box-sizing: border-box;
-  display: inline-block;
-  padding: 0.5rem 2rem;
-  color: #1c1c1c;
-  border: 2px solid #ff4040; }
-
-.home .upload-song-link {
-  box-sizing: border-box;
-  display: inline-block;
-  padding: 0.5rem 2rem;
-  color: #1c1c1c;
-  border: 2px solid #1c1c1c; }
+.home .title {
+  font-size: 3rem; }
 
 .home .screenshot {
   padding: 2rem; }
@@ -355,20 +345,6 @@ legend {
   flex-direction: column-reverse; }
 
 @media (min-width: 768px) {
-  .home .arrow-wrapper {
-    height: initial;
-    overflow-y: initial; }
-  .home .arrow {
-    margin-top: initial; }
-  .home #learn-more {
-    position: relative;
-    height: 75px; }
-    .home #learn-more .learn-more-link {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 0 1.5rem; }
   .home .screenshot-wrapper {
     display: flex;
     justify-content: center; }
@@ -380,11 +356,8 @@ legend {
     flex-direction: initial; } }
 
 @media (min-width: 1280px) {
-  .home #learn-more #red-arrow {
-    float: none;
-    text-align: center; }
-  .home .hero h1 {
-    font-size: 7em; }
+  .home .title {
+    font-size: 5rem; }
   .home .screenshot-wrapper {
     display: flex;
     justify-content: end;

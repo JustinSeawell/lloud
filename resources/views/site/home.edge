@@ -2,16 +2,15 @@
 
 @section('header')
 <div class="home">
-  <div class="hero hero--black">
+  <div class="hero">
     <div class="container">
       <div class="pure-g reversible-at-mobile">
-        <div class="pure-u-1 pure-u-md-1-2 screenshot-wrapper">
-          <div class="screenshot">
-            <img src="{{ assetsUrl('images/lloud-phone.png') }}" alt="Lloud screenshot">
-          </div>
-        </div>
-        <div class="pure-u-1 pure-u-md-1-2">
-          <h1 class="white">Find What's Next<span class="red">.</span></h1>
+        <div class="pure-u-1">
+          <h1 class="title fw-regular center">
+            Discover<span class="red">.</span><br>
+            Connect<span class="red">.</span><br>
+            Achieve<span class="red">.</span><br>
+          </h1>
         </div>
       </div>
     </div>
@@ -21,26 +20,21 @@
 
 @section('content')
   <div class="home">
-  
     <div class="container">
-      <div class="center arrow-wrapper"><img class="arrow" src="{{ assetsUrl('images/blk-arrow.png') }}" alt=""></div>
       <div class="center">
-        <h2 class="body fw-black">Download Now:</h2>
         <a href="https://apps.apple.com/us/app/lloud/id1506399049" target="_blank">
-          <div><img src="{{ assetsUrl('images/app-icon.png') }}" alt=""></div>
+          <div><img src="{{ assetsUrl('images/app-icon-2.png') }}" width="250" alt=""></div>
           <div><img src="{{ assetsUrl('images/dwnld-appstore-wht.png') }}" alt=""></div>
         </a>
       </div>
     </div>
-    <div style="height: 75px;">{{-- spacer --}}</div>
-    <div id="learn-more" class="center">
-        <a class="learn-more-link" href="/what-is-lloud"><h2 class="body fw-black">What is <span class="display">Lloud<span class="red">.</span></span> ?</h2></a>
-      </div>
-      <div style="height: 25px;">{{-- spacer --}}</div>
-      <div class="center">
-        <a class="upload-song-link" href="/artists/apply"><h2 class="body fw-black">Upload Song</h2></a>
-      </div>
-    <div style="height: 150px;">{{-- spacer --}}</div>
+    <div style="height: 50px;">{{-- spacer --}}</div>
+    <div class="container center">
+      <a href="/what-is-lloud"><div class="button button--hollow body fw-light web-link">What is Lloud?</div></a>
+      <br>
+      <a href="/artists/apply"><div class="button button--hollow body fw-light web-link">Artist Portal</div></a>
+    </div>
+    <div style="height: 50px;">{{-- spacer --}}</div>
 
   </div>
 @endsection

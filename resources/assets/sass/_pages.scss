@@ -65,26 +65,8 @@
   .arrow {
     margin-top: -117px;
   }
-
-  #learn-more {
-    #red-arrow {
-      float: right;
-      clear: right;
-    }
-    .learn-more-link {
-      box-sizing: border-box;
-      display: inline-block;
-      padding: 0.5rem 2rem;
-      color: $primary;
-      border: 2px solid #ff4040;
-    }
-  }
-  .upload-song-link {
-    box-sizing: border-box;
-    display: inline-block;
-    padding: 0.5rem 2rem;
-    color: $primary;
-    border: 2px solid #1c1c1c;
+  .title {
+    font-size: 3rem;
   }
 
   .screenshot {
@@ -102,27 +84,6 @@
 }
 @media (min-width: $breakpoint-tablet) {
   .home {
-    .arrow-wrapper {
-      height: initial;
-      overflow-y: initial;
-    }
-    .arrow {
-      margin-top: initial;
-    }
-
-    #learn-more {
-      position: relative;
-      height: 75px;
-
-      .learn-more-link {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 0 1.5rem;
-      }
-    }
-
     .screenshot-wrapper {
       display: flex;
       justify-content: center;
@@ -141,15 +102,8 @@
 }
 @media (min-width: $breakpoint-desktop) {
   .home {
-    #learn-more {
-      #red-arrow {
-        float: none;
-        text-align: center;
-      }
-    }
-
-    .hero h1 {
-      font-size: 7em;
+    .title {
+      font-size: 5rem;
     }
 
     .screenshot-wrapper {

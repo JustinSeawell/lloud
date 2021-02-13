@@ -53,6 +53,18 @@
   color: $white;
 }
 
+.web-link {
+  width: 100%;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  justify-content: center;
+  border-radius: 0.25rem;
+  margin: 0.5rem 0;
+  text-shadow: none;
+  // display: flex;
+  max-width: 500px;
+}
+
 // Message
 %message-shared {
   padding: 1rem;
@@ -134,13 +146,6 @@
   }
 }
 
-.hero.hero--black {
-  @extend %hero;
-
-  background-color: $primary;
-  background-image: url("/images/monitor-blk-pattern.png");
-  background-size: 50px auto;
-}
 .hero.hero--white {
   @extend %hero;
 
