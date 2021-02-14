@@ -73,7 +73,7 @@ class SearchController {
 
     return response.ok({
       status: "success",
-      data: { artists, songs },
+      data: { artists, songs, users },
     });
   }
 }
