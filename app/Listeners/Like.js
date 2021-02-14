@@ -88,13 +88,13 @@ Like.created = async (likeData, otherUsersWhoLikedSong, authUser) => {
 
   users.rows.forEach((user) => {
     const { unreadNotifications_count: unread } = user.$sideLoaded;
-    const limit = 2;
+    const limit = 10;
     if (unread > limit) return;
 
     note.alert =
       unread === limit
         ? `Your points are blowing up!! 😎 Check your score!`
-        : `@${authUser.username} gave you a point. 😮 Check your score!`;
+        : `@${authUser.username} gave you a point. Check your score! 💿`;
     note.badge = unread;
 
     const apnTokens = user.getRelated("apnTokens");
