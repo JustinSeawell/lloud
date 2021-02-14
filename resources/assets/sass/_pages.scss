@@ -58,13 +58,6 @@
 }
 
 .home {
-  .arrow-wrapper {
-    height: 175px;
-    overflow-y: hidden;
-  }
-  .arrow {
-    margin-top: -117px;
-  }
   .title {
     font-size: 3rem;
   }
@@ -103,7 +96,7 @@
 @media (min-width: $breakpoint-desktop) {
   .home {
     .title {
-      font-size: 5rem;
+      font-size: 3.5rem;
     }
 
     .screenshot-wrapper {
@@ -124,32 +117,8 @@
     font-size: 2.75rem;
   }
 
-  .walkthrough-step {
-    margin: 0 0 2rem 0;
-
-    h1 {
-      margin: 0;
-    }
-
-    p {
-      font-size: 1.1rem;
-    }
-
-    .screenshot {
-      height: 550px;
-      display: flex;
-      justify-content: center;
-      padding: 1rem;
-      box-sizing: border-box;
-    }
-    .screenshot img {
-      height: 100%;
-      width: auto;
-    }
-
-    .walkthrough-number {
-      padding: 0 2rem;
-    }
+  .title {
+    font-size: 3.5rem;
   }
 }
 

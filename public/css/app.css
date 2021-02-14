@@ -11,6 +11,9 @@
 .red {
   color: #ff4040; }
 
+.bg-black {
+  background-color: #1c1c1c; }
+
 .success {
   color: #8bc34a; }
 
@@ -187,6 +190,16 @@ legend {
   text-shadow: none;
   max-width: 500px; }
 
+.web-link--white {
+  border-color: #ffffff;
+  color: #ffffff; }
+
+.bullet {
+  font-size: 1.25rem;
+  margin: 1rem 0;
+  font-weight: 300;
+  color: #ffffff; }
+
 .message, .message--success, .message--warning, .message--error {
   padding: 1rem;
   border-radius: 3px;
@@ -237,20 +250,6 @@ legend {
   color: #ffffff;
   font-weight: 900;
   text-decoration: none; }
-
-.hero.hero--white {
-  width: 100%;
-  padding: 1rem 0; }
-  .hero.hero--white h1 {
-    font-size: 5rem;
-    margin: 1rem 0; }
-
-.hero.hero--white {
-  background-color: #ffffff;
-  background-image: url("/images/monitor-wht-transparent-pattern.png");
-  background-size: 100px auto;
-  box-sizing: border-box;
-  border-bottom: 1px solid #e8e8e8; }
 
 .footer {
   border-top: 1px solid #d4d4d4;
@@ -323,13 +322,6 @@ legend {
       width: 100%;
       height: auto; }
 
-.home .arrow-wrapper {
-  height: 175px;
-  overflow-y: hidden; }
-
-.home .arrow {
-  margin-top: -117px; }
-
 .home .title {
   font-size: 3rem; }
 
@@ -357,7 +349,7 @@ legend {
 
 @media (min-width: 1280px) {
   .home .title {
-    font-size: 5rem; }
+    font-size: 3.5rem; }
   .home .screenshot-wrapper {
     display: flex;
     justify-content: end;
@@ -369,23 +361,8 @@ legend {
 #what-is-lloud .display {
   font-size: 2.75rem; }
 
-#what-is-lloud .walkthrough-step {
-  margin: 0 0 2rem 0; }
-  #what-is-lloud .walkthrough-step h1 {
-    margin: 0; }
-  #what-is-lloud .walkthrough-step p {
-    font-size: 1.1rem; }
-  #what-is-lloud .walkthrough-step .screenshot {
-    height: 550px;
-    display: flex;
-    justify-content: center;
-    padding: 1rem;
-    box-sizing: border-box; }
-  #what-is-lloud .walkthrough-step .screenshot img {
-    height: 100%;
-    width: auto; }
-  #what-is-lloud .walkthrough-step .walkthrough-number {
-    padding: 0 2rem; }
+#what-is-lloud .title {
+  font-size: 3.5rem; }
 
 .help-center h1 {
   font-size: 2.75rem; }

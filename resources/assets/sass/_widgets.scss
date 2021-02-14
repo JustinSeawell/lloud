@@ -65,6 +65,18 @@
   max-width: 500px;
 }
 
+.web-link--white {
+  border-color: $white;
+  color: $white;
+}
+
+.bullet {
+  font-size: 1.25rem;
+  margin: 1rem 0;
+  font-weight: 300;
+  color: $white;
+}
+
 // Message
 %message-shared {
   padding: 1rem;
@@ -133,27 +145,6 @@
   color: $white;
   font-weight: 900;
   text-decoration: none;
-}
-
-// Hero
-%hero {
-  width: 100%;
-  padding: 1rem 0;
-
-  h1 {
-    font-size: 5rem;
-    margin: 1rem 0;
-  }
-}
-
-.hero.hero--white {
-  @extend %hero;
-
-  background-color: $white;
-  background-image: url("/images/monitor-wht-transparent-pattern.png");
-  background-size: 100px auto;
-  box-sizing: border-box;
-  border-bottom: 1px solid #e8e8e8;
 }
 
 // Footer
