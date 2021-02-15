@@ -6,7 +6,6 @@ const Env = use("Env");
 const Database = use("Database");
 const Notification = use("App/Models/Notification");
 const Song = use("App/Models/Song");
-const Ws = use("Ws");
 const User = use("App/Models/User");
 
 const Like = (exports = module.exports = {});
@@ -48,17 +47,6 @@ Like.created = async (likeData, otherUsersWhoLikedSong, authUser) => {
 
   await Database.from("notification_subjects").insert(notificationSubjectData);
 
-  // Notify users in real time via websockets
-  for (let userId of otherUsersWhoLikedSong) {
-    const topic = Ws.getChannel("notifications:*").topic(
-      `notifications:${userId}`
-    );
-    if (topic) {
-      topic.broadcast("notification_count", { unread_notifications: 1 });
-    }
-  }
-
-  // TODO: send out push notifications
   var options = {
     token: {
       key: Env.get("APN_KEY_PATH"),
